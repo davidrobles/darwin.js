@@ -1,7 +1,22 @@
 
 // change num of generations to a more general condition checker
+// add validations in constructor function
 
 var DARWIN = DARWIN || {};
+
+/**
+ * Generates a population of popSize individuals based
+ * in the genIndfunc function.
+ * @param genIndFunc
+ * @param popSize
+ */
+function generatePopulation(genIndFunc, popSize) {
+    var population = [];
+    for (var i = 0; i < popSize; i++) {
+        population.push(genIndFunc());
+    }
+    return population;
+}
 
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -25,20 +40,6 @@ function reproduce(x, y) {
     return first;
 }
 
-/**
- * Generates a population of popSize individuals based
- * in the genIndfunc function.
- * @param genIndFunc
- * @param popSize
- */
-function generatePopulation(genIndFunc, popSize) {
-    var population = [];
-    for (var i = 0; i < popSize; i++) {
-        population.push(genIndFunc());
-    }
-    return population;
-}
-
 function createWordFitnessFunction(targetWord) {
     return function fitnessFunc(actualWord) {
         var total = 0;
@@ -51,47 +52,54 @@ function createWordFitnessFunction(targetWord) {
     }
 }
 
-function evaluatePopulation(population, fitnessFunction) {
-    var evaluatedPopulation = [];
-    for (var i = 0; i < population.length; i++) {
-        evaluatedPopulation.push({
-            candidate: population[i],
-            fitness: fitnessFunction(population[i])
-        });
-    }
-    return evaluatedPopulation;
+///////////////////////
+// GENETIC ALGORITHM //
+///////////////////////
+
+function GA(settings) {
+    this.populationSize = settings.populationSize;
+    this.fitnessFunction = settings.fitnessFunction;
+    this.genIndFunc = settings.genIndFunc;
+    this.numGens = settings.numGens;
 }
 
-// add mutation
-
-function run_ga(numGens, genIndFunc, popSize, fitnessFunction) {
-    if (numGens < 1) {
-        throw Error("Number of generations must be at least 1.");
-    }
-    population = generatePopulation(genIndFunc, popSize);
-    for (var i = 0; i < numGens; i++) {
-        console.log('-------------------');
-        console.log("Generation " + (i + 1));
-        newPopulation = [];
-        var evaluatedPopulation = evaluatePopulation(population, fitnessFunction);
-        evaluatedPopulation.sort(function(a, b) {
-            return b.fitness - a.fitness;
-        });
-        for (var j = 0; j < population.length; j++) {
-            var x = randomTopPercent(evaluatedPopulation);
-            var y = randomTopPercent(evaluatedPopulation);
-            var child = reproduce(x.candidate, y.candidate); // remove .candidate
-            newPopulation.push(child);
+GA.prototype = {
+    evaluatePopulation: function() {
+        var evaluatedPopulation = [];
+        for (var i = 0; i < this.population.length; i++) {
+            evaluatedPopulation.push({
+                candidate: this.population[i],
+                fitness: this.fitnessFunction(this.population[i])
+            });
         }
-        population = newPopulation;
-        console.log('Best: ' + population[0]);
-        console.log('Fitness: ' + fitnessFunction(population[0]));
+        return evaluatedPopulation;
+    },
+    run: function() {
+        this.population = generatePopulation(this.genIndFunc, this.populationSize);
+        for (var i = 0; i < this.numGens; i++) {
+            console.log('-------------------');
+            console.log("Generation " + (i + 1));
+            var newPopulation = [];
+            var evaluatedPopulation = this.evaluatePopulation();
+            evaluatedPopulation.sort(function(a, b) {
+                return b.fitness - a.fitness;
+            });
+            for (var j = 0; j < this.population.length; j++) {
+                var x = randomTopPercent(evaluatedPopulation);
+                var y = randomTopPercent(evaluatedPopulation);
+                var child = reproduce(x.candidate, y.candidate); // remove .candidate
+                newPopulation.push(child);
+            }
+            this.population = newPopulation;
+            console.log('Best: ' + this.population[0]);
+            console.log('Fitness: ' + this.fitnessFunction(this.population[0]));
+        }
     }
-}
+};
 
 function createRandomWordGenerator(wordLength) {
     return function generateRandomWord() {
-        var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
             word = "";
         for (var i = 0; i < wordLength; i++) {
             chara = randomIntFromInterval(0, alphabet.length);
@@ -101,10 +109,20 @@ function createRandomWordGenerator(wordLength) {
     }
 }
 
-var numGens = 50,
-    popSize = 100,
-    genIndFunc = createRandomWordGenerator(5), 
-    fitnessFunction = createWordFitnessFunction("HELLO");
+var numGens = 100,
+    popSize = 500,
+    wordToFind = "HELLO WORLD",
+    genIndFunc = createRandomWordGenerator(wordToFind.length), 
+    fitnessFunction = createWordFitnessFunction(wordToFind);
 
-run_ga(numGens, genIndFunc, popSize, fitnessFunction);
+// run_ga(numGens, genIndFunc, popSize, fitnessFunction);
+
+ga = new GA({
+    numGens: 100,
+    populationSize: 500,
+    genIndFunc: createRandomWordGenerator(wordToFind.length),
+    fitnessFunction: createWordFitnessFunction(wordToFind)
+});
+
+ga.run();
 
