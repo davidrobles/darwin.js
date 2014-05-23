@@ -1,6 +1,10 @@
 
 // change num of generations to a more general condition checker
 // add validations in constructor function
+// what are the types of fitnesses? only numeric?
+// configuration object to define notifications? all?
+// monitor fitness evaluation? useful in GA's like the bike evolution
+// save stats of each generation and display it
 
 var DARWIN = DARWIN || {};
 
@@ -74,25 +78,34 @@ GA.prototype = {
         }
         return evaluatedPopulation;
     },
+    newPopulations: function() {
+        var newPopulation = [];
+        for (var j = 0; j < this.population.length; j++) {
+            var x = randomTopPercent(this.evaluatedPopulation);
+            var y = randomTopPercent(this.evaluatedPopulation);
+            var offspring = reproduce(x.candidate, y.candidate); // remove .candidate
+            newPopulation.push(offspring);
+        }
+        return newPopulation;
+    },
+    evolutionaryStep: function() {
+        console.log('-------------------');
+        console.log("Generation " + (this.generation + 1));
+        this.evaluatedPopulation = this.evaluatePopulation();
+        console.log("Population evaluated");
+        this.evaluatedPopulation.sort(function(a, b) {
+            return b.fitness - a.fitness;
+        });
+        this.population = this.newPopulations();
+        console.log('Best: ' + this.population[0]);
+        console.log('Fitness: ' + this.fitnessFunction(this.population[0]));
+    },
     run: function() {
         this.population = generatePopulation(this.genIndFunc, this.populationSize);
-        for (var i = 0; i < this.numGens; i++) {
-            console.log('-------------------');
-            console.log("Generation " + (i + 1));
-            var newPopulation = [];
-            var evaluatedPopulation = this.evaluatePopulation();
-            evaluatedPopulation.sort(function(a, b) {
-                return b.fitness - a.fitness;
-            });
-            for (var j = 0; j < this.population.length; j++) {
-                var x = randomTopPercent(evaluatedPopulation);
-                var y = randomTopPercent(evaluatedPopulation);
-                var child = reproduce(x.candidate, y.candidate); // remove .candidate
-                newPopulation.push(child);
-            }
-            this.population = newPopulation;
-            console.log('Best: ' + this.population[0]);
-            console.log('Fitness: ' + this.fitnessFunction(this.population[0]));
+        this.generation = 0;
+        while (this.generation < this.numGens) {
+            this.evolutionaryStep();
+            this.generation++;
         }
     }
 };
