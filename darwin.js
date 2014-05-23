@@ -85,17 +85,17 @@ GA.prototype = {
         console.log("Generation " + (this.generation + 1));
         this.evaluatedPopulation = this.evaluatePopulation();
         console.log("Population evaluated");
-		this.fire('populationEvaluated');
+        this.fire('populationEvaluated');
         this.evaluatedPopulation.sort(function(a, b) {
             return b.fitness - a.fitness;
         });
-		this.fire('populationSorted');
+        this.fire('populationSorted');
         this.population = this.newPopulations();
         console.log('Best: ' + this.population[0]);
         console.log('Fitness: ' + this.fitnessFunction(this.population[0]));
     },
-	fire: function(notification) {
-	},
+    fire: function(notification) {
+    },
     reset: function() {
         this.population = [];
         this.evaluatedPopulation = [];
@@ -104,10 +104,10 @@ GA.prototype = {
         this.population = generatePopulation(this.genIndFunc, this.populationSize);
         this.generation = 0;
         while (this.generation < this.numGens) {
-			this.fire('generationStart');
+            this.fire('generationStart');
             this.evolutionaryStep();
             this.generation++;
-			this.fire('generationFinish');
+            this.fire('generationFinish');
         }
     }
 };
