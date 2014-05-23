@@ -27,24 +27,27 @@ function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-/*********************
- * Selection methods *
- *********************/
+///////////////////////
+// Selection methods //
+///////////////////////
 
 function randomTopPercent(evaluatedPopulation) {
     intValue = randomIntFromInterval(0, (evaluatedPopulation.length / 2) -1);
     return evaluatedPopulation[intValue];
 }
 
-function reproduce(x, y) {
+///////////////////////////
+// Recombination methods //
+///////////////////////////
+
+function reproduce(parentA, parentB) {
     // verify certain initial condition
-    var c = randomIntFromInterval(0, x.length);
-    var first = x.substr(0, c) + y.substr(c, x.length);
-    // var second = x.substr(0, c) + y.substr(c, x.length);
+    var c = randomIntFromInterval(0, parentA.length);
+    var first = parentA.substr(0, c) + parentB.substr(c, parentA.length);
+    // var second = parentA.substr(0, c) + parentB.substr(c, parentA.length);
     // return [first, second];
     return first;
 }
-
 
 ///////////////////////
 // GENETIC ALGORITHM //
@@ -71,9 +74,9 @@ GA.prototype = {
     newPopulations: function() {
         var self = this;
         return this.population.map(function(candidate) {
-            var x = randomTopPercent(self.evaluatedPopulation);
-            var y = randomTopPercent(self.evaluatedPopulation);
-            var offspring = reproduce(x.candidate, y.candidate); // remove .candidate
+            var parentA = randomTopPercent(self.evaluatedPopulation);
+            var parentB = randomTopPercent(self.evaluatedPopulation);
+            var offspring = reproduce(parentA.candidate, parentB.candidate); // remove .candidate
             return offspring;
         });
     },
