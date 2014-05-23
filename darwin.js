@@ -45,17 +45,6 @@ function reproduce(x, y) {
     return first;
 }
 
-function createWordFitnessFunction(targetWord) {
-    return function fitnessFunc(actualWord) {
-        var total = 0;
-        for (var i = 0; i < actualWord.length; i++) {
-            if (actualWord.charAt(i) == targetWord.charAt(i)) {
-                total++;
-            }
-        }
-        return total;
-    }
-}
 
 ///////////////////////
 // GENETIC ALGORITHM //
@@ -66,28 +55,27 @@ function GA(settings) {
     this.fitnessFunction = settings.fitnessFunction;
     this.genIndFunc = settings.genIndFunc;
     this.numGens = settings.numGens;
+    this.generation = 0;
 }
 
 GA.prototype = {
     evaluatePopulation: function() {
-        var evaluatedPopulation = [];
-        for (var i = 0; i < this.population.length; i++) {
-            evaluatedPopulation.push({
-                candidate: this.population[i],
-                fitness: this.fitnessFunction(this.population[i])
-            });
-        }
-        return evaluatedPopulation;
+        var self = this;
+        return this.population.map(function(candidate) {
+            return {
+                candidate: candidate,
+                fitness: self.fitnessFunction(candidate)
+            };
+        });
     },
     newPopulations: function() {
-        var newPopulation = [];
-        for (var j = 0; j < this.population.length; j++) {
-            var x = randomTopPercent(this.evaluatedPopulation);
-            var y = randomTopPercent(this.evaluatedPopulation);
+        var self = this;
+        return this.population.map(function(candidate) {
+            var x = randomTopPercent(self.evaluatedPopulation);
+            var y = randomTopPercent(self.evaluatedPopulation);
             var offspring = reproduce(x.candidate, y.candidate); // remove .candidate
-            newPopulation.push(offspring);
-        }
-        return newPopulation;
+            return offspring;
+        });
     },
     evolutionaryStep: function() {
         console.log('-------------------');
@@ -100,6 +88,10 @@ GA.prototype = {
         this.population = this.newPopulations();
         console.log('Best: ' + this.population[0]);
         console.log('Fitness: ' + this.fitnessFunction(this.population[0]));
+    },
+    reset: function() {
+        this.population = [];
+        this.evaluatedPopulation = [];
     },
     run: function() {
         this.population = generatePopulation(this.genIndFunc, this.populationSize);
@@ -123,20 +115,28 @@ function createRandomWordGenerator(wordLength) {
     }
 }
 
-var numGens = 100,
-    popSize = 500,
-    wordToFind = "HELLO WORLD",
-    genIndFunc = createRandomWordGenerator(wordToFind.length), 
-    fitnessFunction = createWordFitnessFunction(wordToFind);
+(function() {
+    function createWordFitnessFunction(targetWord) {
+        return function fitnessFunc(actualWord) {
+            var total = 0;
+            for (var i = 0; i < actualWord.length; i++) {
+                if (actualWord.charAt(i) == targetWord.charAt(i)) {
+                    total++;
+                }
+            }
+            return total;
+        }
+    }
 
-// run_ga(numGens, genIndFunc, popSize, fitnessFunction);
+    var wordToFind = "HELLO WORLD";
 
-ga = new GA({
-    numGens: 100,
-    populationSize: 500,
-    genIndFunc: createRandomWordGenerator(wordToFind.length),
-    fitnessFunction: createWordFitnessFunction(wordToFind)
-});
+    ga = new GA({
+        numGens: 100,
+        populationSize: 500,
+        genIndFunc: createRandomWordGenerator(wordToFind.length),
+        fitnessFunction: createWordFitnessFunction(wordToFind)
+    });
 
-ga.run();
+    ga.run();
+})();
 
