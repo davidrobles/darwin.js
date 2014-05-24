@@ -1,3 +1,6 @@
+
+
+
 /**
  * Generates a population of popSize individuals based
  * in the genIndfunc function.
@@ -5,11 +8,11 @@
  * @param popSize
  */
 function generatePopulation(genIndFunc, popSize) {
-    // var population = [];
-    // for (var i = 0; i < popSize; i++) {
-    //     population.push(genIndFunc());
-    // }
-    // return population;
+    var population = [];
+    for (var i = 0; i < popSize; i++) {
+        population.push(genIndFunc());
+    }
+    return population;
 }
 
 function randomIntFromInterval(min, max) {
@@ -43,32 +46,50 @@ function reproduce(parentA, parentB) {
 ///////////////////////
 
 function GA(opts) {
-	this.opts = opts || {};
+    this.opts = opts || {};
     this.populationSize = opts.populationSize;
     this.fitnessFunction = opts.fitnessFunction;
     this.genIndFunc = opts.genIndFunc;
     this.numGens = opts.numGens;
     this.generation = 0;
+    this.generations = [];
     this.observers = opts.observers;
 }
 
 GA.prototype = {
     evaluatePopulation: function() {
-        var self = this;
         return this.population.map(function(candidate) {
             return {
                 candidate: candidate,
-                fitness: self.fitnessFunction(candidate)
+                fitness: this.fitnessFunction(candidate)
             };
-        });
+        },
+        this);
     },
     newPopulations: function() {
-        var self = this;
         return this.population.map(function(candidate) {
-            var parentA = randomTopPercent(self.evaluatedPopulation);
-            var parentB = randomTopPercent(self.evaluatedPopulation);
+            var parentA = randomTopPercent(this.evaluatedPopulation);
+            var parentB = randomTopPercent(this.evaluatedPopulation);
             var offspring = reproduce(parentA.candidate, parentB.candidate); // remove .candidate
             return offspring;
+        },
+        this);
+    },
+    computeStats: function() {
+        var totalFitness = this.evaluatedPopulation.map(function(candidate) {
+                                              return candidate.fitness;
+                                          })
+                                          .reduce(function(prev, cur) {
+                                              return prev + cur;
+                                          });
+        var average = totalFitness / this.evaluatedPopulation.length;
+
+        this.generations.push({
+            generation: this.generation,
+            averageFitness: average,
+            bestCandidate: ga.population[0],
+            bestFitness: ga.fitnessFunction(ga.population[0]),
+            population: this.evaluatedPopulation // sorted from best to worst?
         });
     },
     evolutionaryStep: function() {
@@ -80,6 +101,7 @@ GA.prototype = {
         });
         this.fire('populationSorted');
         this.population = this.newPopulations();
+        this.computeStats();
         this.fire('generationFinish');
         this.generation++;
         if (this.generation >= this.numGens) { // temp fix
@@ -87,7 +109,7 @@ GA.prototype = {
         }
     },
     fire: function(notification) {
-		var observersLength = this.observers.length;
+        var observersLength = this.observers.length;
         for (var i = 0; i < observersLength; i++) {
             this.observers[i](this, notification);
         }
@@ -120,7 +142,7 @@ function hello() {
     function createWordFitnessFunction(targetWord) {
         return function fitnessFunc(actualWord) {
             var total = 0;
-			var actualWordLength = actualWord.length;
+            var actualWordLength = actualWord.length;
             for (var i = 0; i < actualWordLength; i++) {
                 if (actualWord.charAt(i) == targetWord.charAt(i)) {
                     total++;
@@ -146,49 +168,30 @@ function hello() {
         switch (notification) {
             case "generationStart":
                 console.log('------------------');
-                console.log('Generation ' + (ga.generation + 1));
+                console.log('Generation ' + ga.generation);
                 break;
             case "generationFinish":
-                var all = ga.evaluatedPopulation.map(function(value) {
-                    return value.fitness;
-                });
-                var first = all.reduce(function(prev, cur) {
-                    return prev + cur;
-                });
-                var average = first / ga.evaluatedPopulation.length;
-                var results = $("#results");
-                var line = "<tr>";
-                line += "<td>" + (ga.generation + 1) + "</td>";
-                line += "<td>" + ga.population[0] + "</td>";
-                line += "<td>" + ga.fitnessFunction(ga.population[0]) + "</td>";
-                line += '<td style="background-color: rgba(255, 0, 0, '
-                    + (average / 36) + '">' + average + "</td>";
-                line += "</tr>";
-                results.append(line);
+                $(".generations").replaceWith(new GenerationsTableView(ga.generations).render().el);
+                // $("#bestFitness").html(new GenerationsTableView(ga.generations).render().el);
+                // var genTableView = new GenerationsTableView(ga.generations)
+                // genTableView.setElement($("#results"));
+                // genTableView.render();
                 break;
         }
     }
 
     var wordToFind = "THIS IS A TEST ON GENETIC ALGORITHMS";
 
-    $("#bestFitness").html(wordToFind.length);
-
     ga = new GA({
         selectionMethod: null,
-        numGens: 100,
+        numGens: 50,
         populationSize: 1000,
         genIndFunc: createRandomWordGenerator(wordToFind.length),
         fitnessFunction: createWordFitnessFunction(wordToFind),
         observers: [myObserver]
     });
 
-    // ga.run();
-
-	var names = ['David', 'Pepe', 'Natalia', 'Raul'];
-	console.log('The names are:');
-	names.forEach(function(name) {
-		console.log(name);
-	});
+    ga.run();
 
 })();
 

@@ -3,29 +3,32 @@
 <head>
     <title>Darwin.js</title>
     <style>
-    table {
+    body {
+        font-family: "Tahoma";
+        font-size: 12px;
+    }
+    table.generations {
         border: 1px solid black;
     }
-    th, td {
-        padding: 0;
+    table.generations th, table.generations td {
+        padding: 8px;
+    }
+    table.generations th {
+        <!-- border-bottom: 1px solid black; -->
     }
     </style>
 </head>
 <body>
-    <p>Testing</p>
-    <canvas id="timeSeries" width="600" height="150"></canvas>
+    <!-- <canvas id="timeSeries" width="600" height="150"></canvas> -->
     <br />
     <br />
     <div id="bestFitness"></div>
-    <table id="results">
-        <tr>
-            <td>Generation</td>
-            <td>Best</td>
-            <td>Word</td>
-            <td>Average</td>
-        </tr>
+    <table class="generations">
     </table>
     <script src="jquery-2.1.1.js"></script>
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
+    <script src="darwin-ui.js"></script>
     <script src="darwin.js"></script>
 </body>
 </html>
