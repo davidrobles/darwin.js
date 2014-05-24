@@ -97,7 +97,7 @@ GA.prototype = {
     run: function() {
         this.population = generatePopulation(this.genIndFunc, this.populationSize);
         this.generation = 0;
-        this.interval = setInterval(jQuery.proxy(this, 'evolutionaryStep'));
+        this.interval = setInterval(jQuery.proxy(this, 'evolutionaryStep'), 100);
     }
 };
 
@@ -146,20 +146,30 @@ function hello() {
                 console.log('Generation ' + (ga.generation + 1));
                 break;
             case "generationFinish":
-				var results = $("#results");
-				var line = "<tr>";
-				line += "<td>" + (ga.generation + 1) + "</td>";
-				line += "<td>" + ga.population[0] + "</td>";
-				line += "<td>" + ga.fitnessFunction(ga.population[0]) + "</td>";
-				line += "</tr>";
-				results.append(line);
+                var all = ga.evaluatedPopulation.map(function(value) {
+                    return value.fitness;
+                });
+                var first = all.reduce(function(prev, cur) {
+                    return prev + cur;
+                });
+                var average = first / ga.evaluatedPopulation.length;
+                debugger;
+                var results = $("#results");
+                var line = "<tr>";
+                line += "<td>" + (ga.generation + 1) + "</td>";
+                line += "<td>" + ga.population[0] + "</td>";
+                line += "<td>" + ga.fitnessFunction(ga.population[0]) + "</td>";
+                line += '<td style="background-color: rgba(255, 0, 0, '
+                    + (average / 36) + '">' + average + "</td>";
+                line += "</tr>";
+                results.append(line);
                 break;
         }
     }
 
     var wordToFind = "THIS IS A TEST ON GENETIC ALGORITHMS";
 
-	$("#bestFitness").html(wordToFind.length);
+    $("#bestFitness").html(wordToFind.length);
 
     ga = new GA({
         selectionMethod: null,
