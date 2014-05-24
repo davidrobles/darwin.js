@@ -122,7 +122,7 @@ GA.prototype = {
         this.fire('startGA');
         this.population = generatePopulation(this.genIndFunc, this.populationSize);
         this.generation = 0;
-        this.interval = setInterval(jQuery.proxy(this, 'evolutionaryStep'), 100);
+        this.interval = setInterval(jQuery.proxy(this, 'evolutionaryStep'), 50);
     }
 };
 
@@ -180,7 +180,7 @@ function sleep(milliseconds) {
     ga = new GA({
         selectionMethod: null,
         numGens: 50,
-        populationSize: 1000,
+        populationSize: 500,
         genIndFunc: createRandomWordGenerator(wordToFind.length),
         fitnessFunction: createWordFitnessFunction(wordToFind),
         observers: [myObserver]

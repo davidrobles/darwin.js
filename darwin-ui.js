@@ -73,6 +73,13 @@ var PopulationTableView = Backbone.View.extend({
     render: function() {
         this.population.forEach(
             function(candidate) { // change name to evaluated candidate?
+                var text = candidate.candidate;
+                var candidateLabelView = new CandidateLabelView({
+                    actual: text,
+                    target: "THIS IS A TEST ON GENETIC ALGORITHMS"
+                });
+                var hola = candidateLabelView.render().el;
+                candidate.candidate = hola.innerHTML;
                 this.$el.append(this.template(candidate));
             },
             this
@@ -80,3 +87,22 @@ var PopulationTableView = Backbone.View.extend({
         return this;
     }
 });
+
+var CandidateLabelView = Backbone.View.extend({
+    tagName: "p",
+    initialize: function(opts) { // Change options in the other views!
+        this.actual = opts.actual;
+        this.target = opts.target;
+    },
+    render: function() {
+        for (var i = 0; i < this.target.length; i++) {
+            if (this.target.charAt(i) === this.actual.charAt(i)) {
+                this.$el.append('<span style="color: #ff0000;">' + this.actual.charAt(i) + '</span>');
+            } else {
+                this.$el.append('<span>' + this.actual.charAt(i) + '</span>');
+            }
+        }
+        return this;
+    }
+});
+
