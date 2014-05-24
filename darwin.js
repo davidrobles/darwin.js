@@ -1,14 +1,3 @@
-
-// change num of generations to a more general condition checker
-// add validations in constructor function
-// what are the types of fitnesses? only numeric?
-// configuration object to define notifications? all?
-// monitor fitness evaluation? useful in GA's like the bike evolution
-// save stats of each generation and display it
-// reproduce two by two
-
-var DARWIN = DARWIN || {};
-
 /**
  * Generates a population of popSize individuals based
  * in the genIndfunc function.
@@ -112,18 +101,6 @@ GA.prototype = {
     }
 };
 
-function createRandomWordGenerator(wordLength) {
-    return function generateRandomWord() {
-        var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
-            word = "";
-        for (var i = 0; i < wordLength; i++) {
-            chara = randomIntFromInterval(0, alphabet.length);
-            word += alphabet.charAt(chara);
-        }
-        return word
-    }
-}
-
 (function() {
     function createWordFitnessFunction(targetWord) {
         return function fitnessFunc(actualWord) {
@@ -137,9 +114,22 @@ function createRandomWordGenerator(wordLength) {
         }
     }
 
+    function createRandomWordGenerator(wordLength) {
+        return function generateRandomWord() {
+            var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
+                word = "";
+            for (var i = 0; i < wordLength; i++) {
+                chara = randomIntFromInterval(0, alphabet.length);
+                word += alphabet.charAt(chara);
+            }
+            return word
+        }
+    }
+
     var wordToFind = "HELLO WORLD";
 
     ga = new GA({
+        selectionMethod: null,
         numGens: 100,
         populationSize: 500,
         genIndFunc: createRandomWordGenerator(wordToFind.length),
