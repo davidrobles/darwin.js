@@ -7,10 +7,19 @@ var GenerationRowView = Backbone.View.extend({
                          '<td style="background-color: rgba(0, 0, 255, <%= averageFitness / 36 %>)"><%= averageFitness %></td>'),
     initialize: function(generation) {
         this.generation = generation;
+        this.selected = false;
     },
     render: function() {
        this.$el.html(this.template(this.generation));
        return this;
+    },
+    events: {
+        'click': 'select'
+    },
+    select: function() {
+        this.$el.css('background-color', '#ff0000');
+        var generationDetailsView = new GenerationDetailsView(this.generation);
+        $(".generationDetails").html(generationDetailsView.render().el);
     }
 });
 
@@ -36,8 +45,17 @@ var GenerationsTableView = Backbone.View.extend({
     }
 });
 
-var PopulationTableView = Backbone.View.extend({
-    initialize: function(data) {
-        this.data = data;
+var GenerationDetailsView = Backbone.View.extend({
+    tagName: "div",
+    initialize: function(generation) {
+        this.generation = generation;
+    },
+    render: function() {
+        this.$el.html("<p>Generation:      " + this.generation.generation + "</p>" +
+                      "<p>Best candidate:    " + this.generation.bestCandidate + "</p>" +
+                      "<p>Best fitness:    " + this.generation.bestFitness + "</p>" +
+                      "<p>Average fitness: " + this.generation.averageFitness + "</p>");
+        return this;
     }
 });
+

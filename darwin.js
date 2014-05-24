@@ -119,6 +119,7 @@ GA.prototype = {
         this.evaluatedPopulation = [];
     },
     run: function() {
+        this.fire('startGA');
         this.population = generatePopulation(this.genIndFunc, this.populationSize);
         this.generation = 0;
         this.interval = setInterval(jQuery.proxy(this, 'evolutionaryStep'), 100);
@@ -132,10 +133,6 @@ function sleep(milliseconds) {
             break;
         }
     }
-}
-
-function hello() {
-    console.log('hello');
 }
 
 (function() {
@@ -166,16 +163,14 @@ function hello() {
 
     function myObserver(ga, notification) {
         switch (notification) {
+            case "startGA":
+                $(".generations").replaceWith(new GenerationsTableView(ga.generations).render().el);
+                break;
             case "generationStart":
-                console.log('------------------');
-                console.log('Generation ' + ga.generation);
                 break;
             case "generationFinish":
-                $(".generations").replaceWith(new GenerationsTableView(ga.generations).render().el);
-                // $("#bestFitness").html(new GenerationsTableView(ga.generations).render().el);
-                // var genTableView = new GenerationsTableView(ga.generations)
-                // genTableView.setElement($("#results"));
-                // genTableView.render();
+                var generationRowView = new GenerationRowView(ga.generations[ga.generation]);
+                $(".generations").append(generationRowView.render().el);
                 break;
         }
     }

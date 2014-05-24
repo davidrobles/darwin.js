@@ -10,19 +10,30 @@
     table.generations {
         border: 1px solid black;
     }
+    table.generations {
+        font-size: 10px;
+    }
     table.generations th, table.generations td {
-        padding: 8px;
+        padding: 0.7em;
     }
     table.generations th {
         <!-- border-bottom: 1px solid black; -->
+    }
+    table.generations tbody tr:hover {
+        background-color: #ffffcc;
+    }
+
+    div.generationDetails {
+        background-color: #00ff00;
+        float: right;
+        width: 400px;
+        height: 400px;
     }
     </style>
 </head>
 <body>
     <!-- <canvas id="timeSeries" width="600" height="150"></canvas> -->
-    <br />
-    <br />
-    <div id="bestFitness"></div>
+    <div class="generationDetails"></div>
     <table class="generations">
     </table>
     <script src="jquery-2.1.1.js"></script>
