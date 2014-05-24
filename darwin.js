@@ -5,11 +5,11 @@
  * @param popSize
  */
 function generatePopulation(genIndFunc, popSize) {
-    var population = [];
-    for (var i = 0; i < popSize; i++) {
-        population.push(genIndFunc());
-    }
-    return population;
+    // var population = [];
+    // for (var i = 0; i < popSize; i++) {
+    //     population.push(genIndFunc());
+    // }
+    // return population;
 }
 
 function randomIntFromInterval(min, max) {
@@ -42,13 +42,14 @@ function reproduce(parentA, parentB) {
 // GENETIC ALGORITHM //
 ///////////////////////
 
-function GA(settings) {
-    this.populationSize = settings.populationSize;
-    this.fitnessFunction = settings.fitnessFunction;
-    this.genIndFunc = settings.genIndFunc;
-    this.numGens = settings.numGens;
+function GA(opts) {
+	this.opts = opts || {};
+    this.populationSize = opts.populationSize;
+    this.fitnessFunction = opts.fitnessFunction;
+    this.genIndFunc = opts.genIndFunc;
+    this.numGens = opts.numGens;
     this.generation = 0;
-    this.observers = settings.observers;
+    this.observers = opts.observers;
 }
 
 GA.prototype = {
@@ -86,7 +87,8 @@ GA.prototype = {
         }
     },
     fire: function(notification) {
-        for (var i = 0; i < this.observers.length; i++) {
+		var observersLength = this.observers.length;
+        for (var i = 0; i < observersLength; i++) {
             this.observers[i](this, notification);
         }
     },
@@ -118,7 +120,8 @@ function hello() {
     function createWordFitnessFunction(targetWord) {
         return function fitnessFunc(actualWord) {
             var total = 0;
-            for (var i = 0; i < actualWord.length; i++) {
+			var actualWordLength = actualWord.length;
+            for (var i = 0; i < actualWordLength; i++) {
                 if (actualWord.charAt(i) == targetWord.charAt(i)) {
                     total++;
                 }
@@ -153,7 +156,6 @@ function hello() {
                     return prev + cur;
                 });
                 var average = first / ga.evaluatedPopulation.length;
-                debugger;
                 var results = $("#results");
                 var line = "<tr>";
                 line += "<td>" + (ga.generation + 1) + "</td>";
@@ -180,10 +182,13 @@ function hello() {
         observers: [myObserver]
     });
 
-    ga.run();
+    // ga.run();
 
-    // var timerId = setTimeout(function() { alert(1) }, 1000);
-    // clearTimeout(timerId);
+	var names = ['David', 'Pepe', 'Natalia', 'Raul'];
+	console.log('The names are:');
+	names.forEach(function(name) {
+		console.log(name);
+	});
 
 })();
 
