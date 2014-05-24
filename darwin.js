@@ -87,8 +87,8 @@ GA.prototype = {
         this.generations.push({
             generation: this.generation,
             averageFitness: average,
-            bestCandidate: ga.population[0],
-            bestFitness: ga.fitnessFunction(ga.population[0]),
+            bestCandidate: ga.evaluatedPopulation[0].candidate,
+            bestFitness: ga.evaluatedPopulation[0].fitness,
             population: this.evaluatedPopulation // sorted from best to worst?
         });
     },
@@ -100,9 +100,9 @@ GA.prototype = {
             return b.fitness - a.fitness;
         });
         this.fire('populationSorted');
-        this.population = this.newPopulations();
         this.computeStats();
         this.fire('generationFinish');
+        this.population = this.newPopulations();
         this.generation++;
         if (this.generation >= this.numGens) { // temp fix
             clearInterval(this.interval);
