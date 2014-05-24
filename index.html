@@ -2,10 +2,25 @@
 <html>
 <head>
     <title>Darwin.js</title>
+    <style>
+    table, th, td {
+        border: 1px solid black;
+    }
+    </style>
 </head>
 <body>
     <p>Testing</p>
     <canvas id="timeSeries" width="600" height="150"></canvas>
+    <br />
+    <br />
+    <div id="bestFitness"></div>
+    <table id="results">
+        <tr>
+            <td>Generation</td>
+            <td>Best</td>
+            <td>Word</td>
+        </tr>
+    </table>
     <script src="jquery-2.1.1.js"></script>
     <script src="darwin.js"></script>
 </body>

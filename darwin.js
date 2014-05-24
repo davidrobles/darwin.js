@@ -79,9 +79,9 @@ GA.prototype = {
         });
         this.fire('populationSorted');
         this.population = this.newPopulations();
-        this.generation++;
         this.fire('generationFinish');
-        if (this.generation > 10) { // temp fix
+        this.generation++;
+        if (this.generation >= this.numGens) { // temp fix
             clearInterval(this.interval);
         }
     },
@@ -143,25 +143,28 @@ function hello() {
         switch (notification) {
             case "generationStart":
                 console.log('------------------');
-                console.log('Generation ' + ga.generation);
+                console.log('Generation ' + (ga.generation + 1));
                 break;
             case "generationFinish":
-                console.log('Best: ' + ga.population[0]);
-                console.log('Fitness: ' + ga.fitnessFunction(ga.population[0]));
+				var results = $("#results");
+				var line = "<tr>";
+				line += "<td>" + (ga.generation + 1) + "</td>";
+				line += "<td>" + ga.population[0] + "</td>";
+				line += "<td>" + ga.fitnessFunction(ga.population[0]) + "</td>";
+				line += "</tr>";
+				results.append(line);
                 break;
         }
     }
 
-    // var canvas = document.getElementById('timeSeries');
-    // canvas.style.backgroundColor = "#ff0000";
-    // canvas.style.border="1px solid #000000";
+    var wordToFind = "THIS IS A TEST ON GENETIC ALGORITHMS";
 
-    var wordToFind = "HELLO WORLD";
+	$("#bestFitness").html(wordToFind.length);
 
     ga = new GA({
         selectionMethod: null,
         numGens: 100,
-        populationSize: 500,
+        populationSize: 1000,
         genIndFunc: createRandomWordGenerator(wordToFind.length),
         fitnessFunction: createWordFitnessFunction(wordToFind),
         observers: [myObserver]
