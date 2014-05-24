@@ -20,6 +20,8 @@ var GenerationRowView = Backbone.View.extend({
         this.$el.css('background-color', '#ff0000');
         var generationDetailsView = new GenerationDetailsView(this.generation);
         $(".generationDetails").html(generationDetailsView.render().el);
+        var populationTableView = new PopulationTableView(this.generation.population);
+        $(".generationDetails").append(populationTableView.render().el);
     }
 });
 
@@ -52,10 +54,29 @@ var GenerationDetailsView = Backbone.View.extend({
     },
     render: function() {
         this.$el.html("<p>Generation:      " + this.generation.generation + "</p>" +
-                      "<p>Best candidate:    " + this.generation.bestCandidate + "</p>" +
+                      "<p>Best candidate:  " + this.generation.bestCandidate + "</p>" +
                       "<p>Best fitness:    " + this.generation.bestFitness + "</p>" +
                       "<p>Average fitness: " + this.generation.averageFitness + "</p>");
         return this;
     }
 });
 
+var PopulationTableView = Backbone.View.extend({
+    tagName: "table",
+    initialize: function(population) {
+        this.population = population;
+    },
+    template: _.template("<tr>" +
+                         "<td><%= candidate %></td>" +
+                         "<td><%= fitness %></td>" +
+                         "</tr>"),
+    render: function() {
+        this.population.forEach(
+            function(candidate) { // change name to evaluated candidate?
+                this.$el.append(this.template(candidate));
+            },
+            this
+        );
+        return this;
+    }
+});
