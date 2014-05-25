@@ -72,6 +72,20 @@ GA.prototype = {
         },
         this);
     },
+    mutate: function(candidate) {
+        var newString = "";
+        var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+        for (var i = 0; i < candidate.length; i++) {
+            if (Math.random() < 0.01) {
+                var chara = randomIntFromInterval(0, alphabet.length);
+                console.log(chara);
+                newString += alphabet.charAt(chara);
+            } else {
+                newString += candidate.charAt(i);
+            }
+        }
+        return newString;
+    },
     newPopulations: function() {
         var newPopulation = [];
         var halfLength = this.population.length / 2;
@@ -79,8 +93,10 @@ GA.prototype = {
             var parentA = randomTopPercent(this.evaluatedPopulation);
             var parentB = randomTopPercent(this.evaluatedPopulation);
             var children = reproduce(parentA.candidate, parentB.candidate); // remove .candidate
-            newPopulation.push(children.childA);
-            newPopulation.push(children.childB);
+            var childA = this.mutate(children.childA);
+            var childB = this.mutate(children.childB);
+            newPopulation.push(childA);
+            newPopulation.push(childB);
         }
         return newPopulation;
     },
