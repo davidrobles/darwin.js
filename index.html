@@ -3,21 +3,37 @@
 <head>
     <title>Darwin.js</title>
     <style>
+    /*
+              Red: #1B222D
+        Navy Blue: #FF4209
+             Even: #ECF1F4
+              Row: #BCC5C9
+    */
     body {
         font-family: "Tahoma";
         font-size: 12px;
+        margin: 0;
     }
     table.generations {
-        border: 1px solid black;
+        font-size: 12px;
+        border-spacing: 0;
     }
-    table.generations {
-        font-size: 10px;
+    table thead {
+        background-color: #5F6D79;
+        color: #ECF1F4;
+        border-top: 1px solid rgba(44, 44, 44, 1.0);
+    }
+    table tr {
+        <!-- background-color: rgba(51, 51, 51, 1.0); -->
+    }
+    table tr.odd {
+        background-color: #BCC5C9;
+    }
+    table tr.even {
+        background-color: #ECF1F4;
     }
     table.generations th, table.generations td {
         padding: 0.7em;
-    }
-    table.generations th {
-        <!-- border-bottom: 1px solid black; -->
     }
     table.generations tbody tr:hover {
         background-color: #ffffcc;

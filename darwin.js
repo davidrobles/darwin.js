@@ -169,7 +169,10 @@ function sleep(milliseconds) {
             case "generationStart":
                 break;
             case "generationFinish":
-                var generationRowView = new GenerationRowView(ga.generations[ga.generation]);
+                var generationRowView = new GenerationRowView({
+                    generation: ga.generations[ga.generation],
+                    className: ga.generation % 2 == 0 ? "even" : "odd"
+                });
                 $(".generations").append(generationRowView.render().el);
                 break;
         }
@@ -179,7 +182,7 @@ function sleep(milliseconds) {
 
     ga = new GA({
         selectionMethod: null,
-        numGens: 50,
+        numGens: 100,
         populationSize: 500,
         genIndFunc: createRandomWordGenerator(wordToFind.length),
         fitnessFunction: createWordFitnessFunction(wordToFind),
