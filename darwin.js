@@ -36,7 +36,6 @@ function reproduce(parentA, parentB) {
     // verify certain initial condition
     var parentLength = parentA.length;
     var c = randomIntFromInterval(0, parentA.length);
-    // console.log(c);
     var childA = parentA.substr(0, c) + parentB.substr(c, parentLength);
     var childB = parentB.substr(0, c) + parentA.substr(c, parentLength);
     return {
@@ -44,8 +43,6 @@ function reproduce(parentA, parentB) {
         childB: childB
     };
 }
-
-// console.log(reproduce("AAAAA", "BBBBB"));
 
 ///////////////////////
 // GENETIC ALGORITHM //
@@ -78,7 +75,6 @@ GA.prototype = {
         for (var i = 0; i < candidate.length; i++) {
             if (Math.random() < 0.01) {
                 var chara = randomIntFromInterval(0, alphabet.length);
-                console.log(chara);
                 newString += alphabet.charAt(chara);
             } else {
                 newString += candidate.charAt(i);
@@ -189,7 +185,8 @@ function sleep(milliseconds) {
     function myObserver(ga, notification) {
         switch (notification) {
             case "startGA":
-                $(".generations").replaceWith(new GenerationsTableView(ga.generations).render().el);
+                var generationsTableView = new GenerationsTableView(ga.generations);
+                $(".generations").replaceWith(generationsTableView.render().el);
                 break;
             case "generationStart":
                 break;

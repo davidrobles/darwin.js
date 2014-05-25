@@ -2,10 +2,7 @@
 var GenerationRowView = Backbone.View.extend({
     tagName: "tr",
     className: "even",
-    template: _.template('<td><%= generation %></td>' +
-                         '<td><%= bestCandidate %></td>' +
-                         '<td><%= bestFitness %></td>' +
-                         '<td style="background-color: rgba(0, 0, 255, <%= averageFitness / 36 %>)"><%= averageFitness %></td>'),
+    template: _.template($("#generationRowView").html()),
     initialize: function(opts) {
         this.generation = opts.generation;
         this.className = opts.className;
@@ -33,29 +30,15 @@ var GenerationsTableView = Backbone.View.extend({
     initialize: function(generations) {
         this.generations = generations;
     },
+	template: _.template($("#generationsTableView").html()),
     render: function() {
         // change to _.each
-        this.$el.append('<thead><tr>' // move this to a template?
-            + '<th>#</th>'
-            + '<th>Best Candidate</th>'
-            + '<th>Best Fitness</th>'
-            + '<th>Average</th>'
-            + '</tr></thead>');
-        this.generations.forEach(function(generation) {
-
-                // all this code is useless!!!!
-
-
-                // var generationRowView = new GenerationRowView({
-                //     gen: generation
-                // });
-                var generationRowView = new GenerationRowView();
-                // got to use a real model?
-                // this.listenTo(generationRowView, 'select', this.clearAll);
-                // this.$el.append(.render().el);
-            },
-            this
-        );
+		this.$el.append(this.template());
+        // this.generations.forEach(function(generation) {
+        //         var generationRowView = new GenerationRowView();
+        //     },
+        //     this
+        // );
         return this;
     },
     clearAll: function() {
