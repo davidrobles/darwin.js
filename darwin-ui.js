@@ -33,11 +33,9 @@ var GenerationsTableView = Backbone.View.extend({
     template: _.template($("#generationsTableView").html()),
     render: function() {
         // change to _.each
+        this.$el.empty();
         this.$el.append(this.template());
         return this;
-    },
-    clearAll: function() {
-        alert('testing');
     }
 });
 
@@ -97,4 +95,3 @@ var CandidateLabelView = Backbone.View.extend({
         return this;
     }
 });
-

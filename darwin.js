@@ -1,6 +1,3 @@
-
-
-
 /**
  * Generates a population of popSize individuals based
  * in the genIndfunc function.
@@ -20,31 +17,6 @@ function randomIntFromInterval(min, max) {
 }
 
 ///////////////////////
-// Selection methods //
-///////////////////////
-
-function randomTopPercent(evaluatedPopulation) {
-    intValue = randomIntFromInterval(0, (evaluatedPopulation.length / 2) -1);
-    return evaluatedPopulation[intValue];
-}
-
-///////////////////////////
-// Recombination methods //
-///////////////////////////
-
-function reproduce(parentA, parentB) {
-    // verify certain initial condition
-    var parentLength = parentA.length;
-    var c = randomIntFromInterval(0, parentA.length);
-    var childA = parentA.substr(0, c) + parentB.substr(c, parentLength);
-    var childB = parentB.substr(0, c) + parentA.substr(c, parentLength);
-    return {
-        childA: childA,
-        childB: childB
-    };
-}
-
-///////////////////////
 // GENETIC ALGORITHM //
 ///////////////////////
 
@@ -57,38 +29,26 @@ function GA(opts) {
     this.generation = 0;
     this.generations = [];
     this.observers = opts.observers;
+    this.reproduce = opts.reproduce;
+    this.mutate = opts.mutate;
 }
 
 GA.prototype = {
-    evaluatePopulation: function() {
-        return this.population.map(function(candidate) {
+    evaluatePopulation: function(population, fitnessFunction) {
+        return population.map(function(candidate) {
             return {
                 candidate: candidate,
-                fitness: this.fitnessFunction(candidate)
+                fitness: fitnessFunction(candidate)
             };
-        },
-        this);
-    },
-    mutate: function(candidate) {
-        var newString = "";
-        var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
-        for (var i = 0; i < candidate.length; i++) {
-            if (Math.random() < 0.01) {
-                var chara = randomIntFromInterval(0, alphabet.length);
-                newString += alphabet.charAt(chara);
-            } else {
-                newString += candidate.charAt(i);
-            }
-        }
-        return newString;
+        });
     },
     newPopulations: function() {
         var newPopulation = [];
-        var halfLength = this.population.length / 2;
+        var halfLength = this.population.length / 2; // verify population size % 2 == 0?
         for (var i = 0; i < halfLength; i++) {
             var parentA = randomTopPercent(this.evaluatedPopulation);
             var parentB = randomTopPercent(this.evaluatedPopulation);
-            var children = reproduce(parentA.candidate, parentB.candidate); // remove .candidate
+            var children = this.reproduce(parentA.candidate, parentB.candidate); // remove .candidate
             var childA = this.mutate(children.childA);
             var childB = this.mutate(children.childB);
             newPopulation.push(childA);
@@ -115,7 +75,7 @@ GA.prototype = {
     },
     evolutionaryStep: function() {
         this.fire('generationStart');
-        this.evaluatedPopulation = this.evaluatePopulation();
+        this.evaluatedPopulation = this.evaluatePopulation(this.population, this.fitnessFunction);
         this.fire('populationEvaluated');
         this.evaluatedPopulation.sort(function(a, b) {
             return b.fitness - a.fitness;
@@ -146,15 +106,6 @@ GA.prototype = {
         this.interval = setInterval(jQuery.proxy(this, 'evolutionaryStep'), 50);
     }
 };
-
-function sleep(milliseconds) {
-    var start = new Date().getTime();
-    for (var i = 0; i < 1e7; i++) {
-        if ((new Date().getTime() - start) > milliseconds){
-            break;
-        }
-    }
-}
 
 (function() {
     function createWordFitnessFunction(targetWord) {
@@ -208,7 +159,9 @@ function sleep(milliseconds) {
         populationSize: 500,
         genIndFunc: createRandomWordGenerator(wordToFind.length),
         fitnessFunction: createWordFitnessFunction(wordToFind),
-        observers: [myObserver]
+        observers: [myObserver],
+        reproduce: singlePointCrossover,
+        mutate: randomCharacterMutation
     });
 
     ga.run();
