@@ -22,11 +22,11 @@ table.generations thead  {
     text-align: left;
 }
 
-table tr.odd {
+table.generations tr.odd {
     background-color: #BCC5C9;
 }
 
-table tr.even {
+table.generations tr.even {
     background-color: #ECF1F4;
 }
 
