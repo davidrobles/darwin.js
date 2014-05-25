@@ -78,9 +78,9 @@ GA.prototype = {
         for (var i = 0; i < halfLength; i++) {
             var parentA = randomTopPercent(this.evaluatedPopulation);
             var parentB = randomTopPercent(this.evaluatedPopulation);
-            var offsprings = reproduce(parentA.candidate, parentB.candidate); // remove .candidate
-            newPopulation.push(offsprings.childA);
-            newPopulation.push(offsprings.childB);
+            var children = reproduce(parentA.candidate, parentB.candidate); // remove .candidate
+            newPopulation.push(children.childA);
+            newPopulation.push(children.childB);
         }
         return newPopulation;
     },
