@@ -4,7 +4,7 @@
     <title>Darwin.js</title>
     <link rel="stylesheet" href="styles.css"> 
 
-    <script type="text/html" id="generationsTableView">
+    <script type="text/template" id="generationsTableView">
         <thead>
             <tr>
                 <th>#</th>
@@ -15,7 +15,7 @@
         </thead>
     </script>
 
-    <script type="text/html" id="generationRowView">
+    <script type="text/template" id="generationRowView">
         <td><%= generation %></td>
         <td><%= bestCandidate %></td>
         <td><span style="display: inline-block; text-align: right; width: 20px;"><%= bestFitness %></span>&nbsp;&nbsp;
@@ -24,7 +24,7 @@
         <td style="background-color: rgba(0, 0, 255, <%= averageFitness / 36 %>)"><%= averageFitness %></td>
     </script>
 
-    <script type="text/html" id="generationDetailsView">
+    <script type="text/template" id="generationDetailsView">
         <p>Generation:      <%= this.generation.generation %></p>
         <p>Best candidate:  <%= this.generation.bestCandidate %></p>
         <p>Best fitness:    <%= this.generation.bestFitness %></p>
