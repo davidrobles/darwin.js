@@ -18,8 +18,8 @@
     <script type="text/html" id="generationRowView">
         <td><%= generation %></td>
         <td><%= bestCandidate %></td>
-        <td><%= bestFitness %>
-        <div style="display: inline-block; background-color: #FF4209; width: <%= bestFitness * 2 %>px">x</div>
+        <td><span style="display: inline-block; text-align: right; width: 20px;"><%= bestFitness %></span>&nbsp;&nbsp;
+        <div style="display: inline-block; color: #FF4209; background-color: #FF4209; width: <%= bestFitness * 2 %>px">x</div>
         </td>
         <td style="background-color: rgba(0, 0, 255, <%= averageFitness / 36 %>)"><%= averageFitness %></td>
     </script>

@@ -17,3 +17,6 @@ function singlePointCrossover(parentA, parentB) {
 function twoPointCrossover(parentA, parentB) {
 
 }
+
+function cutAndSplice(parentA, parentB) {
+}
