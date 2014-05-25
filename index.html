@@ -62,6 +62,13 @@
         <td style="background-color: rgba(0, 0, 255, <%= averageFitness / 36 %>)"><%= averageFitness %></td>
     </script>
 
+    <script type="text/html" id="generationDetailsView">
+        <p>SGeneration:     <%= this.generation.generation %></p>
+        <p>Best candidate:  <%= this.generation.bestCandidate %></p>
+        <p>Best fitness:    <%= this.generation.bestFitness %></p>
+        <p>Average fitness: <%= this.generation.averageFitness %></p>
+    </script>
+
 </head>
 <body>
     <!-- <canvas id="timeSeries" width="600" height="150"></canvas> -->

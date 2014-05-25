@@ -30,15 +30,10 @@ var GenerationsTableView = Backbone.View.extend({
     initialize: function(generations) {
         this.generations = generations;
     },
-	template: _.template($("#generationsTableView").html()),
+    template: _.template($("#generationsTableView").html()),
     render: function() {
         // change to _.each
-		this.$el.append(this.template());
-        // this.generations.forEach(function(generation) {
-        //         var generationRowView = new GenerationRowView();
-        //     },
-        //     this
-        // );
+        this.$el.append(this.template());
         return this;
     },
     clearAll: function() {
@@ -51,11 +46,9 @@ var GenerationDetailsView = Backbone.View.extend({
     initialize: function(generation) {
         this.generation = generation;
     },
+    template: _.template($("#generationDetailsView").html()),
     render: function() {
-        this.$el.html("<p>Generation:      " + this.generation.generation + "</p>" +
-                      "<p>Best candidate:  " + this.generation.bestCandidate + "</p>" +
-                      "<p>Best fitness:    " + this.generation.bestFitness + "</p>" +
-                      "<p>Average fitness: " + this.generation.averageFitness + "</p>");
+        this.$el.html(this.template(this.generation));
         return this;
     }
 });
