@@ -34,12 +34,18 @@ function randomTopPercent(evaluatedPopulation) {
 
 function reproduce(parentA, parentB) {
     // verify certain initial condition
+    var parentLength = parentA.length;
     var c = randomIntFromInterval(0, parentA.length);
-    var first = parentA.substr(0, c) + parentB.substr(c, parentA.length);
-    // var second = parentA.substr(0, c) + parentB.substr(c, parentA.length);
-    // return [first, second];
-    return first;
+    // console.log(c);
+    var childA = parentA.substr(0, c) + parentB.substr(c, parentLength);
+    var childB = parentB.substr(0, c) + parentA.substr(c, parentLength);
+    return {
+        childA: childA,
+        childB: childB
+    };
 }
+
+// console.log(reproduce("AAAAA", "BBBBB"));
 
 ///////////////////////
 // GENETIC ALGORITHM //
@@ -67,13 +73,16 @@ GA.prototype = {
         this);
     },
     newPopulations: function() {
-        return this.population.map(function(candidate) {
+        var newPopulation = [];
+        var halfLength = this.population.length / 2;
+        for (var i = 0; i < halfLength; i++) {
             var parentA = randomTopPercent(this.evaluatedPopulation);
             var parentB = randomTopPercent(this.evaluatedPopulation);
-            var offspring = reproduce(parentA.candidate, parentB.candidate); // remove .candidate
-            return offspring;
-        },
-        this);
+            var offsprings = reproduce(parentA.candidate, parentB.candidate); // remove .candidate
+            newPopulation.push(offsprings.childA);
+            newPopulation.push(offsprings.childB);
+        }
+        return newPopulation;
     },
     computeStats: function() {
         var totalFitness = this.evaluatedPopulation.map(function(candidate) {
