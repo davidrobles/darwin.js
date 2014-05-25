@@ -36,7 +36,7 @@ var GenerationsTableView = Backbone.View.extend({
     render: function() {
         // change to _.each
         this.$el.append('<thead><tr>' // move this to a template?
-            + '<th>Generation</th>'
+            + '<th>#</th>'
             + '<th>Best Candidate</th>'
             + '<th>Best Fitness</th>'
             + '<th>Average</th>'
