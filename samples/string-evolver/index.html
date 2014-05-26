@@ -60,7 +60,8 @@
             fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
             observers: [StringEvolver.myObserver],
             reproduce: Darwin.Operators.singlePointCrossover,
-            mutate: Darwin.Operators.randomCharacterMutation
+            mutate: StringEvolver.randomCharacterMutation,
+            termination: null
         });
 
         stringEvolver.run();
