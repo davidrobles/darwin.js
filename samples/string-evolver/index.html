@@ -46,6 +46,7 @@
     <script src="../../src/selection.js"></script>
     <script src="../../src/operators.js"></script>
     <script src="../../src/utils.js"></script>
+    <script src="../../src/termination.js"></script>
     <script src="stringEvolver.js"></script>
     <script>
     (function() {
@@ -61,7 +62,7 @@
             observers: [StringEvolver.myObserver],
             reproduce: Darwin.Operators.singlePointCrossover,
             mutate: StringEvolver.randomCharacterMutation,
-            termination: null
+            terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
         });
 
         stringEvolver.run();

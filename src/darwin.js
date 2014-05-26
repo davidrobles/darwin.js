@@ -12,6 +12,7 @@ Darwin.Core.GA = function(opts) {
     this.observers = opts.observers;
     this.reproduce = opts.reproduce;
     this.mutate = opts.mutate;
+    this.terminationConditions = opts.terminationConditions;
 }
 
 Darwin.Core.GA.prototype = {
@@ -58,7 +59,7 @@ Darwin.Core.GA.prototype = {
         this.fire('generationFinish');
         this.population = this.newPopulations();
         this.generation++;
-        if (this.generation >= this.numGens) { // temp fix
+        if (Darwin.Utils.shouldTerminate(this.generations[this.generation - 1], this.terminationConditions)) {
             clearInterval(this.interval);
         }
     },
