@@ -1,4 +1,5 @@
 var StringEvolver = {
+
     createWordFitnessFunction: function(targetWord) {
         return function fitnessFunc(actualWord) {
             var total = 0;
@@ -11,6 +12,7 @@ var StringEvolver = {
             return total;
         }
     },
+
     createRandomStringGenerator: function(charPool, wordLength) {
         return function generateRandomString() {
             var str = "";
@@ -21,6 +23,7 @@ var StringEvolver = {
             return str
         }
     },
+
     myObserver: function(ga, notification) {
         switch (notification) {
             case "startGA":
@@ -37,6 +40,7 @@ var StringEvolver = {
                 break;
         }
     },
+
     randomCharacterMutation: function(candidate) {
         var newString = "";
         var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ "; // fix this
@@ -50,4 +54,5 @@ var StringEvolver = {
         }
         return newString;
     }
+
 };
