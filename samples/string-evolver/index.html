@@ -12,6 +12,7 @@
                 <th>Best Candidate</th>
                 <th>Best Fitness</th>
                 <th>Average</th>
+                <th>Details</th>
             </tr>
         </thead>
     </script>
@@ -23,6 +24,7 @@
         <div style="display: inline-block; color: #FF4209; background-color: #FF4209; width: <%= bestCandidateFitness * 2 %>px">x</div>
         </td>
         <td style="background-color: rgba(0, 0, 255, <%= averageFitness / 36 %>)"><%= averageFitness %></td>
+        <td><button>View</button></td>
     </script>
 
     <script type="text/template" id="generationDetailsView">
