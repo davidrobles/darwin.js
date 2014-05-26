@@ -58,9 +58,10 @@ Darwin.Core.GA.prototype = {
         this.computeStats();
         this.fire('generationFinish');
         this.population = this.newPopulations();
-        this.generation++;
-        if (Darwin.Utils.shouldTerminate(this.generations[this.generation - 1], this.terminationConditions)) {
+        if (Darwin.Utils.shouldTerminate(this.generations[this.generation], this.terminationConditions)) {
             clearInterval(this.interval);
+        } else {
+            this.generation++;
         }
     },
     fire: function(notification) {
