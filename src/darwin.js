@@ -6,7 +6,6 @@ Darwin.Core.GA = function(opts) {
     this.populationSize = opts.populationSize;
     this.fitnessFunction = opts.fitnessFunction;
     this.genIndFunc = opts.genIndFunc;
-    this.numGens = opts.numGens;
     this.generation = 0;
     this.generations = [];
     this.observers = opts.observers;

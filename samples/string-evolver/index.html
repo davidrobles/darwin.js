@@ -55,7 +55,6 @@
 
         var stringEvolver = new Darwin.Core.GA({
             selectionMethod: null,
-            numGens: 100,
             populationSize: 500,
             genIndFunc: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
             fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
