@@ -1,7 +1,6 @@
 var Darwin = {};
-Darwin.Core = {};
 
-Darwin.Core.GA = function(opts) {
+Darwin.GA = function(opts) {
     this.opts = opts || {};
     this.populationSize = opts.populationSize;
     this.fitnessFunction = opts.fitnessFunction;
@@ -14,7 +13,7 @@ Darwin.Core.GA = function(opts) {
     this.terminationConditions = opts.terminationConditions;
 }
 
-Darwin.Core.GA.prototype = {
+Darwin.GA.prototype = {
     newPopulations: function() {
         var newPopulation = [];
         var halfLength = this.population.length / 2; // verify population size % 2 == 0?
