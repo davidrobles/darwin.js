@@ -16,7 +16,12 @@
             </tr>
         </thead>
         <tfoot>
-            <td colspan="5">Hello</td>
+            <td colspan="2" style="text-align: left">
+            Displaying generations 1 - 20 of 250
+            </td>
+            <td colspan="3">
+            &lt; Page <input type="text" value="1" style="width: 30px; text-align: center;" /> of 13 &gt;
+            </td>
         </tfoot>
     </script>
 
@@ -68,7 +73,7 @@
             reproduce: Darwin.Operators.singlePointCrossover,
             mutate: StringEvolver.randomCharacterMutation,
             <!-- terminationConditions: [new Darwin.Termination.TargetFitness(10)] -->
-            terminationConditions: [new Darwin.Termination.MaxNumGens(3)]
+            terminationConditions: [new Darwin.Termination.MaxNumGens(10)]
         });
 
         stringEvolver.run();
