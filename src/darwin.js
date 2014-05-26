@@ -1,26 +1,12 @@
-/**
- * Generates a population of popSize individuals based
- * in the genIndfunc function.
- * @param genIndFunc
- * @param popSize
- */
-function generatePopulation(genIndFunc, popSize) {
-    var population = [];
-    for (var i = 0; i < popSize; i++) {
-        population.push(genIndFunc());
-    }
-    return population;
-}
-
-function randomIntFromInterval(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
+var Darwin = {};
 
 ///////////////////////
 // GENETIC ALGORITHM //
 ///////////////////////
 
-function GA(opts) {
+Darwin.Core = {};
+
+Darwin.Core.GA = function(opts) {
     this.opts = opts || {};
     this.populationSize = opts.populationSize;
     this.fitnessFunction = opts.fitnessFunction;
@@ -33,7 +19,7 @@ function GA(opts) {
     this.mutate = opts.mutate;
 }
 
-GA.prototype = {
+Darwin.Core.GA.prototype = {
     evaluatePopulation: function(population, fitnessFunction) {
         return population.map(function(candidate) {
             return {
@@ -46,8 +32,8 @@ GA.prototype = {
         var newPopulation = [];
         var halfLength = this.population.length / 2; // verify population size % 2 == 0?
         for (var i = 0; i < halfLength; i++) {
-            var parentA = randomTopPercent(this.evaluatedPopulation);
-            var parentB = randomTopPercent(this.evaluatedPopulation);
+            var parentA = Darwin.Selection.randomTopPercent(this.evaluatedPopulation);
+            var parentB = Darwin.Selection.randomTopPercent(this.evaluatedPopulation);
             var children = this.reproduce(parentA.candidate, parentB.candidate); // remove .candidate
             var childA = this.mutate(children.childA);
             var childB = this.mutate(children.childB);
@@ -101,70 +87,8 @@ GA.prototype = {
     },
     run: function() {
         this.fire('startGA');
-        this.population = generatePopulation(this.genIndFunc, this.populationSize);
+        this.population = Darwin.Utils.generatePopulation(this.genIndFunc, this.populationSize);
         this.generation = 0;
         this.interval = setInterval(jQuery.proxy(this, 'evolutionaryStep'), 50);
     }
 };
-
-(function() {
-    function createWordFitnessFunction(targetWord) {
-        return function fitnessFunc(actualWord) {
-            var total = 0;
-            var actualWordLength = actualWord.length;
-            for (var i = 0; i < actualWordLength; i++) {
-                if (actualWord.charAt(i) == targetWord.charAt(i)) {
-                    total++;
-                }
-            }
-            return total;
-        }
-    }
-
-    function createRandomWordGenerator(wordLength) {
-        return function generateRandomWord() {
-            var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
-                word = "";
-            for (var i = 0; i < wordLength; i++) {
-                chara = randomIntFromInterval(0, alphabet.length);
-                word += alphabet.charAt(chara);
-            }
-            return word
-        }
-    }
-
-    function myObserver(ga, notification) {
-        switch (notification) {
-            case "startGA":
-                var generationsTableView = new GenerationsTableView(ga.generations);
-                $(".generations").replaceWith(generationsTableView.render().el);
-                break;
-            case "generationStart":
-                break;
-            case "generationFinish":
-                var generationRowView = new GenerationRowView({
-                    generation: ga.generations[ga.generation],
-                    className: ga.generation % 2 == 0 ? "even" : "odd"
-                });
-                $(".generations").append(generationRowView.render().el);
-                break;
-        }
-    }
-
-    var wordToFind = "THIS IS A TEST ON GENETIC ALGORITHMS";
-
-    ga = new GA({
-        selectionMethod: null,
-        numGens: 100,
-        populationSize: 500,
-        genIndFunc: createRandomWordGenerator(wordToFind.length),
-        fitnessFunction: createWordFitnessFunction(wordToFind),
-        observers: [myObserver],
-        reproduce: singlePointCrossover,
-        mutate: randomCharacterMutation
-    });
-
-    ga.run();
-
-})();
-
