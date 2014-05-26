@@ -15,7 +15,7 @@ var StringEvolver = {
         return function generateRandomString() {
             var str = "";
             for (var i = 0; i < wordLength; i++) {
-                chara = Darwin.Utils.randomIntFromInterval(0, charPool.length);
+                chara = Darwin.Utils.randomIntFromInterval(0, charPool.length - 1);
                 str += charPool.charAt(chara);
             }
             return str
@@ -43,7 +43,7 @@ var StringEvolver = {
         var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ "; // fix this
         for (var i = 0; i < candidate.length; i++) {
             if (Math.random() < 0.01) {
-                var chara = Darwin.Utils.randomIntFromInterval(0, alphabet.length);
+                var chara = Darwin.Utils.randomIntFromInterval(0, alphabet.length - 1);
                 newString += alphabet.charAt(chara);
             } else {
                 newString += candidate.charAt(i);
