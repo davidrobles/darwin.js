@@ -92,7 +92,7 @@
 
         var wordToFind = "THIS IS A TEST ON GENETIC ALGORITHMS";
 
-        ga = new Darwin.Core.GA({
+        var stringEvolver = new Darwin.Core.GA({
             selectionMethod: null,
             numGens: 100,
             populationSize: 500,
@@ -103,7 +103,7 @@
             mutate: Darwin.Operators.randomCharacterMutation
         });
 
-        ga.run();
+        stringEvolver.run();
     })();
     </script>
 </body>
