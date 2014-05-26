@@ -17,20 +17,20 @@ Darwin.Utils = {
     randomIntFromInterval: function(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     },
-	shouldContinue: function(popData, conditions) {
+    shouldContinue: function(popData, conditions) {
         for (var i = 0; i < conditions.length; i++) {
             if (conditions[i].shouldTerminate(popData)) {
-				return false;
+                return false;
             }
         }
-		return true;
-	},
-	shouldTerminate: function(popData, conditions) {
+        return true;
+    },
+    shouldTerminate: function(popData, conditions) {
         for (var i = 0; i < conditions.length; i++) {
             if (conditions[i].shouldTerminate(popData)) {
-				return true;
+                return true;
             }
         }
-		return false;
-	}
+        return false;
+    }
 };
