@@ -7,10 +7,10 @@ Darwin.Utils = {
             };
         });
     },
-    generatePopulation: function(genIndFunc, popSize) {
+    generatePopulation: function(candidateFactory, popSize) {
         var population = [];
         for (var i = 0; i < popSize; i++) {
-            population.push(genIndFunc());
+            population.push(candidateFactory());
         }
         return population;
     },
