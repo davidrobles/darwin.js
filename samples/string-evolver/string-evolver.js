@@ -32,7 +32,6 @@ var StringEvolver = {
             case "generationFinish":
                 var generationRowView = new GenerationRowView({
                     generation: ga.generations[ga.generation],
-                    className: ga.generation % 2 == 0 ? "even" : "odd"
                 });
                 $(".generations").append(generationRowView.render().el);
                 break;

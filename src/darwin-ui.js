@@ -1,7 +1,5 @@
-
 var GenerationRowView = Backbone.View.extend({
     tagName: "tr",
-    className: "even",
     template: _.template($("#generationRowView").html()),
     initialize: function(opts) {
         this.generation = opts.generation;

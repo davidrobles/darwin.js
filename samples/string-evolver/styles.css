@@ -22,12 +22,15 @@ table.generations thead  {
     text-align: left;
 }
 
-table.generations tr.odd {
+table.generations tfoot  {
     background-color: #BCC5C9;
+    color: #ECF1F4;
+    text-align: right;
 }
 
-table.generations tr.even {
+table.generations tbody tr {
     background-color: #ECF1F4;
+    border-bottom: 1px solid #ff0000;
 }
 
 table.generations th, table.generations td {
