@@ -42,7 +42,7 @@ Darwin.Core.GA.prototype = {
             generation: this.generation,
             averageFitness: average,
             bestCandidate: this.evaluatedPopulation[0].candidate,
-            bestFitness: this.evaluatedPopulation[0].fitness,
+            bestCandidateFitness: this.evaluatedPopulation[0].fitness,
             population: this.evaluatedPopulation // sorted from best to worst?
         });
     },

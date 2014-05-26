@@ -18,8 +18,8 @@
     <script type="text/template" id="generationRowView">
         <td><%= generation %></td>
         <td><%= bestCandidate %></td>
-        <td><span style="display: inline-block; text-align: right; width: 20px;"><%= bestFitness %></span>&nbsp;&nbsp;
-        <div style="display: inline-block; color: #FF4209; background-color: #FF4209; width: <%= bestFitness * 2 %>px">x</div>
+        <td><span style="display: inline-block; text-align: right; width: 20px;"><%= bestCandidateFitness %></span>&nbsp;&nbsp;
+        <div style="display: inline-block; color: #FF4209; background-color: #FF4209; width: <%= bestCandidateFitness * 2 %>px">x</div>
         </td>
         <td style="background-color: rgba(0, 0, 255, <%= averageFitness / 36 %>)"><%= averageFitness %></td>
     </script>
@@ -27,7 +27,7 @@
     <script type="text/template" id="generationDetailsView">
         <p>Generation:      <%= this.generation.generation %></p>
         <p>Best candidate:  <%= this.generation.bestCandidate %></p>
-        <p>Best fitness:    <%= this.generation.bestFitness %></p>
+        <p>Best fitness:    <%= this.generation.bestCandidateFitness %></p>
         <p>Average fitness: <%= this.generation.averageFitness %></p>
     </script>
 
