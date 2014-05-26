@@ -27,16 +27,17 @@ var StringEvolver = {
     myObserver: function(ga, notification) {
         switch (notification) {
             case "startGA":
-                var generationsTableView = new GenerationsTableView(ga.generations);
-                $(".generations").replaceWith(generationsTableView.render().el);
+                window.generationsTableView = new GenerationsTableView(ga.generations);
+                $(".generations").replaceWith(generationsTableView.el);
                 break;
             case "generationStart":
                 break;
             case "generationFinish":
-                var generationRowView = new GenerationRowView({
-                    generation: ga.generations[ga.generation],
-                });
-                $(".generations").append(generationRowView.render().el);
+                // var generationRowView = new GenerationRowView({
+                //     generation: ga.generations[ga.generation],
+                // });
+                // $(".generations").append(generationRowView.render().el);
+				window.generationsTableView.render();
                 break;
         }
     },
