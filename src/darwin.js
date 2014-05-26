@@ -14,6 +14,7 @@ Darwin.GA = function(opts) {
 }
 
 Darwin.GA.prototype = {
+
     newPopulations: function() {
         var newPopulation = [];
         var halfLength = this.population.length / 2; // verify population size % 2 == 0?
@@ -28,6 +29,7 @@ Darwin.GA.prototype = {
         }
         return newPopulation;
     },
+
     computeStats: function() {
         var totalFitness = this.evaluatedPopulation.map(function(candidate) {
                                               return candidate.fitness;
@@ -45,7 +47,9 @@ Darwin.GA.prototype = {
             population: this.evaluatedPopulation // sorted from best to worst?
         });
     },
+
     evolutionaryStep: function() {
+        // check if termination conditions are reached?
         this.fire('generationStart');
         this.evaluatedPopulation = Darwin.Utils.evaluatePopulation(this.population, this.fitnessFunction);
         this.fire('populationEvaluated');
@@ -62,16 +66,19 @@ Darwin.GA.prototype = {
             this.generation++;
         }
     },
+
     fire: function(notification) {
         var observersLength = this.observers.length;
         for (var i = 0; i < observersLength; i++) {
             this.observers[i](this, notification);
         }
     },
+
     reset: function() {
         this.population = [];
         this.evaluatedPopulation = [];
     },
+
     run: function() {
         this.fire('startGA');
         this.population = Darwin.Utils.generatePopulation(this.genIndFunc, this.populationSize);

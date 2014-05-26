@@ -56,7 +56,6 @@
     (function() {
         var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
         var wordToFind = "THIS IS A TEST ON GENETIC ALGORITHMS";
-        console.log('tring: ' + wordToFind.length);
         var stringEvolver = new Darwin.GA({
             selectionMethod: null,
             populationSize: 500,
@@ -65,7 +64,8 @@
             observers: [StringEvolver.myObserver],
             reproduce: Darwin.Operators.singlePointCrossover,
             mutate: StringEvolver.randomCharacterMutation,
-            terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
+            <!-- terminationConditions: [new Darwin.Termination.TargetFitness(10)] -->
+            terminationConditions: [new Darwin.Termination.MaxNumGens(3)]
         });
 
         stringEvolver.run();
