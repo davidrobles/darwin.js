@@ -1,0 +1,41 @@
+var StringEvolver = {
+    createWordFitnessFunction: function(targetWord) {
+        return function fitnessFunc(actualWord) {
+            var total = 0;
+            var actualWordLength = actualWord.length;
+            for (var i = 0; i < actualWordLength; i++) {
+                if (actualWord.charAt(i) == targetWord.charAt(i)) {
+                    total++;
+                }
+            }
+            return total;
+        }
+    },
+    createRandomStringGenerator: function(charPool, wordLength) {
+        return function generateRandomString() {
+            var str = "";
+            for (var i = 0; i < wordLength; i++) {
+                chara = Darwin.Utils.randomIntFromInterval(0, charPool.length);
+                str += charPool.charAt(chara);
+            }
+            return str
+        }
+    },
+    myObserver: function(ga, notification) {
+        switch (notification) {
+            case "startGA":
+                var generationsTableView = new GenerationsTableView(ga.generations);
+                $(".generations").replaceWith(generationsTableView.render().el);
+                break;
+            case "generationStart":
+                break;
+            case "generationFinish":
+                var generationRowView = new GenerationRowView({
+                    generation: ga.generations[ga.generation],
+                    className: ga.generation % 2 == 0 ? "even" : "odd"
+                });
+                $(".generations").append(generationRowView.render().el);
+                break;
+        }
+    }
+};

@@ -45,60 +45,19 @@
     <script src="../../src/selection.js"></script>
     <script src="../../src/operators.js"></script>
     <script src="../../src/utils.js"></script>
+    <script src="stringEvolver.js"></script>
     <script>
     (function() {
-        function createWordFitnessFunction(targetWord) {
-            return function fitnessFunc(actualWord) {
-                var total = 0;
-                var actualWordLength = actualWord.length;
-                for (var i = 0; i < actualWordLength; i++) {
-                    if (actualWord.charAt(i) == targetWord.charAt(i)) {
-                        total++;
-                    }
-                }
-                return total;
-            }
-        }
-
-        function createRandomWordGenerator(wordLength) {
-            return function generateRandomWord() {
-                var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
-                    word = "";
-                for (var i = 0; i < wordLength; i++) {
-                    chara = Darwin.Utils.randomIntFromInterval(0, alphabet.length);
-                    word += alphabet.charAt(chara);
-                }
-                return word
-            }
-        }
-
-        function myObserver(ga, notification) {
-            switch (notification) {
-                case "startGA":
-                    var generationsTableView = new GenerationsTableView(ga.generations);
-                    $(".generations").replaceWith(generationsTableView.render().el);
-                    break;
-                case "generationStart":
-                    break;
-                case "generationFinish":
-                    var generationRowView = new GenerationRowView({
-                        generation: ga.generations[ga.generation],
-                        className: ga.generation % 2 == 0 ? "even" : "odd"
-                    });
-                    $(".generations").append(generationRowView.render().el);
-                    break;
-            }
-        }
-
+        var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
         var wordToFind = "THIS IS A TEST ON GENETIC ALGORITHMS";
 
         var stringEvolver = new Darwin.Core.GA({
             selectionMethod: null,
             numGens: 100,
             populationSize: 500,
-            genIndFunc: createRandomWordGenerator(wordToFind.length),
-            fitnessFunction: createWordFitnessFunction(wordToFind),
-            observers: [myObserver],
+            genIndFunc: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
+            fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
+            observers: [StringEvolver.myObserver],
             reproduce: Darwin.Operators.singlePointCrossover,
             mutate: Darwin.Operators.randomCharacterMutation
         });
