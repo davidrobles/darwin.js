@@ -1,9 +1,4 @@
 var Darwin = {};
-
-///////////////////////
-// GENETIC ALGORITHM //
-///////////////////////
-
 Darwin.Core = {};
 
 Darwin.Core.GA = function(opts) {
@@ -20,14 +15,6 @@ Darwin.Core.GA = function(opts) {
 }
 
 Darwin.Core.GA.prototype = {
-    evaluatePopulation: function(population, fitnessFunction) {
-        return population.map(function(candidate) {
-            return {
-                candidate: candidate,
-                fitness: fitnessFunction(candidate)
-            };
-        });
-    },
     newPopulations: function() {
         var newPopulation = [];
         var halfLength = this.population.length / 2; // verify population size % 2 == 0?
@@ -61,7 +48,7 @@ Darwin.Core.GA.prototype = {
     },
     evolutionaryStep: function() {
         this.fire('generationStart');
-        this.evaluatedPopulation = this.evaluatePopulation(this.population, this.fitnessFunction);
+        this.evaluatedPopulation = Darwin.Utils.evaluatePopulation(this.population, this.fitnessFunction);
         this.fire('populationEvaluated');
         this.evaluatedPopulation.sort(function(a, b) {
             return b.fitness - a.fitness;
