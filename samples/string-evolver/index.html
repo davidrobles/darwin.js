@@ -72,7 +72,7 @@
             reproduce: Darwin.Operators.singlePointCrossover,
             mutate: StringEvolver.randomCharacterMutation,
             <!-- terminationConditions: [new Darwin.Termination.TargetFitness(10)] -->
-            terminationConditions: [new Darwin.Termination.MaxNumGens(10)]
+            terminationConditions: [new Darwin.Termination.MaxNumGens(50)]
         });
         stringEvolver.run();
     })();

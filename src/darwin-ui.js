@@ -35,8 +35,9 @@ var GenerationsTableView = Backbone.View.extend({
 
     className: "generations",
 
-    initialize: function(generations) {
-        this.generations = generations;
+    initialize: function(opts) {
+        this.generations = opts.generations;
+        this.numRows = opts.numRows;
         this.preRender();
     },
 
@@ -45,14 +46,14 @@ var GenerationsTableView = Backbone.View.extend({
     preRender: function() {
         this.$el.empty();
         this.$el.append(this.template());
-        for (var i = 0; i < 10; i++)  {
+        for (var i = 0; i < this.numRows; i++)  {
             this.$el.append("<tr><td></td><td></td><td></td><td></td><td></td></tr>");
         }
     },
 
     render: function() {
         // $(".generations").append(generationRowView.render().el);
-        for (var i = 0; i < 10; i++)  {
+        for (var i = 0; i < this.numRows; i++)  {
             if (this.generations[i] === undefined) {
                 continue;
             }

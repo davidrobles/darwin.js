@@ -27,7 +27,10 @@ var StringEvolver = {
     myObserver: function(ga, notification) {
         switch (notification) {
             case "startGA":
-                window.generationsTableView = new GenerationsTableView(ga.generations);
+                window.generationsTableView = new GenerationsTableView({
+                    generations: ga.generations,
+                    numRows: 12
+                });
                 $(".generations").replaceWith(generationsTableView.el);
                 break;
             case "generationStart":
