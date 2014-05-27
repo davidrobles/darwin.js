@@ -55,7 +55,6 @@ var GenerationsTableView = Backbone.View.extend({
     },
 
     renderFooter: function() {
-        var test = this.$("tfoot");
         this.$("tfoot").replaceWith(this.footerTemplate({
             totalPages: this.countTotalPages()
         }));
