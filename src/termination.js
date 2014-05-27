@@ -15,3 +15,13 @@ Darwin.Termination.MaxNumGens = function(numGens) {
 Darwin.Termination.MaxNumGens.prototype.shouldTerminate = function(populationData) {
     return this.numGens - 1 == populationData.generation;
 }
+
+Darwin.Termination.Stagnation = function(generationLimit, naturalFitness) {
+    this.generationLimit = generationLimit;
+    this.naturalFitness = naturalFitness;
+}
+
+Darwin.Termination.Stagnation.prototype.shouldTerminate = function(populationData) {
+
+}
+
