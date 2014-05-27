@@ -5,8 +5,9 @@ Darwin.GA = function(opts) {
     this.populationSize = opts.populationSize;
     this.fitnessFunction = opts.fitnessFunction;
     this.genIndFunc = opts.genIndFunc;
-    this.generation = 0;
-    this.generations = [];
+    this.generation = 1;
+    // leave generations[0] unused for easier index acces, since first generation is 1, not 0
+    this.generations = [undefined];
     this.observers = opts.observers;
     this.reproduce = opts.reproduce;
     this.mutate = opts.mutate;
@@ -82,7 +83,6 @@ Darwin.GA.prototype = {
     run: function() {
         this.fire('startGA');
         this.population = Darwin.Utils.generatePopulation(this.genIndFunc, this.populationSize);
-        this.generation = 0;
         this.interval = setInterval(jQuery.proxy(this, 'evolutionaryStep'), 50);
     }
 };

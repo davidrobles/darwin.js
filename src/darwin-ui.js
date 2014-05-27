@@ -53,7 +53,7 @@ var GenerationsTableView = Backbone.View.extend({
 
     render: function() {
         // $(".generations").append(generationRowView.render().el);
-        for (var i = 0; i < this.numRows; i++)  {
+        for (var i = 1; i <= this.numRows; i++)  {
             if (this.generations[i] === undefined) {
                 continue;
             }
@@ -61,7 +61,7 @@ var GenerationsTableView = Backbone.View.extend({
                 generation: this.generations[i],
             });
             // jQuery nth child indexes start from 1!
-            this.$("tbody tr:nth-child(" + (i + 1) + ")").replaceWith(generationRowView.render().el);
+            this.$("tbody tr:nth-child(" + i + ")").replaceWith(generationRowView.render().el);
         }
         return this;
     }
