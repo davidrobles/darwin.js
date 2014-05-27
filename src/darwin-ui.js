@@ -38,10 +38,13 @@ var GenerationsTableView = Backbone.View.extend({
     initialize: function(opts) {
         this.generations = opts.generations;
         this.numRows = opts.numRows;
+        this.curPage = 1
         this.preRender();
     },
 
     template: _.template($("#generationsTableView").html()),
+
+    footerTemplate: _.template($("#generationsTableViewFooter").html()),
 
     preRender: function() {
         this.$el.empty();
@@ -51,6 +54,13 @@ var GenerationsTableView = Backbone.View.extend({
         }
     },
 
+    renderFooter: function() {
+        var test = this.$("tfoot");
+        this.$("tfoot").replaceWith(this.footerTemplate({
+            totalPages: this.countTotalPages()
+        }));
+    },
+
     render: function() {
         // $(".generations").append(generationRowView.render().el);
         for (var i = 1; i <= this.numRows; i++)  {
@@ -58,12 +68,29 @@ var GenerationsTableView = Backbone.View.extend({
                 continue;
             }
             var generationRowView = new GenerationRowView({
-                generation: this.generations[i],
+                generation: this.generations[i]
             });
             // jQuery nth child indexes start from 1!
             this.$("tbody tr:nth-child(" + i + ")").replaceWith(generationRowView.render().el);
         }
+        this.renderFooter();
         return this;
+    },
+
+    nextPage: function() {
+        this.render();
+    },
+
+    previousPage: function() {
+        this.render();
+    },
+
+    goToPage: function(page) {
+        this.render();
+    },
+
+    countTotalPages: function() {
+        return Math.floor(((this.generations.length - 1) / this.numRows)) + 1;
     }
 
 });

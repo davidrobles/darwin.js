@@ -16,11 +16,20 @@
             </tr>
         </thead>
         <tfoot>
+            <td colspan="2"></td>
+            <td colspan="3"></td>
+        </tfoot>
+    </script>
+
+    <script type="text/template" id="generationsTableViewFooter">
+        <tfoot>
             <td colspan="2" style="text-align: left">
             Displaying generations 1 - 20 of 250
             </td>
             <td colspan="3">
-            &lt; Page <input type="text" value="1" style="width: 30px; text-align: center;" /> of 13 &gt;
+            &lt; Page
+            <input type="text" value="1" style="width: 30px; text-align: center;" />
+            of <%= totalPages %> &gt;
             </td>
         </tfoot>
     </script>
