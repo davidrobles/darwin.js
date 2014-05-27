@@ -59,7 +59,8 @@ var GenerationsTableView = Backbone.View.extend({
             var generationRowView = new GenerationRowView({
                 generation: this.generations[i],
             });
-            this.$("tbody tr:nth-child(" + i + ")").replaceWith(generationRowView.render().el);
+            // jQuery nth child indexes start from 1!
+            this.$("tbody tr:nth-child(" + (i + 1) + ")").replaceWith(generationRowView.render().el);
         }
         return this;
     }

@@ -33,11 +33,7 @@ var StringEvolver = {
             case "generationStart":
                 break;
             case "generationFinish":
-                // var generationRowView = new GenerationRowView({
-                //     generation: ga.generations[ga.generation],
-                // });
-                // $(".generations").append(generationRowView.render().el);
-				window.generationsTableView.render();
+                window.generationsTableView.render();
                 break;
         }
     },
