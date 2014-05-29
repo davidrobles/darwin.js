@@ -7,7 +7,7 @@ var Darwin = Darwin || {};
     Darwin.Utils = {
 
         evaluatePopulation: function(population, fitnessFunction) {
-            return population.map(function(candidate) {
+            return _.map(population, function(candidate) {
                 return {
                     candidate: candidate,
                     fitness: fitnessFunction(candidate)
@@ -16,11 +16,9 @@ var Darwin = Darwin || {};
         },
 
         generatePopulation: function(candidateFactory, popSize) {
-            var population = [];
-            for (var i = 0; i < popSize; i++) {
-                population.push(candidateFactory());
-            }
-            return population;
+            return _.map(_.range(popSize), function() {
+                return candidateFactory();
+            });
         },
 
         randomIntFromInterval: function(min, max) {
@@ -28,21 +26,15 @@ var Darwin = Darwin || {};
         },
 
         shouldContinue: function(popData, conditions) {
-            for (var i = 0; i < conditions.length; i++) {
-                if (conditions[i].shouldTerminate(popData)) {
-                    return false;
-                }
-            }
-            return true;
+            return _.every(conditions, function(condition) {
+                return !condition.shouldTerminate(popData);
+            });
         },
 
         shouldTerminate: function(popData, conditions) {
-            for (var i = 0; i < conditions.length; i++) {
-                if (conditions[i].shouldTerminate(popData)) {
-                    return true;
-                }
-            }
-            return false;
+            return _.some(conditions, function(condition) {
+                return condition.shouldTerminate(popData);
+            });
         }
 
     };

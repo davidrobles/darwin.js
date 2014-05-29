@@ -64,10 +64,15 @@ var Darwin = Darwin || {};
             this.computeStats();
             this.fire('generationFinish');
             this.population = this.newPopulations();
-            if (Darwin.Utils.shouldTerminate(this.generations[this.generation], this.terminationConditions)) {
-                clearInterval(this.interval);
-            } else {
+            // if (Darwin.Utils.shouldTerminate(this.generations[this.generation], this.terminationConditions)) {
+            //     clearInterval(this.interval);
+            // } else {
+            //     this.generation++;
+            // }
+            if (Darwin.Utils.shouldContinue(this.generations[this.generation], this.terminationConditions)) {
                 this.generation++;
+            } else {
+                clearInterval(this.interval);
             }
         },
 

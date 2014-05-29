@@ -29,7 +29,7 @@ var StringEvolver = {
             case "startGA":
                 window.generationsTableView = new GenerationsTableView({
                     generations: ga.generations,
-                    numRows: 12
+                    numRows: 80
                 });
                 $(".generations").replaceWith(generationsTableView.el);
                 break;
