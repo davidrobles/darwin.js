@@ -1,27 +1,34 @@
-Darwin.Termination = {};
+var Darwin = Darwin || {};
 
-Darwin.Termination.TargetFitness = function(targetFitness) {
-    this.targetFitness = targetFitness;
-}
+(function() {
 
-Darwin.Termination.TargetFitness.prototype.shouldTerminate = function(populationData) {
-    return populationData.bestCandidateFitness >= this.targetFitness;
-}
+    "use strict"
 
-Darwin.Termination.MaxNumGens = function(numGens) {
-    this.numGens = numGens;
-}
+    Darwin.Termination = {};
 
-Darwin.Termination.MaxNumGens.prototype.shouldTerminate = function(populationData) {
-    return this.numGens - 1 == populationData.generation;
-}
+    Darwin.Termination.TargetFitness = function(targetFitness) {
+        this.targetFitness = targetFitness;
+    }
 
-Darwin.Termination.Stagnation = function(generationLimit, naturalFitness) {
-    this.generationLimit = generationLimit;
-    this.naturalFitness = naturalFitness;
-}
+    Darwin.Termination.TargetFitness.prototype.shouldTerminate = function(populationData) {
+        return populationData.bestCandidateFitness >= this.targetFitness;
+    }
 
-Darwin.Termination.Stagnation.prototype.shouldTerminate = function(populationData) {
+    Darwin.Termination.MaxNumGens = function(numGens) {
+        this.numGens = numGens;
+    }
 
-}
+    Darwin.Termination.MaxNumGens.prototype.shouldTerminate = function(populationData) {
+        return this.numGens - 1 == populationData.generation;
+    }
 
+    Darwin.Termination.Stagnation = function(generationLimit, naturalFitness) {
+        this.generationLimit = generationLimit;
+        this.naturalFitness = naturalFitness;
+    }
+
+    Darwin.Termination.Stagnation.prototype.shouldTerminate = function(populationData) {
+
+    }
+
+})();

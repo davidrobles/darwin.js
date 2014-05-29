@@ -1,36 +1,50 @@
-Darwin.Utils = {
-    evaluatePopulation: function(population, fitnessFunction) {
-        return population.map(function(candidate) {
-            return {
-                candidate: candidate,
-                fitness: fitnessFunction(candidate)
-            };
-        });
-    },
-    generatePopulation: function(candidateFactory, popSize) {
-        var population = [];
-        for (var i = 0; i < popSize; i++) {
-            population.push(candidateFactory());
-        }
-        return population;
-    },
-    randomIntFromInterval: function(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
-    },
-    shouldContinue: function(popData, conditions) {
-        for (var i = 0; i < conditions.length; i++) {
-            if (conditions[i].shouldTerminate(popData)) {
-                return false;
+var Darwin = Darwin || {};
+
+(function() {
+
+    "use strict"
+
+    Darwin.Utils = {
+
+        evaluatePopulation: function(population, fitnessFunction) {
+            return population.map(function(candidate) {
+                return {
+                    candidate: candidate,
+                    fitness: fitnessFunction(candidate)
+                };
+            });
+        },
+
+        generatePopulation: function(candidateFactory, popSize) {
+            var population = [];
+            for (var i = 0; i < popSize; i++) {
+                population.push(candidateFactory());
             }
-        }
-        return true;
-    },
-    shouldTerminate: function(popData, conditions) {
-        for (var i = 0; i < conditions.length; i++) {
-            if (conditions[i].shouldTerminate(popData)) {
-                return true;
+            return population;
+        },
+
+        randomIntFromInterval: function(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        },
+
+        shouldContinue: function(popData, conditions) {
+            for (var i = 0; i < conditions.length; i++) {
+                if (conditions[i].shouldTerminate(popData)) {
+                    return false;
+                }
             }
+            return true;
+        },
+
+        shouldTerminate: function(popData, conditions) {
+            for (var i = 0; i < conditions.length; i++) {
+                if (conditions[i].shouldTerminate(popData)) {
+                    return true;
+                }
+            }
+            return false;
         }
-        return false;
-    }
-};
+
+    };
+
+})();
