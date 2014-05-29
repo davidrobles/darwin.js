@@ -7,7 +7,7 @@ var Darwin = Darwin || {};
     Darwin.Operators = {
         singlePointCrossover: function(parentA, parentB) {
             var parentLength = parentA.length;
-            var crossoverPoint = Darwin.Utils.randomIntFromInterval(0, parentLength);
+            var crossoverPoint = _.random(0, parentLength);
             return {
                 childA: parentA.substr(0, crossoverPoint)
                         + parentB.substr(crossoverPoint, parentLength),

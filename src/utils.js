@@ -21,10 +21,6 @@ var Darwin = Darwin || {};
             });
         },
 
-        randomIntFromInterval: function(min, max) {
-            return Math.floor(Math.random() * (max - min + 1) + min);
-        },
-
         shouldContinue: function(popData, conditions) {
             return _.every(conditions, function(condition) {
                 return !condition.shouldTerminate(popData);
