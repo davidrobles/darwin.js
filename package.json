@@ -2,6 +2,7 @@
   "name": "DarwinJS",
   "version": "0.1.0",
   "description": "A JavaScript framework for evolutionary algorithms",
+  "url": "http://darwinjs.com",
   "author": {
     "name": "David Robles",
     "email": "drobles@gmail.com",
