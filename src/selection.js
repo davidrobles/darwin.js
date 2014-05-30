@@ -6,7 +6,7 @@ var Darwin = Darwin || {};
 
     Darwin.Selection = {
         randomTopPercent: function(evaluatedPopulation) {
-            var randIndex = chara = _.random(0, (evaluatedPopulation.length / 2) -1);
+            var randIndex = _.random(0, (evaluatedPopulation.length / 2) -1);
             return evaluatedPopulation[randIndex];
         },
         // Also known as fitness proportionate selection

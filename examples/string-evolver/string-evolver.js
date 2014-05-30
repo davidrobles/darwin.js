@@ -17,8 +17,8 @@ var StringEvolver = {
         return function generateRandomString() {
             var str = "";
             for (var i = 0; i < wordLength; i++) {
-                chara = _.random(0, charPool.length - 1);
-                str += charPool.charAt(chara);
+                var randChar = _.random(0, charPool.length - 1);
+                str += charPool.charAt(randChar);
             }
             return str
         }
@@ -46,8 +46,8 @@ var StringEvolver = {
         var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ "; // fix this
         for (var i = 0; i < candidate.length; i++) {
             if (Math.random() < 0.01) {
-                chara = _.random(0, charPool.length - 1);
-                newString += alphabet.charAt(chara);
+                var randChar = _.random(0, alphabet.length - 1);
+                newString += alphabet.charAt(randChar);
             } else {
                 newString += candidate.charAt(i);
             }
