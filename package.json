@@ -1,0 +1,20 @@
+{
+  "name": "DarwinJS",
+  "version": "0.1.0",
+  "description": "A JavaScript framework for evolutionary algorithms",
+  "author": {
+    "name": "David Robles",
+    "email": "drobles@gmail.com",
+    "url": "http://davidrobles.net"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/davidrobles/darwin.js.git"
+  },
+  "dependencies": {
+    "underscore": ">=1.5.0"
+  },
+  "devDependencies": {
+    "mocha": "1.16.2"
+  }
+}
