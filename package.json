@@ -1,17 +1,28 @@
 {
   "name": "Darwin.js",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "A JavaScript framework for evolutionary algorithms",
-  "url": "http://darwinjs.com",
+  "main": "darwin.js",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/davidrobles/darwin.js.git"
+  },
   "author": {
     "name": "David Robles",
     "email": "drobles@gmail.com",
     "url": "http://davidrobles.net"
   },
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/davidrobles/darwin.js.git"
+  "bugs": {
+    "url": "https://github.com/davidrobles/darwin.js/issues"
   },
+  "homepage": "http://darwinjs.com",
   "dependencies": {
     "underscore": ">=1.5.0"
   },
