@@ -1,3 +1,9 @@
+/*
+ * DarwinJS - A JavaScript framework for evolutionary algorithms
+ * Copyright (C) 2014, David Robles
+ * http://www.darwinjs.com
+ */
+
 var Darwin = Darwin || {};
 
 (function() {
