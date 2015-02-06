@@ -1,14 +1,8 @@
-/*
- * DarwinJS - A JavaScript framework for evolutionary algorithms
- * Copyright (C) 2014, David Robles
- * http://www.darwinjs.com
- */
-
 var Darwin = Darwin || {};
 
 (function() {
 
-    "use strict"
+    "use strict";
 
     Darwin.Selection = {
         randomTopPercent: function(evaluatedPopulation) {
@@ -17,13 +11,17 @@ var Darwin = Darwin || {};
         },
         // Also known as fitness proportionate selection
         routletteWheelSelection: function(evalPop) {
+            // TODO
         },
         tournamentSelection: function(evalPop) {
+            // TODO
         },
         rankSelection: function(evalPop) {
+            // TODO
         },
         boltzmannSelection: function(evalPop) {
-        },
+            // TODO
+        }
     };
 
 })();

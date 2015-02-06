@@ -2,7 +2,7 @@ var Darwin = Darwin || {};
 
 (function() {
 
-    "use strict"
+    "use strict";
 
     Darwin.Operators = {
         singlePointCrossover: function(parentA, parentB) {

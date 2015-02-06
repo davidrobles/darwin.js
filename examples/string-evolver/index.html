@@ -70,7 +70,9 @@
     <script src="../../src/termination.js"></script>
     <script src="string-evolver.js"></script>
     <script>
+
     (function() {
+
         var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
         var wordToFind = "THIS IS A TEST ON GENETIC ALGORITHMS";
         var stringEvolver = new Darwin.GA({
@@ -80,7 +82,32 @@
             observers: [StringEvolver.myObserver],
             reproduce: Darwin.Operators.singlePointCrossover,
             mutate: StringEvolver.randomCharacterMutation,
-            terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
+            terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)],
+            notificationCallbacks: {
+
+                startGA: function() {
+                    console.log("Start GA");
+                },
+
+                generationStart: function() {
+                    console.log("Generation Start " + this.generation);
+                },
+
+                generationEnd: function() {
+                    console.log("Generation End");
+                    console.log("-----------------------");
+                },
+
+                populationSorted: function() {
+                    console.log("Population sorted");
+                },
+
+                populationEvaluated: function() {
+                    console.log("Population evaluated");
+                }
+
+            }
+
             <!-- terminationConditions: [new Darwin.Termination.MaxNumGens(50)] -->
         });
         stringEvolver.run();

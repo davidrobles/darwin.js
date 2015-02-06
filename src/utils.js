@@ -35,4 +35,24 @@ var Darwin = Darwin || {};
 
     };
 
+    Darwin.Utils.Callbacks = function() {
+        this.list = [];
+    };
+
+    Darwin.Utils.Callbacks.prototype = {
+        add: function(callback) {
+            this.list = this.list || [];
+            this.list.push(callback);
+        },
+        empty: function() {
+        },
+        remove: function() {
+        },
+        fire: function() {
+            this.list.forEach(function(callback) {
+                callback();
+            });
+        }
+    };
+
 })();

@@ -15,9 +15,20 @@ var Darwin = Darwin || {};
         this.reproduce = opts.reproduce;
         this.mutate = opts.mutate;
         this.terminationConditions = opts.terminationConditions;
+        this.notifCallbacks = {};
+        this.registerCallbacks(opts.notificationCallbacks);
     }
 
     Darwin.GA.prototype = {
+
+        registerCallbacks: function(notifCallbacks) {
+            Object.keys(notifCallbacks).forEach(function(key) {
+                this.notifCallbacks[key] = this.notifCallbacks[key] || new Darwin.Utils.Callbacks();
+                if (typeof notifCallbacks[key] === "function") {
+                    this.notifCallbacks[key].add(notifCallbacks[key]);
+                }
+            }, this);
+        },
 
         newPopulations: function() {
             var newPopulation = [];
@@ -62,7 +73,7 @@ var Darwin = Darwin || {};
             });
             this.fire("populationSorted");
             this.computeStats();
-            this.fire("generationFinish");
+            this.fire("generationEnd");
             this.population = this.newPopulations();
             if (Darwin.Utils.shouldContinue(this.generations[this.generation], this.terminationConditions)) {
                 this.generation++;
@@ -72,10 +83,10 @@ var Darwin = Darwin || {};
         },
 
         fire: function(notification) {
-            var observersLength = this.observers.length;
-            for (var i = 0; i < observersLength; i++) {
-                this.observers[i](this, notification);
-            }
+            var callbacks = this.notifCallbacks[notification];
+            callbacks.list.forEach(function(callback) {
+                callback.call(this);
+            });
         },
 
         reset: function() {
