@@ -22,22 +22,30 @@ table.generations thead  {
     text-align: left;
 }
 
+table.generations thead tr {
+    display: block;
+}
+
 table.generations tbody {
     display: block;
     overflow: scroll;
     height: 300px;
 }
 
-table.generations tfoot  {
-    background-color: #BCC5C9;
-    color: #ECF1F4;
-    text-align: right;
-}
-
 table.generations tbody tr {
     background-color: #ECF1F4;
     border-bottom: 1px solid #ff0000;
     height: 40px;
+}
+
+table.generations tbody tr:hover {
+    cursor: pointer;
+}
+
+table.generations tfoot  {
+    background-color: #BCC5C9;
+    color: #ECF1F4;
+    text-align: right;
 }
 
 table.generations th, table.generations td {
