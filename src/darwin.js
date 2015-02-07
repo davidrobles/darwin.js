@@ -3,21 +3,19 @@ var Darwin = Darwin || {};
 (function() {
     "use strict";
 
-    Darwin.GA = function(opts) {
-        this.opts = opts || {};
-        this.populationSize = opts.populationSize;
-        this.fitnessFunction = opts.fitnessFunction;
-        this.genIndFunc = opts.genIndFunc;
-        this.generation = 1;
-        // leave generations[0] unused for easier index access, since first generation is 1, not 0
-        this.generations = [undefined];
-        this.observers = opts.observers;
-        this.reproduce = opts.reproduce;
-        this.mutate = opts.mutate;
-        this.terminationConditions = opts.terminationConditions;
+    Darwin.GA = function(options) {
+        this.opts = options || {};
+        this.populationSize = options.populationSize; // TODO even population size?
+        this.fitnessFunction = options.fitnessFunction;
+        this.genIndFunc = options.genIndFunc;
+        this.generations = [];
+        this.observers = options.observers;
+        this.reproduce = options.reproduce;
+        this.mutate = options.mutate;
+        this.terminationConditions = options.terminationConditions;
         this.notifCallbacks = {};
-        this.registerCallbacks(opts.notificationCallbacks);
-    }
+        this.registerCallbacks(options.notificationCallbacks);
+    };
 
     Darwin.GA.prototype = {
 
@@ -55,7 +53,7 @@ var Darwin = Darwin || {};
             var average = totalFitness / this.evaluatedPopulation.length;
 
             this.generations.push({
-                generation: this.generation,
+                generation: this.generations.length,
                 averageFitness: average,
                 bestCandidate: this.evaluatedPopulation[0].candidate,
                 bestCandidateFitness: this.evaluatedPopulation[0].fitness,
@@ -75,9 +73,8 @@ var Darwin = Darwin || {};
             this.computeStats();
             this.fire("generation-finished");
             this.population = this.newPopulations();
-            if (Darwin.Utils.shouldContinue(this.generations[this.generation], this.terminationConditions)) {
-                this.generation++;
-            } else {
+            this.fire("population-generated");
+            if (!Darwin.Utils.shouldContinue(this.generations[this.generations.length - 1], this.terminationConditions)) {
                 clearInterval(this.interval);
             }
         },
@@ -104,7 +101,8 @@ var Darwin = Darwin || {};
         run: function() {
             this.fire("ga-started");
             this.population = Darwin.Utils.generatePopulation(this.genIndFunc, this.populationSize);
-            this.interval = setInterval(jQuery.proxy(this, "evolutionaryStep"), 50);
+            this.fire("population-generated");
+            this.interval = setInterval(jQuery.proxy(this, "evolutionaryStep"), 500);
         }
     };
 })();

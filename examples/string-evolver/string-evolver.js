@@ -28,16 +28,17 @@ var StringEvolver = {
         switch (notification) {
             case "ga-started":
                 window.generationsTableView = new GenerationsTableView({
-                    generations: ga.generations,
-                    numRows: 80
                 });
                 $(".generations").replaceWith(generationsTableView.el);
                 break;
             case "generation-started":
-                //console.log("GOT HERE");
+                window.generationsTableView.addNewGeneration();
+                console.log("row added");
                 break;
             case "generation-finished":
-                window.generationsTableView.render();
+                //window.generationsTableView.render();
+                var gen = ga.generations[ga.generations.length - 1]; // TODO create function to return current generation
+                window.generationsTableView.updateGeneration(gen);
                 break;
         }
     },

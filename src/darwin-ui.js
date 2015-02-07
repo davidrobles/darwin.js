@@ -4,6 +4,8 @@ var GenerationRowView = Backbone.View.extend({
     
     template: _.template($("#generationRowView").html()),
 
+    templateRunning: _.template($("#generationRowViewEmpty").html()),
+
     initialize: function(opts) {
         this.generation = opts.generation;
         this.className = opts.className;
@@ -11,8 +13,13 @@ var GenerationRowView = Backbone.View.extend({
     },
 
     render: function() {
-       this.$el.html(this.template(this.generation));
-       return this;
+        this.$el.html(this.template(this.generation));
+        return this;
+    },
+
+    renderEmpty: function() {
+        this.$el.html(this.templateRunning());
+        return this;
     },
 
     events: {
@@ -58,8 +65,8 @@ var GenerationsTableView = Backbone.View.extend({
 
     initialize: function(opts) {
         this.generations = opts.generations;
-        this.numRows = opts.numRows;
-        this.curPage = 1
+        //this.numRows = opts.numRows;
+        //this.curPage = 1
         this.preRender();
     },
 
@@ -70,9 +77,9 @@ var GenerationsTableView = Backbone.View.extend({
     preRender: function() {
         this.$el.empty();
         this.$el.append(this.template());
-        for (var i = 0; i < this.numRows; i++)  {
-            this.$el.append("<tr><td></td><td></td><td></td><td></td><td></td></tr>");
-        }
+    //    for (var i = 0; i < this.numRows; i++)  {
+    //        this.$el.append("<tr><td></td><td></td><td></td><td></td><td></td></tr>");
+    //    }
     },
 
     renderFooter: function() {
@@ -83,10 +90,8 @@ var GenerationsTableView = Backbone.View.extend({
 
     render: function() {
         // $(".generations").append(generationRowView.render().el);
-        for (var i = 1; i <= this.numRows; i++)  {
-            if (this.generations[i] === undefined) {
-                continue;
-            }
+        // TODO call empty()
+        for (var i = 0; i < this.generations.length; i++)  {
             var generationRowView = new GenerationRowView({
                 generation: this.generations[i]
             });
@@ -97,21 +102,31 @@ var GenerationsTableView = Backbone.View.extend({
         return this;
     },
 
-    nextPage: function() {
-        this.render();
+    addNewGeneration: function() {
+        this.generationRowView = new GenerationRowView({});
+        this.$("tbody").append(this.generationRowView.renderEmpty().el);
     },
 
-    previousPage: function() {
-        this.render();
-    },
-
-    goToPage: function(page) {
-        this.render();
-    },
-
-    countTotalPages: function() {
-        return Math.floor(((this.generations.length - 1) / this.numRows)) + 1;
+    updateGeneration: function(generation) {
+        this.generationRowView.generation = generation;
+        this.generationRowView.render();
     }
+
+    //nextPage: function() {
+    //    this.render();
+    //},
+
+    //previousPage: function() {
+    //    this.render();
+    //},
+
+    //goToPage: function(page) {
+    //    this.render();
+    //},
+
+    //countTotalPages: function() {
+    //    return Math.floor(((this.generations.length - 1) / this.numRows)) + 1;
+    //}
 
 });
 
