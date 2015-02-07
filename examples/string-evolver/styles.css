@@ -11,6 +11,10 @@ body {
     margin: 0;
 }
 
+.dashboard {
+    background-color: #0b97c4;
+}
+
 table.generations {
     font-size: 10px;
     border-spacing: 0;
@@ -44,7 +48,7 @@ table.generations thead tr {
 
 table.generations tbody {
     display: block;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 300px;
 }
 
