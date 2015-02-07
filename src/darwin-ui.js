@@ -63,24 +63,13 @@ var GenerationsTableView = Backbone.View.extend({
 
     className: "generations",
 
-    initialize: function(opts) {
-        this.generations = opts.generations;
-        //this.numRows = opts.numRows;
-        //this.curPage = 1
-        this.preRender();
+    initialize: function() {
+        this.render();
     },
 
     template: _.template($("#generationsTableView").html()),
 
     footerTemplate: _.template($("#generationsTableViewFooter").html()),
-
-    preRender: function() {
-        this.$el.empty();
-        this.$el.append(this.template());
-    //    for (var i = 0; i < this.numRows; i++)  {
-    //        this.$el.append("<tr><td></td><td></td><td></td><td></td><td></td></tr>");
-    //    }
-    },
 
     renderFooter: function() {
         this.$("tfoot").replaceWith(this.footerTemplate({
@@ -89,17 +78,8 @@ var GenerationsTableView = Backbone.View.extend({
     },
 
     render: function() {
-        // $(".generations").append(generationRowView.render().el);
-        // TODO call empty()
-        for (var i = 0; i < this.generations.length; i++)  {
-            var generationRowView = new GenerationRowView({
-                generation: this.generations[i]
-            });
-            // jQuery nth child indexes start from 1!
-            this.$("tbody tr:nth-child(" + i + ")").replaceWith(generationRowView.render().el);
-        }
-        //this.renderFooter();
-        return this;
+        this.$el.empty();
+        this.$el.append(this.template());
     },
 
     addNewGeneration: function() {
@@ -111,22 +91,6 @@ var GenerationsTableView = Backbone.View.extend({
         this.generationRowView.generation = generation;
         this.generationRowView.render();
     }
-
-    //nextPage: function() {
-    //    this.render();
-    //},
-
-    //previousPage: function() {
-    //    this.render();
-    //},
-
-    //goToPage: function(page) {
-    //    this.render();
-    //},
-
-    //countTotalPages: function() {
-    //    return Math.floor(((this.generations.length - 1) / this.numRows)) + 1;
-    //}
 
 });
 
