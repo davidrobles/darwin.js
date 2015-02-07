@@ -22,6 +22,12 @@ table.generations thead  {
     text-align: left;
 }
 
+table.generations tbody {
+    display: block;
+    overflow: scroll;
+    height: 300px;
+}
+
 table.generations tfoot  {
     background-color: #BCC5C9;
     color: #ECF1F4;
