@@ -22,6 +22,22 @@ table.generations thead  {
     text-align: left;
 }
 
+table.generations thead th {
+    width: 10px
+}
+
+table.generations thead th + th {
+    width: 240px
+}
+
+table.generations thead th + th + th {
+    width: 110px
+}
+
+table.generations thead th + th + th + th {
+    width: 110px
+}
+
 table.generations thead tr {
     display: block;
 }
@@ -30,6 +46,22 @@ table.generations tbody {
     display: block;
     overflow: scroll;
     height: 300px;
+}
+
+table.generations tbody td {
+    width: 10px
+}
+
+table.generations tbody td + td {
+    width: 240px
+}
+
+table.generations tbody td + td + td {
+    width: 110px
+}
+
+table.generations tbody td + td + td + td {
+    width: 110px
 }
 
 table.generations tbody tr {
