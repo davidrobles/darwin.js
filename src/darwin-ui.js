@@ -6,19 +6,17 @@ var GenerationRowView = Backbone.View.extend({
 
     templateRunning: _.template($("#generationRowViewEmpty").html()),
 
-    initialize: function(opts) {
-        this.generation = opts.generation;
-        this.className = opts.className;
+    initialize: function() {
+        this.generation = null;
         this.selected = false;
     },
 
     render: function() {
-        this.$el.html(this.template(this.generation));
-        return this;
-    },
-
-    renderEmpty: function() {
-        this.$el.html(this.templateRunning());
+        if (this.generation) {
+            this.$el.html(this.template(this.generation));
+        } else {
+            this.$el.html(this.templateRunning());
+        }
         return this;
     },
 
@@ -84,7 +82,7 @@ var GenerationsTableView = Backbone.View.extend({
 
     addNewGeneration: function() {
         this.generationRowView = new GenerationRowView({});
-        this.$("tbody").append(this.generationRowView.renderEmpty().el);
+        this.$("tbody").append(this.generationRowView.render().el);
     },
 
     updateGeneration: function(generation) {
