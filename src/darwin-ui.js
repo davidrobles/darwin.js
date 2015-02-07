@@ -1,10 +1,15 @@
 var GenerationRowView = Backbone.View.extend({
 
     tagName: "tr",
-    
-    template: _.template($("#generationRowView").html()),
 
-    templateInProgress: _.template($("#generationRowViewEmpty").html()),
+    templates: {
+        "finished": _.template($("#generationRowView").html()),
+        "inProgress": _.template($("#generationRowViewEmpty").html())
+    },
+
+    events: {
+        "click": "select"
+    },
 
     initialize: function() {
         this.generation = null;
@@ -13,15 +18,11 @@ var GenerationRowView = Backbone.View.extend({
 
     render: function() {
         if (this.generation) {
-            this.$el.html(this.template(this.generation));
+            this.$el.html(this.templates["finished"](this.generation));
         } else {
-            this.$el.html(this.templateInProgress());
+            this.$el.html(this.templates["inProgress"]);
         }
         return this;
-    },
-
-    events: {
-        "click": "select"
     },
 
     select: function() {
