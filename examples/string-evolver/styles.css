@@ -50,7 +50,7 @@ table.generations thead tr {
 table.generations tbody {
     display: block;
     overflow-y: auto;
-    height: 300px;
+    height: 900px;
 }
 
 table.generations tbody td {
