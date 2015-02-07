@@ -9,7 +9,7 @@ var Darwin = Darwin || {};
         this.fitnessFunction = opts.fitnessFunction;
         this.genIndFunc = opts.genIndFunc;
         this.generation = 1;
-        // leave generations[0] unused for easier index acces, since first generation is 1, not 0
+        // leave generations[0] unused for easier index access, since first generation is 1, not 0
         this.generations = [undefined];
         this.observers = opts.observers;
         this.reproduce = opts.reproduce;
