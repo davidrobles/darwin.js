@@ -65,15 +65,15 @@ var Darwin = Darwin || {};
 
         evolutionaryStep: function() {
             // check if termination conditions are reached?
-            this.fire("generationStart");
+            this.fire("generation-started");
             this.evaluatedPopulation = Darwin.Utils.evaluatePopulation(this.population, this.fitnessFunction);
-            this.fire("populationEvaluated");
+            this.fire("population-evaluated");
             this.evaluatedPopulation.sort(function(a, b) {
                 return b.fitness - a.fitness;
             });
-            this.fire("populationSorted");
+            this.fire("population-sorted");
             this.computeStats();
-            this.fire("generationEnd");
+            this.fire("generation-finished");
             this.population = this.newPopulations();
             if (Darwin.Utils.shouldContinue(this.generations[this.generation], this.terminationConditions)) {
                 this.generation++;
@@ -83,11 +83,18 @@ var Darwin = Darwin || {};
         },
 
         fire: function(notification) {
-            var callbacks = this.notifCallbacks[notification];
-            callbacks.list.forEach(function(callback) {
-                callback.call(this);
-            });
+            var observersLength = this.observers.length;
+            for (var i = 0; i < observersLength; i++) {
+                this.observers[i](this, notification);
+            }
         },
+
+        //fire: function(notification) {
+        //    var callbacks = this.notifCallbacks[notification];
+        //    callbacks.list.forEach(function(callback) {
+        //        callback.call(this);
+        //    });
+        //},
 
         reset: function() {
             this.population = [];
@@ -95,7 +102,7 @@ var Darwin = Darwin || {};
         },
 
         run: function() {
-            this.fire("startGA");
+            this.fire("ga-started");
             this.population = Darwin.Utils.generatePopulation(this.genIndFunc, this.populationSize);
             this.interval = setInterval(jQuery.proxy(this, "evolutionaryStep"), 50);
         }

@@ -26,17 +26,16 @@ var StringEvolver = {
 
     myObserver: function(ga, notification) {
         switch (notification) {
-            case "ga-started":
+            case "startGA":
                 window.generationsTableView = new GenerationsTableView({
                     generations: ga.generations,
                     numRows: 80
                 });
                 $(".generations").replaceWith(generationsTableView.el);
                 break;
-            case "generation-started":
-                //console.log("GOT HERE");
+            case "generationStart":
                 break;
-            case "generation-finished":
+            case "generationFinish":
                 window.generationsTableView.render();
                 break;
         }

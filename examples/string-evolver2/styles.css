@@ -1,0 +1,49 @@
+/*
+          Red: #1B222D
+    Navy Blue: #FF4209
+         Even: #ECF1F4
+          Odd: #BCC5C9
+*/
+
+body {
+    font-family: "Tahoma";
+    font-size: 12px;
+    margin: 0;
+}
+
+table.generations {
+    font-size: 10px;
+    border-spacing: 0;
+}
+
+table.generations thead  {
+    background-color: #5F6D79;
+    color: #ECF1F4;
+    text-align: left;
+}
+
+table.generations tfoot  {
+    background-color: #BCC5C9;
+    color: #ECF1F4;
+    text-align: right;
+}
+
+table.generations tbody tr {
+    background-color: #ECF1F4;
+    border-bottom: 1px solid #ff0000;
+    height: 40px;
+}
+
+table.generations th, table.generations td {
+    padding: 0.7em;
+}
+
+table.generations tbody tr:hover {
+    background-color: #ffffcc;
+}
+
+div.generationDetails {
+    background-color: #BCC5C9;
+    float: right;
+    width: 400px;
+}

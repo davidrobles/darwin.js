@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>Darwin.js</title>
+    <link rel="stylesheet" href="styles.css"> 
+
+    <script type="text/template" id="generationsTableView">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Best Candidate</th>
+                <th>Best Fitness</th>
+                <th>Average Fitness</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <td colspan="2"></td>
+            <td colspan="3"></td>
+        </tfoot>
+    </script>
+
+    <script type="text/template" id="generationsTableViewFooter">
+        <tfoot>
+            <td colspan="2" style="text-align: left">
+            Displaying generations 1 - 20 of 250
+            </td>
+            <td colspan="3">
+            &lt; Page
+            <input type="text" value="1" style="width: 30px; text-align: center;" />
+            of <%= totalPages %> &gt;
+            </td>
+        </tfoot>
+    </script>
+
+    <script type="text/template" id="generationRowView">
+        <td style="text-align: right;"><%= generation %></td>
+        <td><%= bestCandidate %></td>
+        <td><span style="display: inline-block; text-align: right; width: 20px;"><%= bestCandidateFitness %></span>&nbsp;&nbsp;
+        <div style="display: inline-block; color: #FF4209; background-color: #FF4209; width: <%= bestCandidateFitness * 2 %>px">|</div>
+        </td>
+        <td><span style="display: inline-block; text-align: right; width: 20px;"><%= averageFitness.toFixed(2) %></span>&nbsp;&nbsp;
+        <div style="display: inline-block; color: #1B222D; background-color: #1B222D; width: <%= averageFitness.toFixed(2) * 2 %>px">|</div>
+        </td>
+        <td><button>View</button></td>
+    </script>
+
+    <script type="text/template" id="generationDetailsView">
+        <p>Generation:      <%= this.generation.generation %></p>
+        <p>Best candidate:  <%= this.generation.bestCandidate %></p>
+        <p>Best fitness:    <%= this.generation.bestCandidateFitness %></p>
+        <p>Average fitness: <%= this.generation.averageFitness %></p>
+    </script>
+
+</head>
+<body>
+    <!-- <canvas id="timeSeries" width="600" height="150"></canvas> -->
+    <div class="generationDetails"></div>
+    <table class="generations">
+    </table>
+    <script src="../../lib/jquery-2.1.1.js"></script>
+    <script src="../../lib/underscore.js"></script>
+    <script src="../../lib/backbone.js"></script>
+    <script src="../../src/darwin.js"></script>
+    <script src="../../src/darwin-ui.js"></script>
+    <script src="../../src/selection.js"></script>
+    <script src="../../src/operators.js"></script>
+    <script src="../../src/utils.js"></script>
+    <script src="../../src/termination.js"></script>
+    <script src="string-evolver.js"></script>
+    <script>
+
+    (function() {
+
+        var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+        var wordToFind = "THIS IS A TEST ON GENETIC ALGORITHMS";
+        var stringEvolver = new Darwin.GA({
+            populationSize: 500,
+            genIndFunc: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
+            fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
+            observers: [StringEvolver.myObserver],
+            reproduce: Darwin.Operators.singlePointCrossover,
+            mutate: StringEvolver.randomCharacterMutation,
+            terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)],
+            notificationCallbacks: {
+
+                startGA: function() {
+                    console.log("Start GA");
+                },
+
+                generationStart: function() {
+                    console.log("Generation Start " + this.generation);
+                },
+
+                generationEnd: function() {
+                    console.log("Generation End");
+                    console.log("-----------------------");
+                },
+
+                populationSorted: function() {
+                    console.log("Population sorted");
+                },
+
+                populationEvaluated: function() {
+                    console.log("Population evaluated");
+                }
+
+            }
+
+            <!-- terminationConditions: [new Darwin.Termination.MaxNumGens(50)] -->
+        });
+        stringEvolver.run();
+    })();
+    </script>
+</body>
+</html>
