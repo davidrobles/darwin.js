@@ -29,26 +29,26 @@ var GenerationRowView = Backbone.View.extend({
 
 });
 
-var GenerationsTableViewFooter = Backbone.View.extend({
-
-    tagName: "tfoot",
-
-    template: _.template($("#generationsTableViewFooter").html()),
-
-    initialize: function(opts) {
-
-    },
-
-    render: function() {
-        this.$el.replaceWith(this.template());
-    },
-
-
-    countTotalPages: function() {
-        return Math.floor(((this.generations.length - 1) / this.numRows)) + 1;
-    }
-
-});
+//var GenerationsTableViewFooter = Backbone.View.extend({
+//
+//    tagName: "tfoot",
+//
+//    template: _.template($("#generationsTableViewFooter").html()),
+//
+//    initialize: function(opts) {
+//
+//    },
+//
+//    render: function() {
+//        this.$el.replaceWith(this.template());
+//    },
+//
+//
+//    countTotalPages: function() {
+//        return Math.floor(((this.generations.length - 1) / this.numRows)) + 1;
+//    }
+//
+//});
 
 var GenerationsTableView = Backbone.View.extend({
 
@@ -93,7 +93,7 @@ var GenerationsTableView = Backbone.View.extend({
             // jQuery nth child indexes start from 1!
             this.$("tbody tr:nth-child(" + i + ")").replaceWith(generationRowView.render().el);
         }
-        this.renderFooter();
+        //this.renderFooter();
         return this;
     },
 

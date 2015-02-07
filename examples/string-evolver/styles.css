@@ -44,7 +44,7 @@ table.generations thead tr {
 
 table.generations tbody {
     display: block;
-    overflow: scroll;
+    overflow-y: scroll;
     height: 300px;
 }
 
