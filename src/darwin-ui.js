@@ -4,7 +4,7 @@ var GenerationRowView = Backbone.View.extend({
     
     template: _.template($("#generationRowView").html()),
 
-    templateRunning: _.template($("#generationRowViewEmpty").html()),
+    templateInProgress: _.template($("#generationRowViewEmpty").html()),
 
     initialize: function() {
         this.generation = null;
@@ -15,7 +15,7 @@ var GenerationRowView = Backbone.View.extend({
         if (this.generation) {
             this.$el.html(this.template(this.generation));
         } else {
-            this.$el.html(this.templateRunning());
+            this.$el.html(this.templateInProgress());
         }
         return this;
     },
