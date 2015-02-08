@@ -21,13 +21,13 @@ var GenerationsTableView = Backbone.View.extend({
         this.generationRowView = new GenerationRowView();
         this.listenTo(this.generationRowView, "generation-selected", this.generationSelected);
         this.$("tbody").append(this.generationRowView.render().el);
-        //this.generationRowView.selectClick();
     },
 
     updateGeneration: function(generation) {
         this.generationRowView.generation = generation;
         this.generationRowView.render();
         this.generationRowView.selectClick(); // TODO move this line to addNewGeneration()
+        this.$("tbody").scrollTop(100000);
     },
 
     generationSelected: function(generationRowView) {
