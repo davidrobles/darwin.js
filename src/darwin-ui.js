@@ -109,8 +109,8 @@ var GenerationDetailsView = Backbone.View.extend({
 
         //var generationDetailsView = new GenerationDetailsView(this.generation);
         //$(".generationDetails").html(generationDetailsView.render().el);
-        //var populationTableView = new PopulationTableView(this.generation.population);
-        //this.$el.append(populationTableView.render().el);
+        var populationTableView = new PopulationTableView(this.generation.population);
+        this.$el.append(populationTableView.render().el);
 
         return this;
     }
@@ -139,7 +139,7 @@ var PopulationTableView = Backbone.View.extend({
                     target: "THIS IS A TEST ON GENETIC ALGORITHMS"
                 });
                 var hola = candidateLabelView.render().el;
-                candidate.candidate = hola.innerHTML;
+                //candidate.candidate = hola.innerHTML;
                 this.$el.append(this.template(candidate));
             },
             this
@@ -160,11 +160,11 @@ var CandidateLabelView = Backbone.View.extend({
 
     render: function() {
         for (var i = 0; i < this.target.length; i++) {
-            if (this.target.charAt(i) === this.actual.charAt(i)) {
-                this.$el.append('<span style="color: #ff0000;">' + this.actual.charAt(i) + '</span>');
-            } else {
+            //if (this.target.charAt(i) === this.actual.charAt(i)) {
+            //    this.$el.append('<span style="color: #ff0000;">' + this.actual.charAt(i) + '</span>');
+            //} else {
                 this.$el.append("<span>" + this.actual.charAt(i) + "</span>");
-            }
+            //}
         }
         return this;
     }
