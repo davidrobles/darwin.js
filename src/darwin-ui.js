@@ -1,3 +1,5 @@
+Darwin.vent = _.extend({}, Backbone.Events);
+
 var GenerationsTableView = Backbone.View.extend({
 
     tagName: "table",
@@ -30,8 +32,9 @@ var GenerationsTableView = Backbone.View.extend({
         if (this.selectedGenerationRowView) {
             this.selectedGenerationRowView.unselect();
         }
-        this.selectedGenerationRowView = generationRowView;
         generationRowView.select();
+        this.selectedGenerationRowView = generationRowView;
+        Darwin.vent.trigger("generation-selected", this.selectedGenerationRowView.generation);
     }
 
 });
@@ -65,6 +68,7 @@ var GenerationRowView = Backbone.View.extend({
 
     selectClick: function() {
         this.trigger("generation-selected", this);
+        //this.trigger("");
         //this.$el.css('background-color', '#ff0000');
         //var generationDetailsView = new GenerationDetailsView(this.generation);
         //$(".generationDetails").html(generationDetailsView.render().el);
@@ -92,6 +96,7 @@ var GenerationDetailsView = Backbone.View.extend({
 
     initialize: function(generation) {
         this.generation = generation;
+        this.listenTo(Darwin.vent, "generation-selected", this.generationSelected);
     },
 
     render: function() {
@@ -103,6 +108,11 @@ var GenerationDetailsView = Backbone.View.extend({
         var populationTableView = new PopulationTableView(this.generation.population);
         this.$el.append(populationTableView.render().el);
         return this;
+    },
+
+    generationSelected: function(generation) {
+        this.generation = generation;
+        this.render();
     }
 
 });
