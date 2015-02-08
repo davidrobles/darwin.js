@@ -99,27 +99,47 @@ var PopulationTableView = Backbone.View.extend({
         this.population = population;
     },
 
-    templateRow: _.template("<tr>" +
-                         "<td><%= candidate %></td>" +
-                         "<td><%= fitness %></td>" +
-                         "</tr>"),
-
     render: function() {
         this.$el.html(this.template());
 
         this.population.forEach(
             function(candidate) { // change name to evaluated candidate?
-                var text = candidate.candidate;
-                var candidateLabelView = new CandidateLabelView({
-                    actual: text,
-                    target: "THIS IS A TEST ON GENETIC ALGORITHMS"
-                });
-                var hola = candidateLabelView.render().el;
-                //candidate.candidate = hola.innerHTML;
-                this.$el.append(this.templateRow(candidate));
+                //var text = candidate.candidate;
+                //var candidateLabelView = new CandidateLabelView({
+                //    actual: text,
+                //    target: "THIS IS A TEST ON GENETIC ALGORITHMS"
+                //});
+                //var hola = candidateLabelView.render().el;
+                ////candidate.candidate = hola.innerHTML;
+                //this.$el.append(this.templateRow(candidate));
+                var candidateRowView = new CandidateRowView({candidate: candidate});
+                this.$el.append(candidateRowView.render().el);
             },
             this
         );
+        return this;
+    }
+
+});
+
+var CandidateRowView = Backbone.View.extend({
+
+    tagName: "tr",
+
+    template: _.template($("#candidate-row-view").html()),
+
+    initialize: function(options) {
+        options = options || {};
+        this.candidate = options.candidate;
+        debugger;
+    },
+
+    render: function() {
+        this.$el.html(this.template({
+            id: 1,
+            candidate: this.candidate.candidate,
+            fitness: this.candidate.fitness
+        }));
         return this;
     }
 
