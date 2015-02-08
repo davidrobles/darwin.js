@@ -15,6 +15,10 @@ var GenerationsTableView = Backbone.View.extend({
         this.render();
     },
 
+    render: function() {
+        this.$el.html(this.template());
+    },
+
     generationSelected: function(generationNo) {
         var generationRowView = this.allViews[generationNo];
         if (this.selectedGenerationRowView) {
@@ -24,13 +28,8 @@ var GenerationsTableView = Backbone.View.extend({
         this.selectedGenerationRowView = generationRowView;
     },
 
-    render: function() {
-        this.$el.html(this.template());
-    },
-
     addNewGeneration: function() {
         this.generationRowView = new GenerationRowView();
-        //this.listenTo(this.generationRowView, "generation-selected", this.generationSelected);
         this.$("tbody").append(this.generationRowView.render().el);
         this.allViews.push(this.generationRowView);
     },
