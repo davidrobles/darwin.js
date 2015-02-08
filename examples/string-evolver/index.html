@@ -60,7 +60,9 @@
         <td><span style="display: inline-block; text-align: right; width: 20px;"><%= bestCandidateFitness %></span>&nbsp;&nbsp;
         <div style="display: inline-block; color: #FF4209; background-color: #FF4209; width: <%= bestCandidateFitness %>px">|</div>
         </td>
-        <td><button>View</button></td>
+        <td><span style="display: inline-block; text-align: right; width: 20px;"><%= averageFitness.toFixed(2) %></span>&nbsp;&nbsp;
+            <div style="display: inline-block; color: #1B222D; background-color: #1B222D; width: <%= averageFitness %>px">|</div>
+        </td>
     </script>
 
     <script type="text/template" id="generationRowViewEmpty">

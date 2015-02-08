@@ -70,7 +70,7 @@ table.generations tbody td {
 }
 
 table.generations tbody td + td {
-    width: 240px
+    width: 280px
 }
 
 table.generations tbody td + td + td {
@@ -117,7 +117,7 @@ table.generations tbody tr:hover {
 }
 
 .population-details-stats {
-    height: 14vh;
+    height: 10vh;
 }
 
 table.population {
