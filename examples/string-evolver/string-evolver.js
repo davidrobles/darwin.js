@@ -37,6 +37,12 @@ var StringEvolver = {
             case "generation-finished":
                 var gen = ga.generations[ga.generations.length - 1]; // TODO create function to return current generation
                 window.generationsTableView.updateGeneration(gen);
+                // add details
+                if (!window.detailsView) {
+                    window.detailsView = new GenerationDetailsView(gen);
+                }
+                window.detailsView.generation = gen;
+                $(".generationDetails").replaceWith(window.detailsView.render().el)
                 break;
         }
     },
