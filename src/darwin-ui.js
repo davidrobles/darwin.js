@@ -15,7 +15,7 @@ var GenerationsTableView = Backbone.View.extend({
     },
 
     addNewGeneration: function() {
-        this.generationRowView = new GenerationRowView({});
+        this.generationRowView = new GenerationRowView();
         this.$("tbody").append(this.generationRowView.render().el);
     },
 
@@ -63,27 +63,6 @@ var GenerationRowView = Backbone.View.extend({
 
 });
 
-//var GenerationsTableViewFooter = Backbone.View.extend({
-//
-//    tagName: "tfoot",
-//
-//    template: _.template($("#generationsTableViewFooter").html()),
-//
-//    initialize: function(opts) {
-//
-//    },
-//
-//    render: function() {
-//        this.$el.replaceWith(this.template());
-//    },
-//
-//
-//    countTotalPages: function() {
-//        return Math.floor(((this.generations.length - 1) / this.numRows)) + 1;
-//    }
-//
-//});
-
 var GenerationDetailsView = Backbone.View.extend({
 
     tagName: "div",
@@ -92,7 +71,7 @@ var GenerationDetailsView = Backbone.View.extend({
         this.generation = generation;
     },
 
-    template: _.template($("#generationDetailsView").html()),
+    template: _.template($("#generation-details-view").html()),
 
     render: function() {
         this.$el.empty();
