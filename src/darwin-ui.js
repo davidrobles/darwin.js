@@ -136,9 +136,18 @@ var CandidateRowView = Backbone.View.extend({
     },
 
     render: function() {
+        var candidateLabelView = new CandidateLabelView({
+            actual: this.candidate.candidate,
+            target: "THIS IS A TEST ON GENETIC ALGORITHMS"
+        });
+
+        var rendered = candidateLabelView.render();
+        var output = rendered.el.innerHTML;
+
         this.$el.html(this.template({
             id: this.candidate.id,
-            candidate: this.candidate.candidate,
+            //candidate: this.candidate.candidate,
+            candidate: output,
             fitness: this.candidate.fitness
         }));
         return this;
@@ -157,11 +166,11 @@ var CandidateLabelView = Backbone.View.extend({
 
     render: function() {
         for (var i = 0; i < this.target.length; i++) {
-            //if (this.target.charAt(i) === this.actual.charAt(i)) {
-            //    this.$el.append('<span style="color: #ff0000;">' + this.actual.charAt(i) + '</span>');
-            //} else {
+            if (this.target.charAt(i) === this.actual.charAt(i)) {
+                this.$el.append('<span style="color: #ff0000;">' + this.actual.charAt(i) + '</span>');
+            } else {
                 this.$el.append("<span>" + this.actual.charAt(i) + "</span>");
-            //}
+            }
         }
         return this;
     }
