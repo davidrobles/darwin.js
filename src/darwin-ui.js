@@ -1,61 +1,3 @@
-var GenerationRowView = Backbone.View.extend({
-
-    tagName: "tr",
-
-    templates: {
-        "finished": _.template($("#generationRowView").html()),
-        "inProgress": _.template($("#generationRowViewEmpty").html())
-    },
-
-    events: {
-        "click": "select"
-    },
-
-    initialize: function() {
-        this.generation = null;
-        this.selected = false;
-    },
-
-    render: function() {
-        if (this.generation) {
-            this.$el.html(this.templates["finished"](this.generation));
-        } else {
-            this.$el.html(this.templates["inProgress"]());
-        }
-        return this;
-    },
-
-    select: function() {
-        // this.$el.css('background-color', '#ff0000');
-        var generationDetailsView = new GenerationDetailsView(this.generation);
-        $(".generationDetails").html(generationDetailsView.render().el);
-        var populationTableView = new PopulationTableView(this.generation.population);
-        $(".generationDetails").append(populationTableView.render().el);
-    }
-
-});
-
-//var GenerationsTableViewFooter = Backbone.View.extend({
-//
-//    tagName: "tfoot",
-//
-//    template: _.template($("#generationsTableViewFooter").html()),
-//
-//    initialize: function(opts) {
-//
-//    },
-//
-//    render: function() {
-//        this.$el.replaceWith(this.template());
-//    },
-//
-//
-//    countTotalPages: function() {
-//        return Math.floor(((this.generations.length - 1) / this.numRows)) + 1;
-//    }
-//
-//});
-
 var GenerationsTableView = Backbone.View.extend({
 
     tagName: "table",
@@ -92,6 +34,64 @@ var GenerationsTableView = Backbone.View.extend({
     }
 
 });
+
+var GenerationRowView = Backbone.View.extend({
+
+    tagName: "tr",
+
+    templates: {
+        "finished": _.template($("#generationRowView").html()),
+        "inProgress": _.template($("#generationRowViewEmpty").html())
+    },
+
+    events: {
+        "click": "select"
+    },
+
+    initialize: function() {
+        this.generation = null;
+        this.selected = false;
+    },
+
+    render: function() {
+        if (this.generation) {
+            this.$el.html(this.templates["finished"](this.generation));
+        } else {
+            this.$el.html(this.templates["inProgress"]());
+        }
+        return this;
+    },
+
+    select: function() {
+        //this.$el.css('background-color', '#ff0000');
+        var generationDetailsView = new GenerationDetailsView(this.generation);
+        $(".generationDetails").html(generationDetailsView.render().el);
+        var populationTableView = new PopulationTableView(this.generation.population);
+        $(".generationDetails").append(populationTableView.render().el);
+    }
+
+});
+
+//var GenerationsTableViewFooter = Backbone.View.extend({
+//
+//    tagName: "tfoot",
+//
+//    template: _.template($("#generationsTableViewFooter").html()),
+//
+//    initialize: function(opts) {
+//
+//    },
+//
+//    render: function() {
+//        this.$el.replaceWith(this.template());
+//    },
+//
+//
+//    countTotalPages: function() {
+//        return Math.floor(((this.generations.length - 1) / this.numRows)) + 1;
+//    }
+//
+//});
 
 var GenerationDetailsView = Backbone.View.extend({
 
