@@ -67,11 +67,13 @@ var GenerationDetailsView = Backbone.View.extend({
 
     tagName: "div",
 
+    className: "generationDetails",
+
+    template: _.template($("#generation-details-view").html()),
+
     initialize: function(generation) {
         this.generation = generation;
     },
-
-    template: _.template($("#generation-details-view").html()),
 
     render: function() {
         this.$el.empty();
@@ -131,7 +133,6 @@ var CandidateRowView = Backbone.View.extend({
     initialize: function(options) {
         options = options || {};
         this.candidate = options.candidate;
-        debugger;
     },
 
     render: function() {

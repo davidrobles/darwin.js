@@ -11,9 +11,14 @@ body {
     margin: 0;
 }
 
+body p {
+    margin: 0;
+}
+
 .dashboard {
     background-color: #0b97c4;
-    height: 926px;
+    height: 100vh;
+    margin: 0;
 }
 
 table.generations {
@@ -51,7 +56,7 @@ table.generations thead tr {
 table.generations tbody {
     display: block;
     overflow-y: auto;
-    height: 900px;
+    max-height: 400px;
 }
 
 table.generations tbody td {
