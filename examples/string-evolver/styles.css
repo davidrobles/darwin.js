@@ -112,7 +112,6 @@ table.generations tbody tr:hover {
     float: left;
     width: 400px;
     height: 100vh;
-    overflow-y: auto;
     display: inline;
 }
 
