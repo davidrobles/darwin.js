@@ -52,6 +52,10 @@ table.generations thead tr + tr + tr + tr {
     width: 110px
 }
 
+table.generations tbody tr {
+    height: 40px;
+}
+
 table.generations tbody {
     display: block;
     overflow-y: auto;
@@ -72,10 +76,6 @@ table.generations tbody td + td + td {
 
 table.generations tbody td + td + td + td {
     width: 110px
-}
-
-table.generations tbody tr {
-    height: 40px;
 }
 
 table.generations tbody tr:nth-child(even) {
@@ -108,7 +108,7 @@ table.generations tbody tr:hover {
     background-color: #BCC5C9;
     float: left;
     width: 400px;
-    height: 95vh;
+    height: 100vh;
     overflow-y: auto;
     display: inline;
 }
