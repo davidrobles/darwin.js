@@ -19,6 +19,7 @@ body p {
     background-color: #0b97c4;
     height: 100vh;
     margin: 0;
+    font-size: 0.95em;
 }
 
 .generations-container {
