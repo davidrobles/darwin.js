@@ -7,6 +7,7 @@ var GenerationsTableView = Backbone.View.extend({
     template: _.template($("#generations-table-view").html()),
 
     initialize: function() {
+        this.selectedGenerationRowView = null;
         this.render();
     },
 
@@ -16,12 +17,21 @@ var GenerationsTableView = Backbone.View.extend({
 
     addNewGeneration: function() {
         this.generationRowView = new GenerationRowView();
+        this.listenTo(this.generationRowView, "generation-selected", this.generationSelected);
         this.$("tbody").append(this.generationRowView.render().el);
     },
 
     updateGeneration: function(generation) {
         this.generationRowView.generation = generation;
         this.generationRowView.render();
+    },
+
+    generationSelected: function(generationRowView) {
+        if (this.selectedGenerationRowView) {
+            this.selectedGenerationRowView.unselect();
+        }
+        this.selectedGenerationRowView = generationRowView;
+        generationRowView.select();
     }
 
 });
@@ -36,7 +46,7 @@ var GenerationRowView = Backbone.View.extend({
     },
 
     events: {
-        "click": "select"
+        "click": "selectClick"
     },
 
     initialize: function() {
@@ -53,12 +63,21 @@ var GenerationRowView = Backbone.View.extend({
         return this;
     },
 
-    select: function() {
+    selectClick: function() {
+        this.trigger("generation-selected", this);
         //this.$el.css('background-color', '#ff0000');
-        var generationDetailsView = new GenerationDetailsView(this.generation);
-        $(".generationDetails").html(generationDetailsView.render().el);
-        var populationTableView = new PopulationTableView(this.generation.population);
-        $(".generationDetails").append(populationTableView.render().el);
+        //var generationDetailsView = new GenerationDetailsView(this.generation);
+        //$(".generationDetails").html(generationDetailsView.render().el);
+        //var populationTableView = new PopulationTableView(this.generation.population);
+        //$(".generationDetails").append(populationTableView.render().el);
+    },
+
+    select: function() {
+        this.$el.css('background-color', '#ff0000');
+    },
+
+    unselect: function() {
+        this.$el.css('background-color', '');
     }
 
 });
@@ -83,7 +102,6 @@ var GenerationDetailsView = Backbone.View.extend({
         //$(".generationDetails").html(generationDetailsView.render().el);
         var populationTableView = new PopulationTableView(this.generation.population);
         this.$el.append(populationTableView.render().el);
-
         return this;
     }
 
