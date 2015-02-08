@@ -192,7 +192,6 @@ var CandidateRowView = Backbone.View.extend({
             candidate: output,
             fitness: this.candidate.fitness
         }));
-        this.delegateEvents();
         return this;
     },
 
