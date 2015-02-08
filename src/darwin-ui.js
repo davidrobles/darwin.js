@@ -137,7 +137,7 @@ var CandidateRowView = Backbone.View.extend({
 
     render: function() {
         this.$el.html(this.template({
-            id: 1,
+            id: this.candidate.id,
             candidate: this.candidate.candidate,
             fitness: this.candidate.fitness
         }));

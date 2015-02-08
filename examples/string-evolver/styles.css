@@ -81,11 +81,11 @@ table.generations tbody td + td + td + td {
     width: 110px
 }
 
-table.generations tbody tr:nth-child(even) {
+table.generations tbody tr:nth-child(even), table.population tbody tr:nth-child(even) {
     background: #ffffff;
 }
 
-table.generations tbody tr:nth-child(odd) {
+table.generations tbody tr:nth-child(odd), table.population tbody tr:nth-child(odd) {
     background: #ECF1F4;
 }
 

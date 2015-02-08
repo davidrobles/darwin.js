@@ -7,8 +7,10 @@ var Darwin = Darwin || {};
     Darwin.Utils = {
 
         evaluatePopulation: function(population, fitnessFunction) {
+            var index = 0; // TODO hacky, fix it
             return _.map(population, function(candidate) {
                 return {
+                    id: index++,
                     candidate: candidate,
                     fitness: fitnessFunction(candidate)
                 };
