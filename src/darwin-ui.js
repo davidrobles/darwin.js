@@ -95,7 +95,7 @@ var PopulationTableView = Backbone.View.extend({
 
     className: "population",
 
-    template: _.template($("#populationTableView").html()),
+    template: _.template($("#population-table-view").html()),
 
     initialize: function(population) {
         this.population = population;
