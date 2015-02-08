@@ -77,7 +77,7 @@ var GenerationRowView = Backbone.View.extend({
     },
 
     select: function() {
-        this.$el.css('background-color', '#ff0000');
+        this.$el.css('background-color', '#91C2CE');
     },
 
     unselect: function() {
