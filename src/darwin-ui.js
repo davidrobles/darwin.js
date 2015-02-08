@@ -181,7 +181,7 @@ var CandidateRowView = Backbone.View.extend({
     render: function() {
         var candidateLabelView = new CandidateLabelView({
             actual: this.candidate.candidate,
-            target: "THIS IS A TEST ON GENETIC ALGORITHMS"
+            target: "EVOLVING HELLO WORLD!"
         });
 
         var rendered = candidateLabelView.render();

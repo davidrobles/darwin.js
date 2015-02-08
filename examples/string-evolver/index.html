@@ -111,8 +111,8 @@
 
     (function() {
 
-        var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
-        var wordToFind = "THIS IS A TEST ON GENETIC ALGORITHMS";
+        var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ !";
+        var wordToFind = "EVOLVING HELLO WORLD!";
         var stringEvolver = new Darwin.GA({
             populationSize: 500,
             genIndFunc: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
