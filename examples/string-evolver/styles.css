@@ -21,6 +21,10 @@ body p {
     margin: 0;
 }
 
+.generations-container {
+    float: left;
+}
+
 table.generations {
     font-size: 10px;
     border-spacing: 0;
@@ -111,12 +115,6 @@ table.generations tbody tr:hover {
     height: 100vh;
     overflow-y: auto;
     display: inline;
-}
-
-.generations-container {
-    float: left;
-    /*display: inline;*/
-    /*width: 800px*/
 }
 
 table.population {
