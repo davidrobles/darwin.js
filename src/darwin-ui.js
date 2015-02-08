@@ -103,13 +103,19 @@ var PopulationTableView = Backbone.View.extend({
 
     render: function() {
         this.$el.html(this.template());
-        this.population.forEach(
-            function(candidate) { // change name to evaluated candidate?
-                var candidateRowView = new CandidateRowView({candidate: candidate});
-                this.$el.append(candidateRowView.render().el);
-            },
-            this
-        );
+
+        for (var i = 0; i < 15; i++) {
+            var candidate = this.population[i];
+            var candidateRowView = new CandidateRowView({candidate: candidate});
+            this.$el.append(candidateRowView.render().el);
+        }
+        //this.population.forEach(
+        //    function(candidate) { // change name to evaluated candidate?
+        //        var candidateRowView = new CandidateRowView({candidate: candidate});
+        //        this.$el.append(candidateRowView.render().el);
+        //    },
+        //    this
+        //);
         return this;
     }
 
