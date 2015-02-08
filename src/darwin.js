@@ -102,7 +102,7 @@ var Darwin = Darwin || {};
             this.fire("ga-started");
             this.population = Darwin.Utils.generatePopulation(this.genIndFunc, this.populationSize);
             this.fire("population-generated");
-            this.interval = setInterval(jQuery.proxy(this, "evolutionaryStep"), 250);
+            this.interval = setInterval(jQuery.proxy(this, "evolutionaryStep"), 100);
         }
     };
 })();
