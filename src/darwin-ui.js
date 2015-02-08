@@ -68,12 +68,6 @@ var GenerationRowView = Backbone.View.extend({
 
     selectClick: function() {
         this.trigger("generation-selected", this);
-        //this.trigger("");
-        //this.$el.css('background-color', '#ff0000');
-        //var generationDetailsView = new GenerationDetailsView(this.generation);
-        //$(".generationDetails").html(generationDetailsView.render().el);
-        //var populationTableView = new PopulationTableView(this.generation.population);
-        //$(".generationDetails").append(populationTableView.render().el);
     },
 
     select: function() {
