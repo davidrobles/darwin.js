@@ -43,9 +43,6 @@ var StringEvolver = {
                 }
                 window.detailsView.generation = gen;
                 $(".generationDetails").replaceWith(window.detailsView.render().el);
-                // candidate
-                window.candidateDetailsView = new CandidateDetailsView();
-                $(".candidate-details").replaceWith(window.candidateDetailsView.render().el);
                 break;
         }
     },
