@@ -113,4 +113,5 @@ table.population tbody {
     display: block;
     overflow-y: auto;
     height: 600px;
+    width: 400px;
 }
