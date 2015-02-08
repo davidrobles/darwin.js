@@ -108,3 +108,9 @@ table.generations tbody tr:hover {
     /*display: inline;*/
     /*width: 800px*/
 }
+
+table.population tbody {
+    display: block;
+    overflow-y: auto;
+    height: 600px;
+}

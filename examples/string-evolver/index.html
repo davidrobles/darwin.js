@@ -87,7 +87,7 @@
         var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
         var wordToFind = "THIS IS A TEST ON GENETIC ALGORITHMS";
         var stringEvolver = new Darwin.GA({
-            populationSize: 500,
+            populationSize: 250,
             genIndFunc: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
             fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
             observers: [StringEvolver.myObserver],
