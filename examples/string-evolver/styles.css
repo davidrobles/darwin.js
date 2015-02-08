@@ -105,7 +105,7 @@ table.generations tbody tr:hover {
     background-color: #ffffcc;
 }
 
-.generationDetails {
+.generation-details {
     background-color: #BCC5C9;
     float: left;
     width: 400px;

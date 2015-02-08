@@ -67,7 +67,7 @@ var GenerationDetailsView = Backbone.View.extend({
 
     tagName: "div",
 
-    className: "generationDetails",
+    className: "generation-details",
 
     template: _.template($("#generation-details-view").html()),
 
