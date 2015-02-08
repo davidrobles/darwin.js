@@ -103,7 +103,6 @@ var PopulationTableView = Backbone.View.extend({
 
     render: function() {
         this.$el.html(this.template());
-
         this.population.forEach(
             function(candidate) { // change name to evaluated candidate?
                 var candidateRowView = new CandidateRowView({candidate: candidate});
