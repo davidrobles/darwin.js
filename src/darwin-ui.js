@@ -10,7 +10,18 @@ var GenerationsTableView = Backbone.View.extend({
 
     initialize: function() {
         this.selectedGenerationRowView = null;
+        this.allViews = [];
+        this.listenTo(Darwin.vent, "generation-selected", this.generationSelected);
         this.render();
+    },
+
+    generationSelected: function(generationNo) {
+        var generationRowView = this.allViews[generationNo];
+        if (this.selectedGenerationRowView) {
+            this.selectedGenerationRowView.unselect();
+        }
+        generationRowView.select();
+        this.selectedGenerationRowView = generationRowView;
     },
 
     render: function() {
@@ -19,8 +30,9 @@ var GenerationsTableView = Backbone.View.extend({
 
     addNewGeneration: function() {
         this.generationRowView = new GenerationRowView();
-        this.listenTo(this.generationRowView, "generation-selected", this.generationSelected);
+        //this.listenTo(this.generationRowView, "generation-selected", this.generationSelected);
         this.$("tbody").append(this.generationRowView.render().el);
+        this.allViews.push(this.generationRowView);
     },
 
     updateGeneration: function(generation) {
@@ -28,15 +40,6 @@ var GenerationsTableView = Backbone.View.extend({
         this.generationRowView.render();
         this.generationRowView.selectClick(); // TODO move this line to addNewGeneration()
         this.$("tbody").scrollTop(100000);
-    },
-
-    generationSelected: function(generationRowView) {
-        if (this.selectedGenerationRowView) {
-            this.selectedGenerationRowView.unselect();
-        }
-        generationRowView.select();
-        this.selectedGenerationRowView = generationRowView;
-        Darwin.vent.trigger("generation-selected", this.selectedGenerationRowView.generation);
     }
 
 });
@@ -69,7 +72,7 @@ var GenerationRowView = Backbone.View.extend({
     },
 
     selectClick: function() {
-        this.trigger("generation-selected", this);
+        Darwin.vent.trigger("generation-selected", this.generation.generation);
     },
 
     select: function() {
@@ -92,7 +95,7 @@ var GenerationDetailsView = Backbone.View.extend({
 
     initialize: function(generation) {
         this.generation = generation;
-        this.listenTo(Darwin.vent, "generation-selected", this.generationSelected);
+        //this.listenTo(Darwin.vent, "generation-selected", this.generationSelected);
     },
 
     render: function() {
