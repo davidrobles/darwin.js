@@ -71,9 +71,15 @@ table.generations tbody td + td + td + td {
 }
 
 table.generations tbody tr {
-    background-color: #ECF1F4;
-    border-bottom: 1px solid #ff0000;
     height: 40px;
+}
+
+table.generations tbody tr:nth-child(even) {
+    background: #ffffff;
+}
+
+table.generations tbody tr:nth-child(odd) {
+    background: #ECF1F4;
 }
 
 table.generations tbody tr:hover {
