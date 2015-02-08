@@ -4,7 +4,7 @@ var GenerationsTableView = Backbone.View.extend({
 
     className: "generations",
 
-    template: _.template($("#generationsTableView").html()),
+    template: _.template($("#generations-table-view").html()),
 
     initialize: function() {
         this.render();
