@@ -4,18 +4,10 @@ var GenerationsTableView = Backbone.View.extend({
 
     className: "generations",
 
-    initialize: function() {
-        this.render();
-    },
-
     template: _.template($("#generationsTableView").html()),
 
-    footerTemplate: _.template($("#generationsTableViewFooter").html()),
-
-    renderFooter: function() {
-        this.$("tfoot").replaceWith(this.footerTemplate({
-            totalPages: this.countTotalPages()
-        }));
+    initialize: function() {
+        this.render();
     },
 
     render: function() {
