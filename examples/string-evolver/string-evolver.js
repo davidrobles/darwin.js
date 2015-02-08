@@ -42,7 +42,10 @@ var StringEvolver = {
                     window.detailsView = new GenerationDetailsView(gen);
                 }
                 window.detailsView.generation = gen;
-                $(".generationDetails").replaceWith(window.detailsView.render().el)
+                $(".generationDetails").replaceWith(window.detailsView.render().el);
+                // candidate
+                window.candidateDetailsView = new CandidateDetailsView();
+                $(".candidate-details").replaceWith(window.candidateDetailsView.render().el);
                 break;
         }
     },

@@ -54,7 +54,7 @@ var GenerationRowView = Backbone.View.extend({
 
     initialize: function() {
         this.generation = null;
-        this.selected = false;
+        this.selected = false; // TODO remove this?
     },
 
     render: function() {
@@ -121,6 +121,8 @@ var PopulationTableView = Backbone.View.extend({
 
     initialize: function(population) {
         this.population = population;
+        this.selectedCandidateRowView = null;
+        this.listenTo(Darwin.vent, "candidate-selected", this.candidateSelected);
     },
 
     render: function() {
@@ -139,6 +141,26 @@ var PopulationTableView = Backbone.View.extend({
         //    this
         //);
         return this;
+    },
+
+    addNewCandidate: function(candidate) {
+        this.candidateRowView = new CandidateRowView();
+        //this.listenTo(Darwin.vent, "candidate-selected", this.candidateSelected);
+    },
+
+    updateCandidate: function(candidate) {
+        this.candidateRowView.candidate = candidate;
+        this.candidateRowView.render();
+    },
+
+    candidateSelected: function(candidateRowView) {
+        console.log('got here at least');
+        if (this.selectedCandidateRowView) {
+            this.selectedCandidateRowView.unselect();
+        }
+        candidateRowView.select();
+        this.selectedCandidateRowView = candidateRowView;
+        //Darwin.vent.trigger("candidate-selected", this.selectedCandidateRowView.candidate);
     }
 
 });
@@ -149,9 +171,13 @@ var CandidateRowView = Backbone.View.extend({
 
     template: _.template($("#candidate-row-view").html()),
 
+    events: {
+        "click": "selectClick"
+    },
+
     initialize: function(options) {
         options = options || {};
-        this.candidate = options.candidate;
+        this.candidate = options.candidate; // TODO remove this?
     },
 
     render: function() {
@@ -168,7 +194,44 @@ var CandidateRowView = Backbone.View.extend({
             candidate: output,
             fitness: this.candidate.fitness
         }));
+        this.delegateEvents();
         return this;
+    },
+
+    selectClick: function() {
+        Darwin.vent.trigger("candidate-selected", this);
+    },
+
+    select: function() {
+        this.$el.css('background-color', '#91C2CE');
+    },
+
+    unselect: function() {
+        this.$el.css('background-color', '');
+    }
+
+});
+
+var CandidateDetailsView = Backbone.View.extend({
+
+    tagName: "div",
+
+    className: "candidate-details",
+
+    template: _.template($("#candidate-details-view").html()),
+
+    initialize: function() {
+        this.candidate = null;
+        //this.listenTo(Darwin.vent, "candidate-selected", this.changeCandidate);
+    },
+
+    render: function() {
+        this.$el.html("Candidate Details");
+        return this;
+    },
+
+    changeCandidate: function(candidate) {
+        this.render();
     }
 
 });

@@ -147,3 +147,11 @@ table.population tbody tr:hover {
     cursor: pointer;
     background-color: #ffffcc;
 }
+
+.candidate-details {
+    float: left;
+    width: 100px;
+    height: 100vh;
+    display: inline;
+    background-color: #00ff00;
+}
