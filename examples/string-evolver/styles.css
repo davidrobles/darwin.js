@@ -116,10 +116,14 @@ table.generations tbody tr:hover {
     display: inline;
 }
 
+.population-details-stats {
+    height: 14vh;
+}
+
 table.population {
     border-spacing: 0;
     font-size: 10px;
-    width: 300px;
+    width: 400px;
 }
 
 table.population thead {
@@ -130,13 +134,13 @@ table.population thead {
 
 table.population thead tr {
     display: block;
+    height: 3vh;
 }
 
 table.population tbody {
     display: block;
     overflow-y: auto;
-    height: 600px;
-    /*width: 400px;*/
+    height: 80vh;
     background-color: #ECF1F4;
 }
 

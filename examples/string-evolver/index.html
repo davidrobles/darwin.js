@@ -76,10 +76,12 @@
     </script>
 
     <script type="text/template" id="generation-details-view">
-        <p>Generation:      <%= this.generation.generation %></p>
-        <p>Best candidate:  <%= this.generation.bestCandidate %></p>
-        <p>Best fitness:    <%= this.generation.bestCandidateFitness %></p>
-        <p>Average fitness: <%= this.generation.averageFitness %></p>
+        <div class="population-details-stats">
+            <p>Generation:      <%= this.generation.generation %></p>
+            <p>Best candidate:  <%= this.generation.bestCandidate %></p>
+            <p>Best fitness:    <%= this.generation.bestCandidateFitness %></p>
+            <p>Average fitness: <%= this.generation.averageFitness %></p>
+        </div>
     </script>
 
 </head>
