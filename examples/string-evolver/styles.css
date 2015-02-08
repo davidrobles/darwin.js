@@ -91,6 +91,7 @@ table.generations tbody tr:nth-child(odd), table.population tbody tr:nth-child(o
 
 table.generations tbody tr:hover {
     cursor: pointer;
+    background-color: #ffffcc;
 }
 
 table.generations tfoot  {
@@ -101,10 +102,6 @@ table.generations tfoot  {
 
 table.generations th, table.generations td {
     padding: 0.7em;
-}
-
-table.generations tbody tr:hover {
-    background-color: #ffffcc;
 }
 
 .generation-details {
@@ -144,4 +141,9 @@ table.population tbody {
 
 table.population tbody tr {
     height: 30px;
+}
+
+table.population tbody tr:hover {
+    cursor: pointer;
+    background-color: #ffffcc;
 }
