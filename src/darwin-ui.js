@@ -20,7 +20,7 @@ var GenerationRowView = Backbone.View.extend({
         if (this.generation) {
             this.$el.html(this.templates["finished"](this.generation));
         } else {
-            this.$el.html(this.templates["inProgress"]);
+            this.$el.html(this.templates["inProgress"]());
         }
         return this;
     },
