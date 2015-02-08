@@ -109,9 +109,30 @@ table.generations tbody tr:hover {
     /*width: 800px*/
 }
 
+table.population {
+    border-spacing: 0;
+    font-size: 10px;
+    width: 300px;
+}
+
+table.population thead {
+    background-color: #5F6D79;
+    color: #ECF1F4;
+    text-align: left;
+}
+
+table.population thead tr {
+    display: block;
+}
+
 table.population tbody {
     display: block;
     overflow-y: auto;
     height: 600px;
-    width: 400px;
+    /*width: 400px;*/
+    background-color: #ECF1F4;
+}
+
+table.population tbody tr {
+    height: 40px;
 }

@@ -8,6 +8,9 @@
     <script type="text/template" id="generationsTableView">
         <thead>
             <tr>
+                <th colspan="5" style="font-size: 1.4em; width: 200px; text-align: center;">Generations</th>
+            </tr>
+            <tr>
                 <th>#</th>
                 <th>Best Candidate</th>
                 <th>Best Fitness</th>
@@ -29,6 +32,19 @@
             of <%= totalPages %> &gt;
             </td>
         </tfoot>
+    </script>
+
+    <script type="text/template" id="populationTableView">
+        <thead>
+        <tr>
+            <th colspan="2" style="font-size: 1.4em; width: 200px; text-align: center;">Population</th>
+        </tr>
+        <tr>
+            <th>Best Candidate</th>
+            <th>Fitness</th>
+        </tr>
+        </thead>
+        <tbody> </tbody>
     </script>
 
     <script type="text/template" id="generationRowView">

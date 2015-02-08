@@ -123,16 +123,20 @@ var PopulationTableView = Backbone.View.extend({
 
     className: "population",
 
+    template: _.template($("#populationTableView").html()),
+
     initialize: function(population) {
         this.population = population;
     },
 
-    template: _.template("<tr>" +
+    templateRow: _.template("<tr>" +
                          "<td><%= candidate %></td>" +
                          "<td><%= fitness %></td>" +
                          "</tr>"),
 
     render: function() {
+        this.$el.html(this.template());
+
         this.population.forEach(
             function(candidate) { // change name to evaluated candidate?
                 var text = candidate.candidate;
@@ -142,7 +146,7 @@ var PopulationTableView = Backbone.View.extend({
                 });
                 var hola = candidateLabelView.render().el;
                 //candidate.candidate = hola.innerHTML;
-                this.$el.append(this.template(candidate));
+                this.$el.append(this.templateRow(candidate));
             },
             this
         );
