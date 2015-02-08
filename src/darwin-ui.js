@@ -31,7 +31,7 @@ var GenerationRowView = Backbone.View.extend({
     tagName: "tr",
 
     templates: {
-        "finished": _.template($("#generationRowView").html()),
+        "finished": _.template($("#generation-row-view").html()),
         "inProgress": _.template($("#generationRowViewEmpty").html())
     },
 
