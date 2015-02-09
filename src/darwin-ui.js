@@ -11,7 +11,7 @@ var GenerationsTableView = Backbone.View.extend({
     initialize: function() {
         this.selectedGenerationRowView = null;
         this.allViews = [];
-        this.listenTo(Darwin.vent, "generation-selected", this.generationSelected);
+        this.listenTo(Darwin.vent, "generation-selected", this.selectGeneration);
         this.listenTo(this.collection, "add", this.addGeneration);
         this.render();
     },
@@ -20,7 +20,7 @@ var GenerationsTableView = Backbone.View.extend({
         generation = generation.attributes; // TODO remove attributes call
         this.generationRowView.generation =  generation;
         this.generationRowView.render();
-        this.generationSelected(generation); // TODO: move to addNewGeneration, or even better make it a model
+        this.selectGeneration(generation); // TODO: move to addNewGeneration, or even better make it a model
         this.$("tbody").scrollTop(100000);
     },
 
@@ -28,7 +28,7 @@ var GenerationsTableView = Backbone.View.extend({
         this.$el.html(this.template());
     },
 
-    generationSelected: function(generation) {
+    selectGeneration: function(generation) {
         var generationRowView = this.allViews[generation.generation]; // TODO change to generation.no/number?
         if (this.selectedGenerationRowView) {
             this.selectedGenerationRowView.unselect();
