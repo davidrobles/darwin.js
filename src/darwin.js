@@ -83,13 +83,6 @@ var Darwin = Darwin || {};
             }
         },
 
-        //fire: function(notification) {
-        //    var observersLength = this.observers.length;
-        //    for (var i = 0; i < observersLength; i++) {
-        //        this.observers[i](this, notification);
-        //    }
-        //},
-
         reset: function() {
             this.population = [];
             this.evaluatedPopulation = [];
