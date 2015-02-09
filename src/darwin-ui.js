@@ -53,10 +53,7 @@ var GenerationRowView = Backbone.View.extend({
     },
 
     initialize: function() {
-        var self = this;
-        this.listenTo(this.model, "change", function() {
-            self.render();
-        })
+        this.listenTo(this.model, "change", this.render);
     },
 
     render: function() {
