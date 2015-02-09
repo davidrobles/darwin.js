@@ -17,9 +17,9 @@ var GenerationsTableView = Backbone.View.extend({
     },
 
     addGeneration: function(generation) {
-        generation = generation.attributes; // TODO remove attributes call
-        this.generationRowView.generation =  generation;
-        this.generationRowView.render();
+        this.generationRowView = new GenerationRowView({ model: generation });
+        this.$("tbody").append(this.generationRowView.render().el);
+        this.generationRowViews.push(this.generationRowView);
         this.selectGeneration(generation); // TODO: move to addNewGeneration, or even better make it a model
         this.$("tbody").scrollTop(100000);
     },
@@ -29,18 +29,12 @@ var GenerationsTableView = Backbone.View.extend({
     },
 
     selectGeneration: function(generation) {
-        var generationRowView = this.generationRowViews[generation.generation]; // TODO change to generation.no/number?
+        var generationRowView = this.generationRowViews[generation.get("generation")]; // TODO change to generation.no/number?
         if (this.selectedGenerationRowView) {
             this.selectedGenerationRowView.unselect();
         }
         generationRowView.select();
         this.selectedGenerationRowView = generationRowView;
-    },
-
-    addNewGeneration: function() {
-        this.generationRowView = new GenerationRowView();
-        this.$("tbody").append(this.generationRowView.render().el);
-        this.generationRowViews.push(this.generationRowView);
     }
 
 });
@@ -59,21 +53,23 @@ var GenerationRowView = Backbone.View.extend({
     },
 
     initialize: function() {
-        this.generation = null;
-        //this.selected = false; // TODO remove this?
+        var self = this;
+        this.listenTo(this.model, "change", function() {
+            self.render();
+        })
     },
 
     render: function() {
-        if (this.generation) {
-            this.$el.html(this.templates["finished"](this.generation));
-        } else {
+        if (this.model.get("status") === "in-progress") {
             this.$el.html(this.templates["inProgress"]());
+        } else {
+            this.$el.html(this.templates["finished"](this.model.toJSON()));
         }
         return this;
     },
 
     selectClick: function() {
-        Darwin.vent.trigger("generation-selected", this.generation);
+        Darwin.vent.trigger("generation-selected", this.model);
     },
 
     select: function() {

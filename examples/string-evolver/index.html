@@ -68,7 +68,6 @@
         <td>Running</td>
         <td>Running</td>
         <td>Running</td>
-        <td>Running</td>
     </script>
 
     <script type="text/template" id="generation-details-view">
@@ -137,11 +136,13 @@
         });
 
         callbacks.listenTo(stringEvolver, "generation-started", function(generation) {
-            window.generationsTableView.addNewGeneration();
+//            window.generationsTableView.addNewGeneration();
+            Evolver.generationsCollection.add(generation);
         });
 
         callbacks.listenTo(stringEvolver, "generation-finished", function(generation) {
-            Evolver.generationsCollection.add(generation);
+//            Evolver.generationsCollection.add(generation);
+            window.generationsTableView.selectedGenerationRowView.model.set(generation);
             // add details
             if (!window.detailsView) {
                 window.detailsView = new GenerationDetailsView(generation);
