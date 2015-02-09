@@ -42,7 +42,7 @@ var GenerationRowView = Backbone.View.extend({
     tagName: "tr",
 
     templates: {
-        "finished": _.template($("#generation-row-view").html()),
+        "complete": _.template($("#generation-row-view").html()),
         "in-progress": _.template($("#generationRowViewEmpty").html())
     },
 
@@ -55,11 +55,8 @@ var GenerationRowView = Backbone.View.extend({
     },
 
     render: function() {
-        if (this.model.get("status") === "in-progress") {
-            this.$el.html(this.templates["in-progress"]());
-        } else {
-            this.$el.html(this.templates["finished"](this.model.toJSON()));
-        }
+        var templateName = this.model.get("status");
+        this.$el.html(this.templates[templateName](this.model.toJSON()));
         return this;
     },
 
