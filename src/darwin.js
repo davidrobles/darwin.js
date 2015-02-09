@@ -72,9 +72,10 @@ var Darwin = Darwin || {};
             this.fire("population-sorted");
             this.computeStats();
             this.fire("generation-finished");
-            this.population = this.newPopulations();
-            this.fire("population-generated");
-            if (!Darwin.Utils.shouldContinue(this.generations[this.generations.length - 1], this.terminationConditions)) {
+            if (Darwin.Utils.shouldContinue(this.generations[this.generations.length - 1], this.terminationConditions)) {
+                this.population = this.newPopulations();
+                this.fire("population-generated");
+            } else {
                 this.fire("ga-finished");
                 clearInterval(this.interval);
             }
