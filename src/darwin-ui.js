@@ -17,10 +17,7 @@ var GenerationsTableView = Backbone.View.extend({
     },
 
     addGeneration: function(generation) {
-        //this.updateGeneration(generation.attributes);// TODO remove attributes call
-
-        generation = generation.attributes;
-
+        generation = generation.attributes; // TODO remove attributes call
         this.generationRowView.generation =  generation;
         this.generationRowView.render();
         this.generationSelected(generation); // TODO: move to addNewGeneration, or even better make it a model
