@@ -75,6 +75,7 @@ var Darwin = Darwin || {};
             this.population = this.newPopulations();
             this.fire("population-generated");
             if (!Darwin.Utils.shouldContinue(this.generations[this.generations.length - 1], this.terminationConditions)) {
+                this.fire("ga-finished");
                 clearInterval(this.interval);
             }
         },

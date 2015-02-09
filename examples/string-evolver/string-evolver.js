@@ -1,3 +1,7 @@
+var Evolver = {};
+Evolver.GenerationsCollection = Backbone.Collection.extend();
+Evolver.generationsCollection = new Evolver.GenerationsCollection();
+
 var StringEvolver = {
 
     createWordFitnessFunction: function(targetWord) {
@@ -28,6 +32,7 @@ var StringEvolver = {
         switch (notification) {
             case "ga-started":
                 window.generationsTableView = new GenerationsTableView({
+                    collection: Evolver.generationsCollection
                 });
                 $(".generations").replaceWith(generationsTableView.el);
                 break;
@@ -36,13 +41,16 @@ var StringEvolver = {
                 break;
             case "generation-finished":
                 var gen = ga.generations[ga.generations.length - 1]; // TODO create function to return current generation
-                window.generationsTableView.updateGeneration(gen);
+                //window.generationsTableView.updateGeneration(gen);
+                Evolver.generationsCollection.add(gen);
                 // add details
                 if (!window.detailsView) {
                     window.detailsView = new GenerationDetailsView(gen);
                 }
                 window.detailsView.generation = gen;
                 $(".generationDetails").replaceWith(window.detailsView.render().el);
+                break;
+            case "ga-finished":
                 break;
         }
     },
