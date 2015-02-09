@@ -95,6 +95,8 @@ var GenerationDetailsView = Backbone.View.extend({
         this.listenTo(Darwin.vent, "generation-selected", this.generationSelected);
     },
 
+    // TODO listener if the model changes? how to do that?
+
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
         var populationTableView = new PopulationTableView(this.model.get("population"));
@@ -103,7 +105,7 @@ var GenerationDetailsView = Backbone.View.extend({
     },
 
     generationSelected: function(generation) {
-        this.generation = generation;
+        this.model = generation;
         this.render();
     }
 
