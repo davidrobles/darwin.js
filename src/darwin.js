@@ -15,19 +15,9 @@ var Darwin = Darwin || {};
         this.terminationConditions = options.terminationConditions;
         this.notifCallbacks = {};
         this.currentGeneration = null;
-        //this.registerCallbacks(options.notificationCallbacks);
     };
 
     Darwin.GA.prototype = {
-
-        //registerCallbacks: function(notifCallbacks) {
-        //    Object.keys(notifCallbacks).forEach(function(key) {
-        //        this.notifCallbacks[key] = this.notifCallbacks[key] || new Darwin.Utils.Callbacks();
-        //        if (typeof notifCallbacks[key] === "function") {
-        //            this.notifCallbacks[key].add(notifCallbacks[key]);
-        //        }
-        //    }, this);
-        //},
 
         newPopulations: function() {
             var newPopulation = [];
