@@ -136,7 +136,8 @@
             $(".generations").replaceWith(generationsTableView.el);
         });
 
-        callbacks.listenTo(stringEvolver, "generation-started", function() {
+        callbacks.listenTo(stringEvolver, "generation-started", function(generation) {
+            debugger;
             window.generationsTableView.addNewGeneration();
         });
 
