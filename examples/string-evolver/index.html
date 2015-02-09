@@ -124,7 +124,7 @@
 
         var Evolver = {};
         Evolver.GenerationsCollection = Backbone.Collection.extend();
-        Evolver.generationsCollection = new Evolver.GenerationsCollection();
+        var generationsCollection = new Evolver.GenerationsCollection();
 
         var callbacks = _.extend({}, Backbone.Events);
 
@@ -132,14 +132,14 @@
 
         callbacks.listenTo(stringEvolver, "ga-started", function() {
             window.generationsTableView = new GenerationsTableView({
-                collection: Evolver.generationsCollection
+                collection: generationsCollection
             });
             $(".generations").replaceWith(generationsTableView.render().el);
         });
 
         callbacks.listenTo(stringEvolver, "generation-started", function(generation) {
-            Evolver.generationsCollection.add(generation);
-            var last = Evolver.generationsCollection.last();
+            generationsCollection.add(generation);
+            var last = generationsCollection.last();
             gensMap[last.get("generation")] = last;
         });
 

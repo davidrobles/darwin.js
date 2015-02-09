@@ -91,6 +91,7 @@ var GenerationDetailsView = Backbone.View.extend({
     // TODO listener if the model changes? how to do that?
 
     render: function() {
+        // TODO what if there is no model
         this.$el.html(this.template(this.model.toJSON()));
         var populationTableView = new PopulationTableView(this.model.get("population"));
         this.$el.append(populationTableView.render().el);
