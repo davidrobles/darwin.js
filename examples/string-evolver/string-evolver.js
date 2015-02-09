@@ -1,7 +1,3 @@
-var Evolver = {};
-Evolver.GenerationsCollection = Backbone.Collection.extend();
-Evolver.generationsCollection = new Evolver.GenerationsCollection();
-
 var StringEvolver = {
 
     createWordFitnessFunction: function(targetWord) {
