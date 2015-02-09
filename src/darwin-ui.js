@@ -79,8 +79,7 @@ var GenerationDetailsView = Backbone.View.extend({
 
     template: _.template($("#generation-details-view").html()),
 
-    initialize: function(generation) {
-        this.generation = generation;
+    initialize: function() {
         this.listenTo(Darwin.vent, "generation-selected", this.generationSelected);
     },
 

@@ -147,7 +147,7 @@
             var generationModel = gensMap[generation.generation];
             generationModel.set(generation);
             if (!window.detailsView) {
-                window.detailsView = new GenerationDetailsView({ model: generationModel });
+                window.detailsView = new GenerationDetailsView();
             }
             window.detailsView.model = generationModel;
             $(".generationDetails").replaceWith(window.detailsView.render().el);
