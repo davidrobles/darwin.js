@@ -10,7 +10,7 @@ var GenerationsTableView = Backbone.View.extend({
 
     initialize: function() {
         this.selectedGenerationRowView = null;
-        this.allViews = [];
+        this.generationRowViews = [];
         this.listenTo(Darwin.vent, "generation-selected", this.selectGeneration);
         this.listenTo(this.collection, "add", this.addGeneration);
         this.render();
@@ -29,7 +29,7 @@ var GenerationsTableView = Backbone.View.extend({
     },
 
     selectGeneration: function(generation) {
-        var generationRowView = this.allViews[generation.generation]; // TODO change to generation.no/number?
+        var generationRowView = this.generationRowViews[generation.generation]; // TODO change to generation.no/number?
         if (this.selectedGenerationRowView) {
             this.selectedGenerationRowView.unselect();
         }
@@ -40,7 +40,7 @@ var GenerationsTableView = Backbone.View.extend({
     addNewGeneration: function() {
         this.generationRowView = new GenerationRowView();
         this.$("tbody").append(this.generationRowView.render().el);
-        this.allViews.push(this.generationRowView);
+        this.generationRowViews.push(this.generationRowView);
     }
 
 });
