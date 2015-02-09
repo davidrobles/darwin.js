@@ -14,6 +14,7 @@ var Darwin = Darwin || {};
         this.mutate = options.mutate;
         this.terminationConditions = options.terminationConditions;
         this.notifCallbacks = {};
+        this.currentGeneration = null;
         this.registerCallbacks(options.notificationCallbacks);
     };
 
@@ -52,19 +53,20 @@ var Darwin = Darwin || {};
                                               });
             var average = totalFitness / this.evaluatedPopulation.length;
 
-            this.generations.push({
-                generation: this.generations.length,
-                averageFitness: average,
-                bestCandidate: this.evaluatedPopulation[0].candidate,
-                bestCandidateFitness: this.evaluatedPopulation[0].fitness,
-                population: this.evaluatedPopulation // sorted from best to worst?
-            });
+            // TODO extend object with _.extend
+            this.currentGeneration.averageFitness = average;
+            this.currentGeneration.bestCandidate = this.evaluatedPopulation[0].candidate;
+            this.currentGeneration.bestCandidateFitness = this.evaluatedPopulation[0].fitness;
+            this.currentGeneration.population = this.evaluatedPopulation; // sorted from best to worst?
+            this.currentGeneration.status = "complete";
+            this.generations.push(this.currentGeneration);
         },
 
         evolutionaryStep: function() {
             // check if termination conditions are reached?
             this.fire("generation-started");
-            this.evaluatedPopulation = Darwin.Utils.evaluatePopulation(this.population, this.fitnessFunction);
+            this.currentGeneration = { generation: this.generations.length, status: "in-progress" };  // TODO merge
+            this.evaluatedPopulation = Darwin.Utils.evaluatePopulation(this.population, this.fitnessFunction); // TODO merge
             this.fire("population-evaluated");
             this.evaluatedPopulation.sort(function(a, b) {
                 return b.fitness - a.fitness;
@@ -73,7 +75,7 @@ var Darwin = Darwin || {};
             this.computeStats();
             this.fire("generation-finished");
             if (Darwin.Utils.shouldContinue(this.generations[this.generations.length - 1], this.terminationConditions)) {
-                this.population = this.newPopulations();
+                this.population = this.newPopulations(); // TODO merge
                 this.fire("population-generated");
             } else {
                 this.fire("ga-finished");
