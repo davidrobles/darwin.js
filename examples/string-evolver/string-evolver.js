@@ -28,34 +28,6 @@ var StringEvolver = {
         }
     },
 
-    myObserver: function(ga, notification) {
-        switch (notification) {
-            case "ga-started":
-                window.generationsTableView = new GenerationsTableView({
-                    collection: Evolver.generationsCollection
-                });
-                $(".generations").replaceWith(generationsTableView.el);
-                break;
-            case "generation-started":
-                //var curGA = ga.currentGeneration;
-                window.generationsTableView.addNewGeneration();
-                break;
-            case "generation-finished":
-                // var gen = ga.generations[ga.generations.length - 1]; // TODO create function to return current generation
-                var gen = ga.currentGeneration;
-                Evolver.generationsCollection.add(gen);
-                // add details
-                if (!window.detailsView) {
-                    window.detailsView = new GenerationDetailsView(gen);
-                }
-                window.detailsView.generation = gen;
-                $(".generationDetails").replaceWith(window.detailsView.render().el);
-                break;
-            case "ga-finished":
-                break;
-        }
-    },
-
     randomCharacterMutation: function(candidate) {
         var newString = "";
         var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ "; // fix this
