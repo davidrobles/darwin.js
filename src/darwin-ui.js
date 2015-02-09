@@ -62,7 +62,7 @@ var GenerationRowView = Backbone.View.extend({
 
     select: function() {
         Darwin.vent.trigger("generation-selected", this.model);
-        this.$el.css('background-color', '#91C2CE');
+        this.$el.css('background-color', '#91C2CE'); // TODO move this color to a class
     },
 
     unselect: function() {
