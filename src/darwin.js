@@ -4,7 +4,7 @@ var Darwin = Darwin || {};
     "use strict";
 
     Darwin.GA = function(options) {
-        this.opts = options || {};
+        this.options = options || {};
         this.populationSize = options.populationSize; // TODO even population size?
         this.fitnessFunction = options.fitnessFunction;
         this.genIndFunc = options.genIndFunc;
