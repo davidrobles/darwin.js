@@ -17,8 +17,8 @@ var GenerationsTableView = Backbone.View.extend({
 
     addGeneration: function(generation) {
         this.generationRowView = new GenerationRowView({ model: generation });
-        this.$("tbody").append(this.generationRowView.render().el);
         this.generationRowViews.push(this.generationRowView);
+        this.$("tbody").append(this.generationRowView.render().el);
         this.selectGeneration(generation);
         this.$("tbody").scrollTop(100000);
     },
