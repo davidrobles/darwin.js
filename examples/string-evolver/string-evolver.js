@@ -37,10 +37,12 @@ var StringEvolver = {
                 $(".generations").replaceWith(generationsTableView.el);
                 break;
             case "generation-started":
+                //var curGA = ga.currentGeneration;
                 window.generationsTableView.addNewGeneration();
                 break;
             case "generation-finished":
-                var gen = ga.generations[ga.generations.length - 1]; // TODO create function to return current generation
+                // var gen = ga.generations[ga.generations.length - 1]; // TODO create function to return current generation
+                var gen = ga.currentGeneration;
                 Evolver.generationsCollection.add(gen);
                 // add details
                 if (!window.detailsView) {
