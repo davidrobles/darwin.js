@@ -128,6 +128,8 @@
 
         var callbacks = _.extend({}, Backbone.Events);
 
+        var gensMap = {};
+
         callbacks.listenTo(stringEvolver, "ga-started", function() {
             window.generationsTableView = new GenerationsTableView({
                 collection: Evolver.generationsCollection
@@ -136,18 +138,18 @@
         });
 
         callbacks.listenTo(stringEvolver, "generation-started", function(generation) {
-//            window.generationsTableView.addNewGeneration();
             Evolver.generationsCollection.add(generation);
+            var last = Evolver.generationsCollection.last();
+            gensMap[last.get("generation")] = last;
         });
 
         callbacks.listenTo(stringEvolver, "generation-finished", function(generation) {
-//            Evolver.generationsCollection.add(generation);
-            window.generationsTableView.selectedGenerationRowView.model.set(generation);
-            // add details
+            var generationModel = gensMap[generation.generation];
+            generationModel.set(generation);
             if (!window.detailsView) {
-                window.detailsView = new GenerationDetailsView(generation);
+                window.detailsView = new GenerationDetailsView({ model: generationModel });
             }
-            window.detailsView.generation = generation;
+            window.detailsView.model = generationModel;
             $(".generationDetails").replaceWith(window.detailsView.render().el);
         });
 

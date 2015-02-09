@@ -96,8 +96,8 @@ var GenerationDetailsView = Backbone.View.extend({
     },
 
     render: function() {
-        this.$el.html(this.template(this.generation));
-        var populationTableView = new PopulationTableView(this.generation.population);
+        this.$el.html(this.template(this.model.toJSON()));
+        var populationTableView = new PopulationTableView(this.model.get("population"));
         this.$el.append(populationTableView.render().el);
         return this;
     },
