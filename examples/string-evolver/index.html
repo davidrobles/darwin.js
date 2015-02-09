@@ -137,19 +137,16 @@
         });
 
         callbacks.listenTo(stringEvolver, "generation-started", function() {
-            // var curGA = ga.currentGeneration;
             window.generationsTableView.addNewGeneration();
         });
 
-        callbacks.listenTo(stringEvolver, "generation-finished", function() {
-            // var gen = ga.generations[ga.generations.length - 1]; // TODO create function to return current generation
-            var gen = stringEvolver.currentGeneration;
-            Evolver.generationsCollection.add(gen);
+        callbacks.listenTo(stringEvolver, "generation-finished", function(generation) {
+            Evolver.generationsCollection.add(generation);
             // add details
             if (!window.detailsView) {
-                window.detailsView = new GenerationDetailsView(gen);
+                window.detailsView = new GenerationDetailsView(generation);
             }
-            window.detailsView.generation = gen;
+            window.detailsView.generation = generation;
             $(".generationDetails").replaceWith(window.detailsView.render().el);
         });
 

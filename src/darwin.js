@@ -63,7 +63,7 @@ var Darwin = Darwin || {};
             });
             this.trigger("population-sorted");
             this.computeStats();
-            this.trigger("generation-finished");
+            this.trigger("generation-finished", this.currentGeneration);
             if (Darwin.Utils.shouldContinue(this.generations[this.generations.length - 1], this.terminationConditions)) {
                 this.population = this.newPopulations(); // TODO merge
                 this.trigger("population-generated");
