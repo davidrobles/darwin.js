@@ -32,7 +32,8 @@ var GenerationsTableView = Backbone.View.extend({
         if (this.selectedGenerationRowView) {
             this.selectedGenerationRowView.unselect();
         }
-        this.selectedGenerationRowView = this.generationRowViews[generation.get("generation")]; // TODO change to generation.no/number?
+        // TODO change to generation.no/number?
+        this.selectedGenerationRowView = this.generationRowViews[generation.get("generation")];
     }
 
 });
