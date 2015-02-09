@@ -110,44 +110,76 @@
     <script>
 
     (function() {
-
         var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ !";
         var wordToFind = "EVOLVING HELLO WORLD!";
         var stringEvolver = new Darwin.GA({
             populationSize: 500,
             genIndFunc: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
             fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
-            observers: [StringEvolver.myObserver],
             reproduce: Darwin.Operators.singlePointCrossover,
             mutate: StringEvolver.randomCharacterMutation,
             terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)],
-            notificationCallbacks: {
-
-                startGA: function() {
-                    console.log("Start GA");
-                },
-
-                generationStart: function() {
-                    console.log("Generation Start " + this.generation);
-                },
-
-                generationEnd: function() {
-                    console.log("Generation End");
-                    console.log("-----------------------");
-                },
-
-                populationSorted: function() {
-                    console.log("Population sorted");
-                },
-
-                populationEvaluated: function() {
-                    console.log("Population evaluated");
-                }
-
-            }
-
             <!-- terminationConditions: [new Darwin.Termination.MaxNumGens(50)] -->
         });
+
+
+        var Evolver = {};
+        Evolver.GenerationsCollection = Backbone.Collection.extend();
+        Evolver.generationsCollection = new Evolver.GenerationsCollection();
+
+        var callbacks = _.extend({}, Backbone.Events);
+
+        callbacks.listenTo(stringEvolver, "ga-started", function() {
+            window.generationsTableView = new GenerationsTableView({
+                collection: Evolver.generationsCollection
+            });
+            $(".generations").replaceWith(generationsTableView.el);
+        });
+
+        callbacks.listenTo(stringEvolver, "generation-started", function() {
+            // var curGA = ga.currentGeneration;
+            window.generationsTableView.addNewGeneration();
+        });
+
+        callbacks.listenTo(stringEvolver, "generation-finished", function() {
+            // var gen = ga.generations[ga.generations.length - 1]; // TODO create function to return current generation
+            var gen = stringEvolver.currentGeneration;
+            Evolver.generationsCollection.add(gen);
+            // add details
+            if (!window.detailsView) {
+                window.detailsView = new GenerationDetailsView(gen);
+            }
+            window.detailsView.generation = gen;
+            $(".generationDetails").replaceWith(window.detailsView.render().el);
+        });
+
+
+//                switch (notification) {
+//        case "ga-started":
+//            window.generationsTableView = new GenerationsTableView({
+//                collection: Evolver.generationsCollection
+//            });
+//            $(".generations").replaceWith(generationsTableView.el);
+//            break;
+//        case "generation-started":
+//            //var curGA = ga.currentGeneration;
+//            window.generationsTableView.addNewGeneration();
+//            break;
+//        case "generation-finished":
+//            // var gen = ga.generations[ga.generations.length - 1]; // TODO create function to return current generation
+//            var gen = ga.currentGeneration;
+//            Evolver.generationsCollection.add(gen);
+//            // add details
+//            if (!window.detailsView) {
+//                window.detailsView = new GenerationDetailsView(gen);
+//            }
+//            window.detailsView.generation = gen;
+//            $(".generationDetails").replaceWith(window.detailsView.render().el);
+//            break;
+//        case "ga-finished":
+//            break;
+//        }
+
         stringEvolver.run();
     })();
     </script>

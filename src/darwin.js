@@ -15,19 +15,19 @@ var Darwin = Darwin || {};
         this.terminationConditions = options.terminationConditions;
         this.notifCallbacks = {};
         this.currentGeneration = null;
-        this.registerCallbacks(options.notificationCallbacks);
+        //this.registerCallbacks(options.notificationCallbacks);
     };
 
     Darwin.GA.prototype = {
 
-        registerCallbacks: function(notifCallbacks) {
-            Object.keys(notifCallbacks).forEach(function(key) {
-                this.notifCallbacks[key] = this.notifCallbacks[key] || new Darwin.Utils.Callbacks();
-                if (typeof notifCallbacks[key] === "function") {
-                    this.notifCallbacks[key].add(notifCallbacks[key]);
-                }
-            }, this);
-        },
+        //registerCallbacks: function(notifCallbacks) {
+        //    Object.keys(notifCallbacks).forEach(function(key) {
+        //        this.notifCallbacks[key] = this.notifCallbacks[key] || new Darwin.Utils.Callbacks();
+        //        if (typeof notifCallbacks[key] === "function") {
+        //            this.notifCallbacks[key].add(notifCallbacks[key]);
+        //        }
+        //    }, this);
+        //},
 
         newPopulations: function() {
             var newPopulation = [];
@@ -65,36 +65,29 @@ var Darwin = Darwin || {};
         evolutionaryStep: function() {
             // check if termination conditions are reached?
             this.currentGeneration = { generation: this.generations.length, status: "in-progress" };  // TODO merge
-            this.fire("generation-started");
+            this.trigger("generation-started");
             this.evaluatedPopulation = Darwin.Utils.evaluatePopulation(this.population, this.fitnessFunction); // TODO merge
-            this.fire("population-evaluated");
+            this.trigger("population-evaluated");
             this.evaluatedPopulation.sort(function(a, b) {
                 return b.fitness - a.fitness;
             });
-            this.fire("population-sorted");
+            this.trigger("population-sorted");
             this.computeStats();
-            this.fire("generation-finished");
+            this.trigger("generation-finished");
             if (Darwin.Utils.shouldContinue(this.generations[this.generations.length - 1], this.terminationConditions)) {
                 this.population = this.newPopulations(); // TODO merge
-                this.fire("population-generated");
+                this.trigger("population-generated");
             } else {
-                this.fire("ga-finished");
+                this.trigger("ga-finished");
                 clearInterval(this.interval);
             }
         },
 
-        fire: function(notification) {
-            var observersLength = this.observers.length;
-            for (var i = 0; i < observersLength; i++) {
-                this.observers[i](this, notification);
-            }
-        },
-
         //fire: function(notification) {
-        //    var callbacks = this.notifCallbacks[notification];
-        //    callbacks.list.forEach(function(callback) {
-        //        callback.call(this);
-        //    });
+        //    var observersLength = this.observers.length;
+        //    for (var i = 0; i < observersLength; i++) {
+        //        this.observers[i](this, notification);
+        //    }
         //},
 
         reset: function() {
@@ -103,10 +96,13 @@ var Darwin = Darwin || {};
         },
 
         run: function() {
-            this.fire("ga-started");
+            this.trigger("ga-started");
             this.population = Darwin.Utils.generatePopulation(this.genIndFunc, this.populationSize);
-            this.fire("population-generated");
+            this.trigger("population-generated");
             this.interval = setInterval(jQuery.proxy(this, "evolutionaryStep"), 50);
         }
     };
+
+    _.extend(Darwin.GA.prototype, Backbone.Events);
+
 })();
