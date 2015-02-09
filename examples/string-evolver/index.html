@@ -134,7 +134,7 @@
             window.generationsTableView = new GenerationsTableView({
                 collection: Evolver.generationsCollection
             });
-            $(".generations").replaceWith(generationsTableView.el);
+            $(".generations").replaceWith(generationsTableView.render().el);
         });
 
         callbacks.listenTo(stringEvolver, "generation-started", function(generation) {

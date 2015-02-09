@@ -13,7 +13,6 @@ var GenerationsTableView = Backbone.View.extend({
         this.generationRowViews = [];
         this.listenTo(Darwin.vent, "generation-selected", this.selectGeneration);
         this.listenTo(this.collection, "add", this.addGeneration);
-        this.render();
     },
 
     addGeneration: function(generation) {
@@ -26,6 +25,7 @@ var GenerationsTableView = Backbone.View.extend({
 
     render: function() {
         this.$el.html(this.template());
+        return this;
     },
 
     selectGeneration: function(generation) {
