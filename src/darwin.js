@@ -54,7 +54,7 @@ var Darwin = Darwin || {};
 
         evolutionaryStep: function() {
             // check if termination conditions are reached?
-            this.currentGeneration = { generation: this.generations.length, status: "in-progress" };  // TODO merge
+            this.currentGeneration = { number: this.generations.length, status: "in-progress" };  // TODO merge
             this.trigger("generation-started", this.currentGeneration);
             this.evaluatedPopulation = Darwin.Utils.evaluatePopulation(this.population, this.fitnessFunction); // TODO merge
             this.trigger("population-evaluated");
