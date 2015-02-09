@@ -29,11 +29,10 @@ var GenerationsTableView = Backbone.View.extend({
     },
 
     selectGeneration: function(generation) {
-        var generationRowView = this.generationRowViews[generation.get("generation")]; // TODO change to generation.no/number?
         if (this.selectedGenerationRowView) {
             this.selectedGenerationRowView.unselect();
         }
-        generationRowView.select();
+        var generationRowView = this.generationRowViews[generation.get("generation")]; // TODO change to generation.no/number?
         this.selectedGenerationRowView = generationRowView;
     }
 
@@ -67,9 +66,6 @@ var GenerationRowView = Backbone.View.extend({
 
     selectClick: function() {
         Darwin.vent.trigger("generation-selected", this.model);
-    },
-
-    select: function() {
         this.$el.css('background-color', '#91C2CE');
     },
 
