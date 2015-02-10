@@ -217,7 +217,6 @@ var PopulationTableView = Backbone.View.extend({
     },
 
     candidateSelected: function(candidateRowView) {
-        console.log('got here at least');
         if (this.selectedCandidateRowView) {
             this.selectedCandidateRowView.unselect();
         }
