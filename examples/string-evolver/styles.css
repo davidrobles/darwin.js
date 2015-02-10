@@ -108,11 +108,13 @@ table.generations th, table.generations td {
 }
 
 .generation-details {
-    background-color: #BCC5C9;
     float: left;
     width: 400px;
-    height: 100vh;
+    height: 81.3vh;
     display: inline;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #ccffcc;
 }
 
 .population-details-stats {
@@ -138,7 +140,7 @@ table.population thead tr {
 table.population tbody {
     display: block;
     overflow-y: auto;
-    height: 80vh;
+    height: 65vh;
     background-color: #ECF1F4;
 }
 
