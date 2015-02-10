@@ -1,5 +1,79 @@
 Darwin.vent = _.extend({}, Backbone.Events);
 
+var DashboardView = Backbone.View.extend({
+
+    tagName: "div",
+
+    className: "dashboard",
+
+    initialize: function(ga) {
+        this.ga = ga;
+        this.initSubviews();
+        this.registerCallbacks();
+    },
+
+    initSubviews: function() {
+        this.GenerationsCollection = Backbone.Collection.extend();
+        this.generationsCollection = new this.GenerationsCollection();
+        this.generationsView = new GenerationsView({ collection: this.generationsCollection });
+        this.generationDetailsView = new GenerationDetailsView();
+        this.candidateDetailsView = new CandidateDetailsView();
+    },
+
+    registerCallbacks: function() {
+        var self = this;
+        var gensMap = {};
+
+        this.listenTo(this.ga, "ga-started", function() {
+            //self.generationsTableView = new GenerationsTableView({
+            //    collection: generationsCollection
+            //});
+            //self.generationsView.render();
+            //$(".generations").replaceWith(this.generationsTableView.render().el);
+        });
+
+        this.listenTo(this.ga, "generation-started", function(generation) {
+            this.generationsCollection.add(generation);
+            var last = this.generationsCollection.last();
+            gensMap[last.get("generation")] = last;
+        });
+
+        this.listenTo(this.ga, "generation-finished", function(generation) {
+            var generationModel = gensMap[generation.generation];
+            generationModel.set(generation);
+            debugger;
+            this.generationDetailsView.model = generationModel;
+            this.generationDetailsView.render();
+            //$(".generationDetails").replaceWith(detailsView.render().el);
+        });
+    },
+
+    render: function() {
+        this.$el.html();
+        this.$el.append(this.generationsView.render().el);
+        this.$el.append(this.generationDetailsView.render().el);
+        //var candidateDetailsView = new CandidateDetailsView();
+        //this.$el.append(candidateDetailsView.render().el);
+        return this;
+    }
+});
+
+var GenerationsView = Backbone.View.extend({
+
+    className: "generations-container",
+
+    initialize: function() {
+        this.generationsTableView = new GenerationsTableView({ collection: this.collection });
+    },
+
+    render: function() {
+        this.$el.html("<p>Something</p>");
+        this.$el.append(this.generationsTableView.render().el);
+        return this;
+    }
+
+});
+
 var GenerationsTableView = Backbone.View.extend({
 
     tagName: "table",
@@ -12,7 +86,9 @@ var GenerationsTableView = Backbone.View.extend({
         this.selectedGenerationRowView = null;
         this.generationRowViews = [];
         this.listenTo(Darwin.vent, "generation-selected", this.selectGeneration);
-        this.listenTo(this.collection, "add", this.addGeneration);
+        if (this.collection) {
+            this.listenTo(this.collection, "add", this.addGeneration);
+        }
     },
 
     addGeneration: function(generation) {
@@ -77,7 +153,10 @@ var GenerationDetailsView = Backbone.View.extend({
 
     className: "generation-details",
 
-    template: _.template($("#generation-details-view").html()),
+    template: {
+        "full": _.template($("#generation-details-view").html()),
+        "empty": _.template($("#generation-details-view-empty").html())
+    },
 
     initialize: function() {
         this.listenTo(Darwin.vent, "generation-selected", this.generationSelected);
@@ -91,10 +170,15 @@ var GenerationDetailsView = Backbone.View.extend({
     // TODO listener if the model changes? how to do that?
 
     render: function() {
-        // TODO what if there is no model
-        this.$el.html(this.template(this.model.toJSON()));
-        var populationTableView = new PopulationTableView(this.model.get("population"));
-        this.$el.append(populationTableView.render().el);
+        this.$el.html();
+        if (this.model) {
+            // TODO what if there is no model
+            this.$el.html(this.template["full"](this.model.toJSON()));
+            var populationTableView = new PopulationTableView(this.model.get("population"));
+            this.$el.append(populationTableView.render().el);
+        } else {
+            this.$el.html(this.template["empty"]());
+        }
         return this;
     }
 
@@ -117,7 +201,7 @@ var PopulationTableView = Backbone.View.extend({
     render: function() {
         this.$el.html(this.template());
 
-        for (var i = 0; i < 15; i++) {
+        for (var i = 0; i < 30; i++) {
             var candidate = this.population[i];
             var candidateRowView = new CandidateRowView({candidate: candidate});
             this.$el.append(candidateRowView.render().el);

@@ -79,6 +79,12 @@
         </div>
     </script>
 
+    <script type="text/template" id="generation-details-view-empty">
+        <div class="population-details-stats">
+            <div>Empty</div>
+        </div>
+    </script>
+
     <script type="text/template" id="candidate-details-view">
         <p>Candidate Details View</p>
     </script>
@@ -86,14 +92,14 @@
 </head>
 <body>
 
-    <div class="dashboard">
-        <div class="generations-container">
-            <table class="generations">
-            </table>
-        </div>
-        <div class="generationDetails"></div>
-        <div class="candidate-details"></div>
-    </div>
+    <!--<div class="dashboard">-->
+        <!--<div class="generations-container">-->
+            <!--<table class="generations">-->
+            <!--</table>-->
+        <!--</div>-->
+        <!--<div class="generationDetails"></div>-->
+        <!--<div class="candidate-details"></div>-->
+    <!--</div>-->
 
     <script src="../../lib/jquery-2.1.1.js"></script>
     <script src="../../lib/underscore.js"></script>
@@ -106,7 +112,6 @@
     <script src="../../src/termination.js"></script>
     <script src="string-evolver.js"></script>
     <script>
-
     (function() {
         var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ !";
         var wordToFind = "EVOLVING HELLO WORLD!";
@@ -120,38 +125,8 @@
             <!-- terminationConditions: [new Darwin.Termination.MaxNumGens(50)] -->
         });
 
-
-        var Evolver = {};
-        Evolver.GenerationsCollection = Backbone.Collection.extend();
-        var generationsCollection = new Evolver.GenerationsCollection();
-
-        var callbacks = _.extend({}, Backbone.Events);
-
-        var gensMap = {};
-
-        callbacks.listenTo(stringEvolver, "ga-started", function() {
-            window.generationsTableView = new GenerationsTableView({
-                collection: generationsCollection
-            });
-            $(".generations").replaceWith(generationsTableView.render().el);
-        });
-
-        callbacks.listenTo(stringEvolver, "generation-started", function(generation) {
-            generationsCollection.add(generation);
-            var last = generationsCollection.last();
-            gensMap[last.get("generation")] = last;
-        });
-
-        callbacks.listenTo(stringEvolver, "generation-finished", function(generation) {
-            var generationModel = gensMap[generation.generation];
-            generationModel.set(generation);
-            if (!window.detailsView) {
-                window.detailsView = new GenerationDetailsView();
-            }
-            window.detailsView.model = generationModel;
-            $(".generationDetails").replaceWith(window.detailsView.render().el);
-        });
-
+        var dashboardView = new DashboardView(stringEvolver);
+        $("body").prepend(dashboardView.render().el);
         stringEvolver.run();
     })();
     </script>
