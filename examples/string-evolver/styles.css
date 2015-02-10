@@ -153,6 +153,14 @@ table.population tbody tr:hover {
     background-color: #ffffcc;
 }
 
+table.population tbody tr td {
+    width: 30px;
+}
+
+table.population tbody tr td + td {
+    width: 250px;
+}
+
 .candidate-details {
     float: left;
     width: 300px;
