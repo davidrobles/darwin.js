@@ -21,15 +21,9 @@ var DashboardView = Backbone.View.extend({
     },
 
     registerCallbacks: function() {
-        var self = this;
         var gensMap = {};
 
         this.listenTo(this.ga, "ga-started", function() {
-            //self.generationsTableView = new GenerationsTableView({
-            //    collection: generationsCollection
-            //});
-            //self.generationsView.render();
-            //$(".generations").replaceWith(this.generationsTableView.render().el);
         });
 
         this.listenTo(this.ga, "generation-started", function(generation) {
@@ -41,7 +35,6 @@ var DashboardView = Backbone.View.extend({
         this.listenTo(this.ga, "generation-finished", function(generation) {
             var generationModel = gensMap[generation.generation];
             generationModel.set(generation);
-            debugger;
             this.generationDetailsView.model = generationModel;
             this.generationDetailsView.render();
             //$(".generationDetails").replaceWith(detailsView.render().el);
