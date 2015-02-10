@@ -204,7 +204,8 @@ var PopulationTableView = Backbone.View.extend({
             var candidateRowView = new CandidateRowView({ model: candidate });
             this.candidateRowViews.push(candidateRowView);
             if (i == 0) {
-                this.selectCandidate(candidate);
+                candidateRowView.selectClick();
+                //this.selectCandidate(candidate);
             }
             this.$el.append(candidateRowView.render().el);
         }
@@ -243,6 +244,8 @@ var CandidateRowView = Backbone.View.extend({
         }));
         return this;
     },
+
+    // TODO fix this!!!!!!!!!!
 
     selectClick: function() {
         Darwin.vent.trigger("candidate-selected", this.model);
