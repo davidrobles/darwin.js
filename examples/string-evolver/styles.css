@@ -155,7 +155,7 @@ table.population tbody tr:hover {
 
 .candidate-details {
     float: left;
-    width: 100px;
+    width: 300px;
     height: 81vh;
     display: inline;
     border: 2px solid #ccffcc;

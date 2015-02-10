@@ -264,19 +264,26 @@ var CandidateDetailsView = Backbone.View.extend({
 
     className: "candidate-details",
 
-    template: _.template($("#candidate-details-view").html()),
+    template: {
+        "full": _.template($("#candidate-details-view").html()),
+        "empty": _.template($("#candidate-details-view-empty").html())
+    },
 
     initialize: function() {
-        this.candidate = null;
-        //this.listenTo(Darwin.vent, "candidate-selected", this.changeCandidate);
+        this.listenTo(Darwin.vent, "candidate-selected", this.changeCandidate);
     },
 
     render: function() {
-        this.$el.html("Candidate Details");
+        if (this.model) {
+            this.$el.html(this.template["full"](this.model.toJSON()));
+        } else {
+            this.$el.html(this.template["empty"]());
+        }
         return this;
     },
 
     changeCandidate: function(candidate) {
+        this.model = candidate;
         this.render();
     }
 
