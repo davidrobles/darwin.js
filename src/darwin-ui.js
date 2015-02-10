@@ -194,6 +194,7 @@ var PopulationTableView = Backbone.View.extend({
 
     initialize: function() {
         this.selectedCandidateRowView = null;
+        this.candidateRowViews = [];
         this.listenTo(Darwin.vent, "candidate-selected", this.candidateSelected);
     },
 
@@ -202,6 +203,7 @@ var PopulationTableView = Backbone.View.extend({
         for (var i = 0; i < 30; i++) {
             var candidate = this.collection.get(i);
             var candidateRowView = new CandidateRowView({ model: candidate });
+            this.candidateRowViews.push(candidateRowView);
             this.$el.append(candidateRowView.render().el);
         }
         return this;
@@ -217,16 +219,26 @@ var PopulationTableView = Backbone.View.extend({
         this.candidateRowView.render();
     },
 
-    candidateSelected: function(candidateRowView) {
+    candidateSelected: function(candidate) {
         if (this.selectedCandidateRowView) {
             this.selectedCandidateRowView.unselect();
         }
-        candidateRowView.select();
-        this.selectedCandidateRowView = candidateRowView;
-        //Darwin.vent.trigger("candidate-selected", this.selectedCandidateRowView.candidate);
+        this.selectedCandidateRowView = this.candidateRowViews[candidate.get("id")];
+        this.selectedCandidateRowView.select();
     }
 
 });
+
+//selectGeneration: function(generation) {
+//    if (this.selectedGenerationRowView) {
+//        if (this.selectedGenerationRowView.model.get("number") === generation.get("number")) {
+//            return;
+//        }
+//        this.selectedGenerationRowView.unselect();
+//    }
+//    this.selectedGenerationRowView = this.generationRowViews[generation.get("number")];
+//    this.selectedGenerationRowView.select();
+//}
 
 var CandidateRowView = Backbone.View.extend({
 
@@ -252,7 +264,7 @@ var CandidateRowView = Backbone.View.extend({
     },
 
     selectClick: function() {
-        Darwin.vent.trigger("candidate-selected", this);
+        Darwin.vent.trigger("candidate-selected", this.model);
     },
 
     select: function() {
