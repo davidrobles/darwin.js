@@ -109,7 +109,7 @@ table.generations th, table.generations td {
 
 .generation-details {
     float: left;
-    width: 300px;
+    width: 350px;
     height: 81.3vh;
     display: inline;
     margin: 10px;
@@ -123,7 +123,7 @@ table.generations th, table.generations td {
 
 table.population {
     border-spacing: 0;
-    width: 300px;
+    width: 340px;
 }
 
 table.population thead {
@@ -158,12 +158,12 @@ table.population tbody tr td {
 }
 
 table.population tbody tr td + td {
-    width: 250px;
+    width: 350px;
 }
 
 .candidate-details {
     float: left;
-    width: 300px;
+    width: 250px;
     height: 81vh;
     display: inline;
     border: 2px solid #ccffcc;
