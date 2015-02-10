@@ -243,13 +243,9 @@ var CandidateRowView = Backbone.View.extend({
             actual: this.model.get("candidate"),
             target: "EVOLVING HELLO WORLD!"
         });
-
-        var rendered = candidateLabelView.render();
-        var output = rendered.el.innerHTML;
-
         this.$el.html(this.template({
             id: this.model.get("id"),
-            candidate: output,
+            candidate: candidateLabelView.render().el.innerHTML,
             fitness: this.model.get("fitness")
         }));
         return this;
