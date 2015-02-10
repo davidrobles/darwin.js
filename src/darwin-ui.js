@@ -37,7 +37,6 @@ var DashboardView = Backbone.View.extend({
             generationModel.set(generation);
             this.generationDetailsView.model = generationModel;
             this.generationDetailsView.render();
-            //$(".generationDetails").replaceWith(detailsView.render().el);
         });
     },
 
