@@ -205,7 +205,6 @@ var PopulationTableView = Backbone.View.extend({
             this.candidateRowViews.push(candidateRowView);
             if (i == 0) {
                 candidateRowView.selectClick();
-                //this.selectCandidate(candidate);
             }
             this.$el.append(candidateRowView.render().el);
         }
