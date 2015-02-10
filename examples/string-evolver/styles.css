@@ -73,15 +73,15 @@ table.generations tbody td {
 }
 
 table.generations tbody td + td {
-    width: 280px
+    width: 200px
 }
 
 table.generations tbody td + td + td {
-    width: 110px
+    width: 90px
 }
 
 table.generations tbody td + td + td + td {
-    width: 110px
+    width: 90px
 }
 
 table.generations tbody tr:nth-child(even), table.population tbody tr:nth-child(even) {
@@ -109,7 +109,7 @@ table.generations th, table.generations td {
 
 .generation-details {
     float: left;
-    width: 400px;
+    width: 300px;
     height: 81.3vh;
     display: inline;
     margin: 10px;
@@ -123,7 +123,7 @@ table.generations th, table.generations td {
 
 table.population {
     border-spacing: 0;
-    width: 400px;
+    width: 300px;
 }
 
 table.population thead {
@@ -156,7 +156,9 @@ table.population tbody tr:hover {
 .candidate-details {
     float: left;
     width: 100px;
-    height: 100vh;
+    height: 81vh;
     display: inline;
-    background-color: #00ff00;
+    border: 2px solid #ccffcc;
+    margin: 10px;
+    padding: 10px;
 }

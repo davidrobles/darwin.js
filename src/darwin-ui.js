@@ -44,8 +44,7 @@ var DashboardView = Backbone.View.extend({
         this.$el.html();
         this.$el.append(this.generationsView.render().el);
         this.$el.append(this.generationDetailsView.render().el);
-        //var candidateDetailsView = new CandidateDetailsView();
-        //this.$el.append(candidateDetailsView.render().el);
+        this.$el.append(this.candidateDetailsView.render().el);
         return this;
     }
 });
