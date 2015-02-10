@@ -98,9 +98,13 @@ var GenerationsTableView = Backbone.View.extend({
 
     selectGeneration: function(generation) {
         if (this.selectedGenerationRowView) {
+            if (this.selectedGenerationRowView.model.get("number") === generation.get("number")) {
+                return;
+            }
             this.selectedGenerationRowView.unselect();
         }
         this.selectedGenerationRowView = this.generationRowViews[generation.get("number")];
+        this.selectedGenerationRowView.select();
     }
 
 });
@@ -115,7 +119,7 @@ var GenerationRowView = Backbone.View.extend({
     },
 
     events: {
-        "click": "select"
+        "click": "selectClick"
     },
 
     initialize: function() {
@@ -128,9 +132,13 @@ var GenerationRowView = Backbone.View.extend({
         return this;
     },
 
-    select: function() {
+    selectClick: function() {
         Darwin.vent.trigger("generation-selected", this.model);
+    },
+
+    select: function() {
         this.$el.css('background-color', '#91C2CE'); // TODO move this color to a class
+        console.log("selected");
     },
 
     unselect: function() {
