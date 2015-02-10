@@ -173,7 +173,8 @@ var GenerationDetailsView = Backbone.View.extend({
         if (this.model) {
             // TODO what if there is no model
             this.$el.html(this.template["full"](this.model.toJSON()));
-            var populationTableView = new PopulationTableView({ collection: this.model.get("population") });
+            var backCollection = new Backbone.Collection(this.model.get("population"));
+            var populationTableView = new PopulationTableView({ collection: backCollection });
             this.$el.append(populationTableView.render().el);
         } else {
             this.$el.html(this.template["empty"]());
@@ -199,8 +200,8 @@ var PopulationTableView = Backbone.View.extend({
     render: function() {
         this.$el.html(this.template());
         for (var i = 0; i < 30; i++) {
-            var candidate = this.collection[i];
-            var candidateRowView = new CandidateRowView({ candidate: candidate });
+            var candidate = this.collection.get(i);
+            var candidateRowView = new CandidateRowView({ model: candidate });
             this.$el.append(candidateRowView.render().el);
         }
         return this;
@@ -237,14 +238,9 @@ var CandidateRowView = Backbone.View.extend({
         "click": "selectClick"
     },
 
-    initialize: function(options) {
-        options = options || {};
-        this.candidate = options.candidate; // TODO remove this?
-    },
-
     render: function() {
         var candidateLabelView = new CandidateLabelView({
-            actual: this.candidate.candidate,
+            actual: this.model.get("candidate"),
             target: "EVOLVING HELLO WORLD!"
         });
 
@@ -252,9 +248,9 @@ var CandidateRowView = Backbone.View.extend({
         var output = rendered.el.innerHTML;
 
         this.$el.html(this.template({
-            id: this.candidate.id,
+            id: this.model.get("id"),
             candidate: output,
-            fitness: this.candidate.fitness
+            fitness: this.model.get("fitness")
         }));
         return this;
     },
