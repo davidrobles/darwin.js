@@ -173,7 +173,7 @@ var GenerationDetailsView = Backbone.View.extend({
         if (this.model) {
             // TODO what if there is no model
             this.$el.html(this.template["full"](this.model.toJSON()));
-            var populationTableView = new PopulationTableView(this.model.get("population"));
+            var populationTableView = new PopulationTableView({ collection: this.model.get("population") });
             this.$el.append(populationTableView.render().el);
         } else {
             this.$el.html(this.template["empty"]());
@@ -191,8 +191,7 @@ var PopulationTableView = Backbone.View.extend({
 
     template: _.template($("#population-table-view").html()),
 
-    initialize: function(population) {
-        this.population = population;
+    initialize: function() {
         this.selectedCandidateRowView = null;
         this.listenTo(Darwin.vent, "candidate-selected", this.candidateSelected);
     },
@@ -201,7 +200,7 @@ var PopulationTableView = Backbone.View.extend({
         this.$el.html(this.template());
 
         for (var i = 0; i < 30; i++) {
-            var candidate = this.population[i];
+            var candidate = this.collection[i];
             var candidateRowView = new CandidateRowView({candidate: candidate});
             this.$el.append(candidateRowView.render().el);
         }
