@@ -138,7 +138,6 @@ var GenerationRowView = Backbone.View.extend({
 
     select: function() {
         this.$el.css('background-color', '#91C2CE'); // TODO move this color to a class
-        console.log("selected");
     },
 
     unselect: function() {
