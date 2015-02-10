@@ -91,16 +91,6 @@
 
 </head>
 <body>
-
-    <!--<div class="dashboard">-->
-        <!--<div class="generations-container">-->
-            <!--<table class="generations">-->
-            <!--</table>-->
-        <!--</div>-->
-        <!--<div class="generationDetails"></div>-->
-        <!--<div class="candidate-details"></div>-->
-    <!--</div>-->
-
     <script src="../../lib/jquery-2.1.1.js"></script>
     <script src="../../lib/underscore.js"></script>
     <script src="../../lib/backbone.js"></script>
@@ -124,7 +114,6 @@
             terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)],
             <!-- terminationConditions: [new Darwin.Termination.MaxNumGens(50)] -->
         });
-
         var dashboardView = new DashboardView(stringEvolver);
         $("body").prepend(dashboardView.render().el);
         stringEvolver.run();
