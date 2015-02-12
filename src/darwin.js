@@ -85,7 +85,7 @@ var Darwin = Darwin || {};
         },
 
         checkTermination: function() {
-            if (!Darwin.Utils.shouldContinue(this.generations[this.generations.length - 1], this.terminationConditions)) {
+            if (!Darwin.Utils.shouldContinue(this.currentGeneration, this.terminationConditions)) {
                 this.trigger("ga-finished");
                 clearInterval(this.interval);
             }
