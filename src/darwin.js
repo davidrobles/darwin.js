@@ -9,12 +9,11 @@ var Darwin = Darwin || {};
         this.populationSize = options.populationSize; // TODO even population size?
         this.fitnessFunction = options.fitnessFunction;
         this.genIndFunc = options.genIndFunc;
-        this.generations = [];
         this.observers = options.observers;
         this.reproduce = options.reproduce;
         this.mutate = options.mutate;
         this.terminationConditions = options.terminationConditions;
-        this.notifCallbacks = {};
+        this.generations = [];
         this.currentGeneration = null;
     };
 
