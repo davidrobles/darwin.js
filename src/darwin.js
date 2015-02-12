@@ -81,7 +81,7 @@ var Darwin = Darwin || {};
 
         breed: function() {
             var newPopulation = [];
-            var halfLength = this.population.length / 2; // verify population size % 2 == 0?
+            var halfLength = this.population.length / 2;
             for (var i = 0; i < halfLength; i++) {
                 var parentA = Darwin.Selection.randomTopPercent(this.evaluatedPopulation);
                 var parentB = Darwin.Selection.randomTopPercent(this.evaluatedPopulation);
