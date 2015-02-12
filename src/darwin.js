@@ -46,7 +46,7 @@ var Darwin = Darwin || {};
             this.population = this.currentGeneration.id === 0 ?
                               Darwin.Utils.generatePopulation(this.genIndFunc, this.populationSize) :
                               this.breed();
-            this.trigger("population-generated");
+            this.trigger("population-generated", this.population);
         },
 
         evaluatePopulation: function() {
