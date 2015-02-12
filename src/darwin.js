@@ -1,6 +1,7 @@
 var Darwin = Darwin || {};
 
 (function() {
+
     "use strict";
 
     Darwin.GA = function(options) {
@@ -19,7 +20,77 @@ var Darwin = Darwin || {};
 
     Darwin.GA.prototype = {
 
-        newPopulations: function() {
+        run: function() {
+            this.trigger("ga-started");
+            this.interval = setInterval(jQuery.proxy(this, "evolutionaryStep"), 50);
+        },
+
+        evolutionaryStep: function() {
+            this.initGeneration();
+            this.generatePopulation();
+            this.evaluatePopulation();
+            this.sortPopulation();
+            this.computeStats();
+            this.checkTermination();
+        },
+
+        initGeneration: function() {
+            this.currentGeneration = { number: this.generations.length, status: "in-progress" };
+            this.trigger("generation-started", this.currentGeneration);
+        },
+
+        generatePopulation: function() {
+            // initial population
+            if (this.currentGeneration.number === 0) {
+                this.population = Darwin.Utils.generatePopulation(this.genIndFunc, this.populationSize);
+            }
+            // breed
+            else {
+                this.population = this.breed();
+            }
+            this.trigger("population-generated");
+        },
+
+        evaluatePopulation: function() {
+            this.evaluatedPopulation = Darwin.Utils.evaluatePopulation(this.population, this.fitnessFunction);
+            this.trigger("population-evaluated");
+        },
+
+        sortPopulation: function() {
+            this.evaluatedPopulation.sort(function(a, b) {
+                return b.fitness - a.fitness;
+            });
+            this.trigger("population-sorted");
+        },
+
+        computeStats: function() {
+            var totalFitness = this.evaluatedPopulation.map(function(candidate) {
+                return candidate.fitness;
+            })
+                .reduce(function(prev, cur) {
+                    return prev + cur;
+                });
+            var average = totalFitness / this.evaluatedPopulation.length;
+
+            // TODO extend object with _.extend
+            this.currentGeneration.averageFitness = average;
+            this.currentGeneration.bestCandidate = this.evaluatedPopulation[0].candidate;
+            this.currentGeneration.bestCandidateFitness = this.evaluatedPopulation[0].fitness;
+            this.currentGeneration.population = this.evaluatedPopulation; // sorted from best to worst?
+            this.currentGeneration.status = "complete";
+            this.generations.push(this.currentGeneration);
+            this.trigger("stats");
+        },
+
+        checkTermination: function() {
+            if (!Darwin.Utils.shouldContinue(this.generations[this.generations.length - 1], this.terminationConditions)) {
+                this.trigger("ga-finished");
+                clearInterval(this.interval);
+            }
+            this.trigger("generation-finished", this.currentGeneration);
+        },
+
+        breed: function() {
             var newPopulation = [];
             var halfLength = this.population.length / 2; // verify population size % 2 == 0?
             for (var i = 0; i < halfLength; i++) {
@@ -34,56 +105,11 @@ var Darwin = Darwin || {};
             return newPopulation;
         },
 
-        computeStats: function() {
-            var totalFitness = this.evaluatedPopulation.map(function(candidate) {
-                                                  return candidate.fitness;
-                                              })
-                                              .reduce(function(prev, cur) {
-                                                  return prev + cur;
-                                              });
-            var average = totalFitness / this.evaluatedPopulation.length;
-
-            // TODO extend object with _.extend
-            this.currentGeneration.averageFitness = average;
-            this.currentGeneration.bestCandidate = this.evaluatedPopulation[0].candidate;
-            this.currentGeneration.bestCandidateFitness = this.evaluatedPopulation[0].fitness;
-            this.currentGeneration.population = this.evaluatedPopulation; // sorted from best to worst?
-            this.currentGeneration.status = "complete";
-            this.generations.push(this.currentGeneration);
-        },
-
-        evolutionaryStep: function() {
-            // check if termination conditions are reached?
-            this.currentGeneration = { number: this.generations.length, status: "in-progress" };  // TODO merge
-            this.trigger("generation-started", this.currentGeneration);
-            this.evaluatedPopulation = Darwin.Utils.evaluatePopulation(this.population, this.fitnessFunction); // TODO merge
-            this.trigger("population-evaluated");
-            this.evaluatedPopulation.sort(function(a, b) {
-                return b.fitness - a.fitness;
-            });
-            this.trigger("population-sorted");
-            this.computeStats();
-            this.trigger("generation-finished", this.currentGeneration);
-            if (Darwin.Utils.shouldContinue(this.generations[this.generations.length - 1], this.terminationConditions)) {
-                this.population = this.newPopulations(); // TODO merge
-                this.trigger("population-generated");
-            } else {
-                this.trigger("ga-finished");
-                clearInterval(this.interval);
-            }
-        },
-
         reset: function() {
             this.population = [];
             this.evaluatedPopulation = [];
-        },
-
-        run: function() {
-            this.trigger("ga-started");
-            this.population = Darwin.Utils.generatePopulation(this.genIndFunc, this.populationSize);
-            this.trigger("population-generated");
-            this.interval = setInterval(jQuery.proxy(this, "evolutionaryStep"), 50);
         }
+
     };
 
     _.extend(Darwin.GA.prototype, Backbone.Events);
