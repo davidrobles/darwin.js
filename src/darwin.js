@@ -35,7 +35,10 @@ var Darwin = Darwin || {};
         },
 
         initGeneration: function() {
-            this.currentGeneration = { number: this.generations.length, status: "in-progress" };
+            this.currentGeneration = {
+                number: this.generations.length,
+                status: "in-progress"
+            };
             this.trigger("generation-started", this.currentGeneration);
         },
 
