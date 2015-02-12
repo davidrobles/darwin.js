@@ -234,7 +234,7 @@ var CandidateRowView = Backbone.View.extend({
     render: function() {
         var candidateLabelView = new CandidateLabelView({
             actual: this.model.get("candidate"),
-            target: "FINDING HELLO WORLD WITH EVOLUTION"
+            target: "HELLO WORLD"
         });
         this.$el.html(this.template({
             id: this.model.get("id"),
