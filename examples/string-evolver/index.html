@@ -118,8 +118,7 @@
             fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
             reproduce: Darwin.Operators.singlePointCrossover,
             mutate: StringEvolver.randomCharacterMutation,
-            terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)],
-            <!-- terminationConditions: [new Darwin.Termination.MaxNumGens(50)] -->
+            terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
         });
         var dashboardView = new DashboardView(stringEvolver);
         $("body").prepend(dashboardView.render().el);
