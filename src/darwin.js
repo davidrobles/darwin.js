@@ -73,7 +73,6 @@ var Darwin = Darwin || {};
                     return prev + cur;
                 });
             var average = totalFitness / this.evaluatedPopulation.length;
-
             // TODO extend object with _.extend
             this.currentGeneration.averageFitness = average;
             this.currentGeneration.bestCandidate = this.evaluatedPopulation[0].candidate;

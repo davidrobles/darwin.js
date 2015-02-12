@@ -199,7 +199,7 @@ var PopulationTableView = Backbone.View.extend({
 
     render: function() {
         this.$el.html(this.template());
-        for (var i = 0; i < 30; i++) {
+        for (var i = 0; i <this.collection.length; i++) {
             var candidate = this.collection.get(i);
             var candidateRowView = new CandidateRowView({ model: candidate });
             this.candidateRowViews.push(candidateRowView);

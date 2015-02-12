@@ -113,7 +113,7 @@
         var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         var wordToFind = "HELLO WORLD";
         var stringEvolver = new Darwin.GA({
-            populationSize: 500,
+            populationSize: 50,
             genIndFunc: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
             fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
             reproduce: Darwin.Operators.singlePointCrossover,
