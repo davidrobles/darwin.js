@@ -53,7 +53,7 @@
     </script>
 
     <script type="text/template" id="generation-row-view">
-        <td style="text-align: right;"><%= number %></td>
+        <td style="text-align: right;"><%= id %></td>
         <td><%= bestCandidate %></td>
         <td><span style="display: inline-block; text-align: right; width: 20px;"><%= bestCandidateFitness %></span>&nbsp;&nbsp;
         <div style="display: inline-block; color: #FF4209; background-color: #FF4209; width: <%= bestCandidateFitness %>px">|</div>
@@ -64,7 +64,7 @@
     </script>
 
     <script type="text/template" id="generation-row-view-in-progress">
-        <td><%= number %></td>
+        <td><%= id %></td>
         <td>In progress...</td>
         <td></td>
         <td></td>
@@ -72,7 +72,7 @@
 
     <script type="text/template" id="generation-details-view">
         <div class="population-details-stats">
-            <p>Generation:      <%= number %></p>
+            <p>Generation:      <%= id %></p>
             <p>Best candidate:  <%= bestCandidate %></p>
             <p>Best fitness:    <%= bestCandidateFitness %></p>
             <p>Average fitness: <%= averageFitness %></p>

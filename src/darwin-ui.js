@@ -97,12 +97,12 @@ var GenerationsTableView = Backbone.View.extend({
 
     selectGeneration: function(generation) {
         if (this.selectedGenerationRowView) {
-            if (this.selectedGenerationRowView.model.get("number") === generation.get("number")) {
+            if (this.selectedGenerationRowView.model.get("id") === generation.get("id")) {
                 return;
             }
             this.selectedGenerationRowView.unselect();
         }
-        this.selectedGenerationRowView = this.generationRowViews[generation.get("number")];
+        this.selectedGenerationRowView = this.generationRowViews[generation.get("id")];
         this.selectedGenerationRowView.select();
     }
 

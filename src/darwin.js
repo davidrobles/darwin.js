@@ -36,14 +36,14 @@ var Darwin = Darwin || {};
 
         initGeneration: function() {
             this.currentGeneration = {
-                number: this.generations.length,
+                id: this.generations.length,
                 status: "in-progress"
             };
             this.trigger("generation-started", this.currentGeneration);
         },
 
         generatePopulation: function() {
-            this.population = this.currentGeneration.number === 0 ?
+            this.population = this.currentGeneration.id === 0 ?
                               Darwin.Utils.generatePopulation(this.genIndFunc, this.populationSize) :
                               this.breed();
             this.trigger("population-generated");
