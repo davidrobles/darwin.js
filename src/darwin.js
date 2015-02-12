@@ -43,14 +43,9 @@ var Darwin = Darwin || {};
         },
 
         generatePopulation: function() {
-            // initial population
-            if (this.currentGeneration.number === 0) {
-                this.population = Darwin.Utils.generatePopulation(this.genIndFunc, this.populationSize);
-            }
-            // breed
-            else {
-                this.population = this.breed();
-            }
+            this.population = this.currentGeneration.number === 0 ?
+                              Darwin.Utils.generatePopulation(this.genIndFunc, this.populationSize) :
+                              this.breed();
             this.trigger("population-generated");
         },
 
