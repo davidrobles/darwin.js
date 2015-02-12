@@ -30,6 +30,7 @@ var Darwin = Darwin || {};
             this.evaluatePopulation();
             this.sortPopulation();
             this.computeStats();
+            this.endGeneration();
             this.checkTermination();
         },
 
@@ -66,21 +67,14 @@ var Darwin = Darwin || {};
         },
 
         computeStats: function() {
-            var totalFitness = this.evaluatedPopulation.map(function(candidate) {
-                return candidate.fitness;
-            })
-                .reduce(function(prev, cur) {
-                    return prev + cur;
-                });
-            var average = totalFitness / this.evaluatedPopulation.length;
-            // TODO extend object with _.extend
-            this.currentGeneration.averageFitness = average;
-            this.currentGeneration.bestCandidate = this.evaluatedPopulation[0].candidate;
-            this.currentGeneration.bestCandidateFitness = this.evaluatedPopulation[0].fitness;
-            this.currentGeneration.population = this.evaluatedPopulation; // sorted from best to worst?
+            _.extend(this.currentGeneration, Darwin.Utils.generateStats(this.evaluatedPopulation));
+            this.trigger("stats");
+        },
+
+        endGeneration: function() {
             this.currentGeneration.status = "complete";
             this.generations.push(this.currentGeneration);
-            this.trigger("stats");
+            this.trigger("generation-finished", this.currentGeneration);
         },
 
         checkTermination: function() {
@@ -88,7 +82,6 @@ var Darwin = Darwin || {};
                 this.trigger("ga-finished");
                 clearInterval(this.interval);
             }
-            this.trigger("generation-finished", this.currentGeneration);
         },
 
         breed: function() {
