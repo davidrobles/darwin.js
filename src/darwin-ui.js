@@ -56,8 +56,7 @@ var GenerationsView = Backbone.View.extend({
     },
 
     render: function() {
-        this.$el.html("<p>Something</p>");
-        this.$el.append(this.generationsTableView.render().el);
+        this.$el.html(this.generationsTableView.render().el);
         return this;
     }
 
