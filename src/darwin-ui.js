@@ -52,7 +52,9 @@ var GenerationsView = Backbone.View.extend({
     className: "generations-container",
 
     initialize: function() {
-        this.generationsTableView = new GenerationsTableView({ collection: this.collection });
+        this.generationsTableView = new GenerationsTableView({
+            collection: this.collection
+        });
     },
 
     render: function() {
