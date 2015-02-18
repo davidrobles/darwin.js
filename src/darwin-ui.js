@@ -2,8 +2,6 @@ Darwin.vent = _.extend({}, Backbone.Events);
 
 var DashboardView = Backbone.View.extend({
 
-    tagName: "div",
-
     className: "dashboard",
 
     initialize: function(ga) {
@@ -147,8 +145,6 @@ var GenerationRowView = Backbone.View.extend({
 
 var GenerationDetailsView = Backbone.View.extend({
 
-    tagName: "div",
-
     className: "generation-details",
 
     template: {
@@ -265,8 +261,6 @@ var CandidateRowView = Backbone.View.extend({
 
 var CandidateDetailsView = Backbone.View.extend({
 
-    tagName: "div",
-
     className: "candidate-details",
 
     template: {
@@ -288,6 +282,7 @@ var CandidateDetailsView = Backbone.View.extend({
     },
 
     changeCandidate: function(candidate) {
+        console.log("here");
         this.model = candidate;
         this.render();
     }
