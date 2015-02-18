@@ -282,7 +282,6 @@ var CandidateDetailsView = Backbone.View.extend({
     },
 
     changeCandidate: function(candidate) {
-        console.log("here");
         this.model = candidate;
         this.render();
     }
