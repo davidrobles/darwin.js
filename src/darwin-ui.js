@@ -157,6 +157,7 @@ var GenerationDetailsView = Backbone.View.extend({
     },
 
     initialize: function() {
+        this.populationTableView = null;
         this.listenTo(Darwin.vent, "generation-selected", this.generationSelected);
     },
 
@@ -168,13 +169,15 @@ var GenerationDetailsView = Backbone.View.extend({
     // TODO listener if the model changes? how to do that?
 
     render: function() {
-        this.$el.html();
         if (this.model) {
-            // TODO what if there is no model
             this.$el.html(this.template["full"](this.model.toJSON()));
-            var backCollection = new Backbone.Collection(this.model.get("population"));
-            var populationTableView = new PopulationTableView({ collection: backCollection });
-            this.$el.append(populationTableView.render().el);
+            if (this.populationTableView) {
+                this.populationTableView.remove();
+            }
+            this.populationTableView = new PopulationTableView({
+                collection: new Backbone.Collection(this.model.get("population"))
+            });
+            this.$el.append(this.populationTableView.render().el);
         } else {
             this.$el.html(this.template["empty"]());
         }
