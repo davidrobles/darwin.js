@@ -101,3 +101,13 @@ table.population th, table.population td {
 table.population th + th, table.population td + td {
     width: 100px;
 }
+
+/****************************/
+/** Candidate Details View **/
+/****************************/
+
+.candidate-details-view {
+    height: 75vh;
+    min-width: 200px;
+    padding: 10px;
+}

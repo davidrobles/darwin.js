@@ -287,7 +287,7 @@ var CandidateRowView = SelectableRowView.extend({
 
 var CandidateDetailsView = Backbone.View.extend({
 
-    className: "widget",
+    className: "widget candidate-details-view",
 
     template: {
         "full": _.template($("#candidate-details-view").html()),
