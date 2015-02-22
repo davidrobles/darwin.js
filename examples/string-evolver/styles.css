@@ -23,14 +23,6 @@ body p {
     font-size: 0.95em;
 }
 
-.generations-container {
-    float: left;
-    margin: 10px;
-    padding: 10px;
-    background-color: #313842;
-    border: 2px solid #363f4a;
-}
-
 /**************/
 /** EA Table **/
 /**************/
