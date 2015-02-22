@@ -25,7 +25,7 @@ body p {
     display: inline;
     margin: 10px 0 0 10px;
     background-color: #313842;
-    border: 2px solid #363f4a;
+    /*border: 2px solid #363f4a;*/
     color: #b5bfcc;
 }
 
@@ -52,6 +52,7 @@ table.ea th, table.ea td {
     border-bottom: 2px solid #363f4a;
     text-align: left;
     padding: 0.7em;
+
 }
 
 table.ea tbody {
@@ -60,6 +61,22 @@ table.ea tbody {
 
 table.ea tr.selected, table.ea tr.selected:hover {
     background-color: #252b34;
+}
+
+table.ea td:first-child {
+    border-left: 2px solid #363f4a;
+}
+
+table.ea tr.selected td:first-child {
+    border-left: 2px solid #252b34;
+}
+
+table.ea td:last-child {
+    border-right: 2px solid #363f4a;
+}
+
+table.ea tr.selected td:last-child {
+    border-right: 2px solid #252b34;
 }
 
 table.ea tbody tr:hover {

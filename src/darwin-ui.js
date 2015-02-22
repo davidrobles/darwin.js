@@ -268,7 +268,7 @@ var CandidateRowView = SelectableRowView.extend({
     render: function() {
         var candidateLabelView = new CandidateLabelView({
             actual: this.model.get("candidate"),
-            target: "HELLO WORLD"
+            target: "EVOLUTION"
         });
         this.$el.html(this.template({
             id: this.model.get("id"),
