@@ -43,12 +43,10 @@ table.ea thead {
     display: table-header-group;
 }
 
-table.ea th {
-    border-bottom: 2px solid #363f4a;
-}
-
 table.ea th, table.ea td {
+    border-bottom: 2px solid #363f4a;
     text-align: left;
+    padding: 0.7em;
 }
 
 table.ea tbody {
@@ -63,14 +61,6 @@ table.ea tbody tr:hover {
     cursor: pointer;
     background-color: #363f4a;
     border-right: 2px solid #363f4a;
-}
-
-table.ea td {
-    border-bottom: 2px solid #363f4a;
-}
-
-table.ea th, table.ea td {
-    padding: 0.7em;
 }
 
 /***********************/
