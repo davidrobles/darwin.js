@@ -54,7 +54,7 @@ var DashboardView = Backbone.View.extend({
     initSubviews: function() {
         this.GenerationsCollection = Backbone.Collection.extend();
         this.generationsCollection = new this.GenerationsCollection();
-        this.generationsView = new GenerationsView({ collection: this.generationsCollection });
+        this.generationsTableView = new GenerationsTableView({ collection: this.generationsCollection });
         this.generationDetailsView = new GenerationDetailsView();
         this.candidateDetailsView = new CandidateDetailsView();
         this.configurationView = new EAConfigurationView(this.ga);
@@ -89,26 +89,9 @@ var DashboardView = Backbone.View.extend({
     render: function() {
         this.$el.empty();
         this.$el.append(this.configurationView.render().el);
-        this.$el.append(this.generationsView.render().el);
+        this.$el.append(this.generationsTableView.render().el);
         this.$el.append(this.generationDetailsView.render().el);
         this.$el.append(this.candidateDetailsView.render().el);
-        return this;
-    }
-
-});
-
-var GenerationsView = Backbone.View.extend({
-
-    className: "generations-container",
-
-    initialize: function() {
-        this.generationsTableView = new GenerationsTableView({
-            collection: this.collection
-        });
-    },
-
-    render: function() {
-        this.$el.html(this.generationsTableView.render().el);
         return this;
     }
 
