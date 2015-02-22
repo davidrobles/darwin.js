@@ -19,11 +19,6 @@ var Darwin = Darwin || {};
 
     Darwin.GA.prototype = {
 
-        run: function() {
-            this.trigger("ga-started");
-            this.interval = setInterval(jQuery.proxy(this, "evolutionaryStep"), 50);
-        },
-
         evolutionaryStep: function() {
             this.initGeneration();
             this.generatePopulation();
@@ -94,9 +89,20 @@ var Darwin = Darwin || {};
             return newPopulation;
         },
 
+        // Controls
+
+        start: function() {
+            this.trigger("ga-started");
+            this.interval = setInterval(jQuery.proxy(this, "evolutionaryStep"), 50);
+        },
+
         reset: function() {
+            clearInterval(this.interval);
+            this.generations = [];
+            this.currentGeneration = null;
             this.population = [];
             this.evaluatedPopulation = [];
+            this.trigger("reset");
         }
 
     };

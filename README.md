@@ -19,3 +19,4 @@ Callbacks
 | population-evaluated       | Fires when the population is evaluated at the beginning of a generation
 | generation-finished        | Fires when a new generation ends
 | ea-finished                | Fires once, when the EA ends
+| reset                      | Fires when the EA is reset

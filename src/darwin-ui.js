@@ -7,7 +7,8 @@ var EAConfigurationView = Backbone.View.extend({
     template: _.template($("#ea-configuration-view").html()),
 
     events: {
-        "click .start": "start"
+        "click .start": "start",
+        "click .reset": "reset"
     },
 
     initialize: function(ga) {
@@ -20,14 +21,22 @@ var EAConfigurationView = Backbone.View.extend({
     },
 
     start: function() {
-        this.disableAll();
+        this.run();
         this.ga.populationSize = parseInt(this.$(".population-size").val());
-        this.ga.run();
+        this.ga.start();
     },
 
-    disableAll: function() {
+    run: function() {
         this.$(".population-size").prop("disabled", true);
         this.$(".start").prop("disabled", true);
+        this.$(".reset").prop("disabled", false);
+    },
+
+    reset: function() {
+        this.$(".population-size").prop("disabled", false);
+        this.$(".start").prop("disabled", false);
+        this.$(".reset").prop("disabled", true);
+        this.ga.reset();
     }
 
 });
@@ -54,6 +63,11 @@ var DashboardView = Backbone.View.extend({
     registerCallbacks: function() {
         var gensMap = {};
 
+        this.listenTo(this.ga, "reset", function() {
+            this.initSubviews();
+            this.render();
+        });
+
         this.listenTo(this.ga, "ga-started", function() {
         });
 
@@ -72,7 +86,7 @@ var DashboardView = Backbone.View.extend({
     },
 
     render: function() {
-        this.$el.html();
+        this.$el.empty();
         this.$el.append(this.configurationView.render().el);
         this.$el.append(this.generationsView.render().el);
         this.$el.append(this.generationDetailsView.render().el);
