@@ -69,7 +69,7 @@ var Darwin = Darwin || {};
 
         checkTermination: function() {
             if (!Darwin.Utils.shouldContinue(this.currentGeneration, this.terminationConditions)) {
-                this.trigger("ga-finished");
+                this.trigger("ea-finished");
                 clearInterval(this.interval);
             }
         },
@@ -92,7 +92,7 @@ var Darwin = Darwin || {};
         // Controls
 
         start: function() {
-            this.trigger("ga-started");
+            this.trigger("ea-started");
             this.interval = setInterval(jQuery.proxy(this, "evolutionaryStep"), 50);
         },
 

@@ -69,7 +69,7 @@ var DashboardView = Backbone.View.extend({
             this.render();
         });
 
-        this.listenTo(this.ga, "ga-started", function() {
+        this.listenTo(this.ga, "ea-started", function() {
         });
 
         this.listenTo(this.ga, "generation-started", function(generation) {
