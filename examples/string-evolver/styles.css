@@ -80,14 +80,6 @@ table.generations thead th + th, table.generations tbody td + td {
     width: 100px;
 }
 
-table.generations tbody tr:nth-child(even), table.population tbody tr:nth-child(even) {
-    /*background: #ffffff;*/
-}
-
-table.generations tbody tr:nth-child(odd), table.population tbody tr:nth-child(odd) {
-    /*background: #ECF1F4;*/
-}
-
 .generation-details {
     float: left;
     width: 350px;
