@@ -1,5 +1,5 @@
 body {
-    font-family: "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;
+    font-family: "Menlo", "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;;
     font-size: 12px;
     margin: 0;
     background-color: #252b34;
@@ -82,7 +82,7 @@ table.generations th, table.generations td {
 }
 
 table.generations th + th, table.generations td + td {
-    width: 100px;
+    width: 120px;
 }
 
 /**********************/
