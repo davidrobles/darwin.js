@@ -67,14 +67,10 @@
     </script>
 
     <script type="text/template" id="generation-row-view">
-        <td style="text-align: right;"><%= id %></td>
+        <td><%= id %></td>
         <td><%= bestCandidate %></td>
-        <td><span style="display: inline-block; text-align: right; width: 20px;"><%= bestCandidateFitness %></span>&nbsp;&nbsp;
-        <div style="display: inline-block; color: #FF4209; background-color: #FF4209; width: <%= bestCandidateFitness %>px">|</div>
-        </td>
-        <td><span style="display: inline-block; text-align: right; width: 20px;"><%= averageFitness.toFixed(2) %></span>&nbsp;&nbsp;
-            <div style="display: inline-block; color: #1B222D; background-color: #1B222D; width: <%= averageFitness %>px">|</div>
-        </td>
+        <td><%= bestCandidateFitness %></td>
+        <td><%= averageFitness.toFixed(2) %></td>
     </script>
 
     <script type="text/template" id="generation-row-view-in-progress">

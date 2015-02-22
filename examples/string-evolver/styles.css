@@ -16,6 +16,19 @@ body p {
     font-size: 0.95em;
 }
 
+/************/
+/** Widget **/
+/************/
+
+.widget {
+    float: left;
+    display: inline;
+    margin: 10px 0 0 10px;
+    background-color: #313842;
+    border: 2px solid #363f4a;
+    color: #b5bfcc;
+}
+
 /**************/
 /** EA Table **/
 /**************/
@@ -23,6 +36,26 @@ body p {
 table.ea {
     color: #ECF1F4;
     border-spacing: 0;
+    text-align: left;
+}
+
+table.ea thead {
+    display: table-header-group;
+}
+
+table.ea thead th {
+    border-bottom: 2px solid #363f4a;
+}
+
+table.ea thead tr {
+    border-bottom: 2px solid #363f4a;
+    /*display: block;*/
+    /*width: 100%;*/
+}
+
+table.ea th, table.ea td {
+    width: 200px;
+    text-align: left;
 }
 
 table.ea tbody {
@@ -47,55 +80,25 @@ table.ea tbody tr td {
     border-bottom: 2px solid #363f4a;
 }
 
+table.ea th, table.ea td {
+    padding: 0.7em;
+}
+
 /***********************/
 /** Generations Table **/
 /***********************/
-
-table.generations thead {
-    text-align: left;
-}
-
-table.generations thead tr {
-    display: block;
-    width: 10px;
-    height: 5vh;
-}
-
-table.generations thead tr + tr {
-    width: 240px
-}
-
-table.generations thead tr + tr + tr {
-    width: 110px
-}
-
-table.generations thead tr + tr + tr + tr {
-    width: 110px
-}
-
-table.generations tbody tr {
-    height: 30px;
-}
 
 table.generations tbody {
     overflow-y: auto;
     height: 70vh;
 }
 
-table.generations tbody td {
-    width: 10px
+table.generations thead th, table.generations tbody td {
+    width: 20px;
 }
 
-table.generations tbody td + td {
-    width: 200px
-}
-
-table.generations tbody td + td + td {
-    width: 90px
-}
-
-table.generations tbody td + td + td + td {
-    width: 90px
+table.generations thead th + th, table.generations tbody td + td {
+    width: 120px;
 }
 
 table.generations tbody tr:nth-child(even), table.population tbody tr:nth-child(even) {
@@ -104,16 +107,6 @@ table.generations tbody tr:nth-child(even), table.population tbody tr:nth-child(
 
 table.generations tbody tr:nth-child(odd), table.population tbody tr:nth-child(odd) {
     /*background: #ECF1F4;*/
-}
-
-table.generations tfoot  {
-    background-color: #BCC5C9;
-    color: #ECF1F4;
-    text-align: right;
-}
-
-table.generations th, table.generations td {
-    padding: 0.7em;
 }
 
 .generation-details {
@@ -159,18 +152,4 @@ table.population tbody tr td {
 
 table.population tbody tr td + td {
     width: 350px;
-}
-
-/************/
-/** Widget **/
-/************/
-
-.widget {
-    float: left;
-    display: inline;
-    padding: 10px;
-    margin: 10px 0 0 10px;
-    background-color: #313842;
-    border: 2px solid #363f4a;
-    color: #b5bfcc;
 }
