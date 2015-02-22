@@ -207,7 +207,8 @@ var GenerationDetailsView = Backbone.View.extend({
 
     render: function() {
         if (this.model) {
-            this.$el.html(this.template["full"](this.model.toJSON()));
+            //this.$el.html(this.template["full"](this.model.toJSON()));
+            this.$el.html();
             if (this.populationTableView) {
                 this.populationTableView.remove();
             }

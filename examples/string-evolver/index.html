@@ -34,28 +34,16 @@
         <tbody></tbody>
     </script>
 
-    <script type="text/template" id="generationsTableViewFooter">
-        <tfoot>
-            <td colspan="2" style="text-align: left">
-            Displaying generations 1 - 20 of 250
-            </td>
-            <td colspan="3">
-            &lt; Page
-            <input type="text" value="1" style="width: 30px; text-align: center;" />
-            of <%= totalPages %> &gt;
-            </td>
-        </tfoot>
-    </script>
-
     <script type="text/template" id="population-table-view">
         <thead>
-        <tr>
-            <th colspan="2" style="font-size: 1.4em; width: 200px; text-align: center;">Population</th>
-        </tr>
-        <tr>
-            <th>Best Candidate</th>
-            <th>Fitness</th>
-        </tr>
+            <tr>
+                <th colspan="3" style="font-size: 1.4em; width: 200px; text-align: center;">Population</th>
+            </tr>
+            <tr>
+                <th>#</th>
+                <th>Best Candidate</th>
+                <th>Fitness</th>
+            </tr>
         </thead>
         <tbody></tbody>
     </script>
@@ -81,18 +69,18 @@
     </script>
 
     <script type="text/template" id="generation-details-view">
-        <div class="population-details-stats">
-            <p>Generation:      <%= id %></p>
-            <p>Best candidate:  <%= bestCandidate %></p>
-            <p>Best fitness:    <%= bestCandidateFitness %></p>
-            <p>Average fitness: <%= averageFitness %></p>
-        </div>
+        <!--<div class="population-details-stats">-->
+            <!--<p>Generation:      <%= id %></p>-->
+            <!--<p>Best candidate:  <%= bestCandidate %></p>-->
+            <!--<p>Best fitness:    <%= bestCandidateFitness %></p>-->
+            <!--<p>Average fitness: <%= averageFitness %></p>-->
+        <!--</div>-->
     </script>
 
     <script type="text/template" id="generation-details-view-empty">
-        <div class="population-details-stats">
-            <div>Empty</div>
-        </div>
+        <!--<div class="population-details-stats">-->
+            <!--<div>Empty</div>-->
+        <!--</div>-->
     </script>
 
     <script type="text/template" id="candidate-details-view">

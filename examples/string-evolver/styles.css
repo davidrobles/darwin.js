@@ -72,55 +72,27 @@ table.generations tbody {
     height: 70vh;
 }
 
-table.generations thead th, table.generations tbody td {
+table.generations th, table.generations td {
     width: 20px;
 }
 
-table.generations thead th + th, table.generations tbody td + td {
+table.generations th + th, table.generations td + td {
     width: 100px;
-}
-
-.generation-details {
-    float: left;
-    width: 350px;
-    height: 81.3vh;
-    display: inline;
-    margin: 10px;
-    padding: 10px;
-    border: 2px solid #ccffcc;
-}
-
-.population-details-stats {
-    height: 10vh;
 }
 
 /**********************/
 /** Population Table **/
 /**********************/
 
-table.population {
-    border-spacing: 0;
-    width: 340px;
-}
-
-table.population thead tr {
-    display: block;
-    height: 3vh;
-}
-
 table.population tbody {
     overflow-y: auto;
-    height: 65vh;
+    height: 70vh;
 }
 
-table.population tbody tr {
-    height: 30px;
+table.population th, table.population td {
+    width: 20px;
 }
 
-table.population tbody tr td {
-    width: 30px;
-}
-
-table.population tbody tr td + td {
-    width: 350px;
+table.population th + th, table.population td + td {
+    width: 100px;
 }
