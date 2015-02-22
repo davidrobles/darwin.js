@@ -268,7 +268,7 @@ var CandidateRowView = SelectableRowView.extend({
     render: function() {
         var candidateLabelView = new CandidateLabelView({
             actual: this.model.get("candidate"),
-            target: "HELLO"
+            target: "HELLO WORLD"
         });
         this.$el.html(this.template({
             id: this.model.get("id"),
@@ -326,9 +326,9 @@ var CandidateLabelView = Backbone.View.extend({
     render: function() {
         for (var i = 0; i < this.target.length; i++) {
             if (this.target.charAt(i) === this.actual.charAt(i)) {
-                this.$el.append('<span style="color: #ff0000;">' + this.actual.charAt(i) + '</span>');
+                this.$el.append('<span style="color: #00ff00;">' + this.actual.charAt(i) + '</span>');
             } else {
-                this.$el.append('<span style="color: #00ff00;">' + this.actual.charAt(i) + "</span>");
+                this.$el.append('<span style="color: #ff0000;">' + this.actual.charAt(i) + "</span>");
             }
         }
         return this;
