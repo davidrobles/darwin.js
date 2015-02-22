@@ -27,7 +27,7 @@ var EAConfigurationView = Backbone.View.extend({
 
     disableAll: function() {
         this.$(".population-size").prop("disabled", true);
-        this.$(".start-ea").prop("disabled", true);
+        this.$(".start").prop("disabled", true);
     }
 
 });
