@@ -142,7 +142,6 @@ var GenerationsTableView = Backbone.View.extend({
 
 });
 
-// TODO fix this
 var SelectableRowView = Backbone.View.extend({
 
     tagName: "tr",
