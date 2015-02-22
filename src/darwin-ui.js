@@ -260,7 +260,6 @@ var PopulationTableView = Backbone.View.extend({
 
 });
 
-// todo use inheritance to avoid repeating table selection?
 var CandidateRowView = SelectableRowView.extend({
 
     template: _.template($("#candidate-row-view").html()),
