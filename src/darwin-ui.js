@@ -186,8 +186,6 @@ var GenerationRowView = SelectableRowView.extend({
 
 var GenerationDetailsView = Backbone.View.extend({
 
-    className: "widget",
-
     template: {
         "full": _.template($("#generation-details-view").html()),
         "empty": _.template($("#generation-details-view-empty").html())
@@ -228,7 +226,7 @@ var PopulationTableView = Backbone.View.extend({
 
     tagName: "table",
 
-    className: "ea population",
+    className: "ea population widget",
 
     template: _.template($("#population-table-view").html()),
 

@@ -1,5 +1,5 @@
 body {
-    font-family: "Tahoma";
+    font-family: "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;
     font-size: 12px;
     margin: 0;
     background-color: #252b34;
@@ -37,6 +37,11 @@ table.ea {
     color: #ecf1f4;
     border-spacing: 0;
     text-align: left;
+}
+
+table.ea th.table-title {
+    text-align: center;
+    font-size: 1.3em;
 }
 
 table.ea thead {
