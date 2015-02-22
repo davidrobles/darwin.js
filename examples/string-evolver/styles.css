@@ -43,16 +43,11 @@ table.ea thead {
     display: table-header-group;
 }
 
-table.ea thead th {
-    border-bottom: 2px solid #363f4a;
-}
-
-table.ea thead tr {
+table.ea th {
     border-bottom: 2px solid #363f4a;
 }
 
 table.ea th, table.ea td {
-    width: 200px;
     text-align: left;
 }
 
