@@ -74,7 +74,7 @@ table.ea tbody tr:hover {
 
 table.generations tbody {
     overflow-y: auto;
-    height: 70vh;
+    height: 90vh;
 }
 
 table.generations th, table.generations td {
@@ -91,7 +91,7 @@ table.generations th + th, table.generations td + td {
 
 table.population tbody {
     overflow-y: auto;
-    height: 70vh;
+    height: 90vh;
 }
 
 table.population th, table.population td {
@@ -107,7 +107,7 @@ table.population th + th, table.population td + td {
 /****************************/
 
 .candidate-details-view {
-    height: 75vh;
+    height: 95vh;
     min-width: 200px;
     padding: 10px;
 }
