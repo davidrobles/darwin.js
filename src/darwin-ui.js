@@ -5,7 +5,7 @@ var EAConfigurationView = Backbone.View.extend({
     template: _.template($("#ea-configuration-view").html()),
 
     events: {
-        "click .start-ea": "startClick"
+        "click .start": "start"
     },
 
     initialize: function(ga) {
@@ -17,7 +17,7 @@ var EAConfigurationView = Backbone.View.extend({
         return this;
     },
 
-    startClick: function() {
+    start: function() {
         this.disableAll();
         this.ga.populationSize = parseInt(this.$(".population-size").val());
         this.ga.run();
