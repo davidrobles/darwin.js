@@ -27,11 +27,11 @@ var DashboardView = Backbone.View.extend({
         this.listenTo(this.ga, "generation-started", function(generation) {
             this.generationsCollection.add(generation);
             var last = this.generationsCollection.last();
-            gensMap[last.get("generation")] = last;
+            gensMap[last.get("id")] = last;
         });
 
         this.listenTo(this.ga, "generation-finished", function(generation) {
-            var generationModel = gensMap[generation.generation];
+            var generationModel = gensMap[generation.id];
             generationModel.set(generation);
             this.generationDetailsView.model = generationModel;
             this.generationDetailsView.render();
