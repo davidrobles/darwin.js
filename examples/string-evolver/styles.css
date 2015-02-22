@@ -55,10 +55,6 @@ table.ea tbody {
     display: block;
 }
 
-table.ea tbody tr {
-    border-right: 2px solid #363f4a;
-}
-
 table.ea tr.selected, table.ea tr.selected:hover {
     background-color: #252b34;
 }
@@ -91,7 +87,7 @@ table.generations thead th, table.generations tbody td {
 }
 
 table.generations thead th + th, table.generations tbody td + td {
-    width: 120px;
+    width: 100px;
 }
 
 table.generations tbody tr:nth-child(even), table.population tbody tr:nth-child(even) {
