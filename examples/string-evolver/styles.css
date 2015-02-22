@@ -9,6 +9,7 @@ body {
     font-family: "Tahoma";
     font-size: 12px;
     margin: 0;
+    background-color: #252b34;
 }
 
 body p {
@@ -16,7 +17,7 @@ body p {
 }
 
 .dashboard {
-    background-color: #0b97c4;
+    background-color: #252b34;
     height: 100vh;
     margin: 0;
     font-size: 0.95em;
@@ -26,17 +27,42 @@ body p {
     float: left;
     margin: 10px;
     padding: 10px;
-    border: 2px solid #ccffcc;
+    background-color: #313842;
+    border: 2px solid #363f4a;
 }
 
-table.generations {
+/**************/
+/** EA Table **/
+/**************/
+
+table.ea {
+    color: #ECF1F4;
     border-spacing: 0;
-    background-color: #ECF1F4;
 }
+
+table.ea tbody {
+    display: block;
+}
+
+table.ea tbody tr {
+    border-right: 2px solid #363f4a;
+}
+
+table.ea tbody tr:hover {
+    cursor: pointer;
+    background-color: #363f4a;
+    border-right: 2px solid #363f4a;
+}
+
+table.ea tbody tr td {
+    border-bottom: 2px solid #363f4a;
+}
+
+/***********************/
+/** Generations Table **/
+/***********************/
 
 table.generations thead {
-    background-color: #5F6D79;
-    color: #ECF1F4;
     text-align: left;
 }
 
@@ -63,7 +89,6 @@ table.generations tbody tr {
 }
 
 table.generations tbody {
-    display: block;
     overflow-y: auto;
     height: 70vh;
 }
@@ -85,16 +110,11 @@ table.generations tbody td + td + td + td {
 }
 
 table.generations tbody tr:nth-child(even), table.population tbody tr:nth-child(even) {
-    background: #ffffff;
+    /*background: #ffffff;*/
 }
 
 table.generations tbody tr:nth-child(odd), table.population tbody tr:nth-child(odd) {
-    background: #ECF1F4;
-}
-
-table.generations tbody tr:hover {
-    cursor: pointer;
-    background-color: #ffffcc;
+    /*background: #ECF1F4;*/
 }
 
 table.generations tfoot  {
@@ -121,16 +141,20 @@ table.generations th, table.generations td {
     height: 10vh;
 }
 
+/**********************/
+/** Population Table **/
+/**********************/
+
 table.population {
     border-spacing: 0;
     width: 340px;
 }
 
-table.population thead {
-    background-color: #5F6D79;
-    color: #ECF1F4;
-    text-align: left;
-}
+/*table.population thead {*/
+    /*background-color: #5F6D79;*/
+    /*color: #ECF1F4;*/
+    /*text-align: left;*/
+/*}*/
 
 table.population thead tr {
     display: block;
@@ -138,20 +162,18 @@ table.population thead tr {
 }
 
 table.population tbody {
-    display: block;
     overflow-y: auto;
     height: 65vh;
-    background-color: #ECF1F4;
 }
 
 table.population tbody tr {
     height: 30px;
 }
 
-table.population tbody tr:hover {
-    cursor: pointer;
-    background-color: #ffffcc;
-}
+/*table.population tbody tr:hover {*/
+    /*cursor: pointer;*/
+    /*background-color: #ffffcc;*/
+/*}*/
 
 table.population tbody tr td {
     width: 30px;
@@ -174,7 +196,9 @@ table.population tbody tr td + td {
 .widget {
     float: left;
     display: inline;
-    border: 2px solid #ccffcc;
     padding: 10px;
     margin: 10px 0 0 10px;
+    background-color: #313842;
+    border: 2px solid #363f4a;
+    color: #b5bfcc;
 }

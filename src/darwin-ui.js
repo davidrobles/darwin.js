@@ -118,7 +118,7 @@ var GenerationsTableView = Backbone.View.extend({
 
     tagName: "table",
 
-    className: "generations",
+    className: "ea generations widget",
 
     template: _.template($("#generations-table-view").html()),
 
@@ -187,7 +187,7 @@ var GenerationRowView = Backbone.View.extend({
     },
 
     select: function() {
-        this.$el.css('background-color', '#91C2CE'); // TODO move this color to a class
+        this.$el.css('background-color', '#252b34'); // TODO move this color to a class
     },
 
     unselect: function() {
@@ -198,7 +198,7 @@ var GenerationRowView = Backbone.View.extend({
 
 var GenerationDetailsView = Backbone.View.extend({
 
-    className: "generation-details",
+    className: "widget",
 
     template: {
         "full": _.template($("#generation-details-view").html()),
@@ -239,7 +239,7 @@ var PopulationTableView = Backbone.View.extend({
 
     tagName: "table",
 
-    className: "population",
+    className: "ea population",
 
     template: _.template($("#population-table-view").html()),
 
@@ -286,7 +286,7 @@ var CandidateRowView = Backbone.View.extend({
     render: function() {
         var candidateLabelView = new CandidateLabelView({
             actual: this.model.get("candidate"),
-            target: "HELLO WORLD"
+            target: "HELLO"
         });
         this.$el.html(this.template({
             id: this.model.get("id"),
@@ -303,7 +303,7 @@ var CandidateRowView = Backbone.View.extend({
     },
 
     select: function() {
-        this.$el.css('background-color', '#91C2CE');
+        this.$el.css('background-color', '#252b34');
     },
 
     unselect: function() {
