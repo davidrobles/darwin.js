@@ -37,6 +37,7 @@ table.ea {
     color: #ecf1f4;
     border-spacing: 0;
     text-align: left;
+    border: 2px solid #363f4a;
 }
 
 table.ea th.table-title {
@@ -63,21 +64,21 @@ table.ea tr.selected, table.ea tr.selected:hover {
     background-color: #252b34;
 }
 
-table.ea td:first-child {
-    border-left: 2px solid #363f4a;
-}
+/*table.ea td:first-child {*/
+    /*border-left: 2px solid #363f4a;*/
+/*}*/
 
-table.ea tr.selected td:first-child {
-    border-left: 2px solid #252b34;
-}
+/*table.ea tr.selected td:first-child {*/
+    /*border-left: 2px solid #252b34;*/
+/*}*/
 
-table.ea td:last-child {
-    border-right: 2px solid #363f4a;
-}
+/*table.ea td:last-child {*/
+    /*border-right: 2px solid #363f4a;*/
+/*}*/
 
-table.ea tr.selected td:last-child {
-    border-right: 2px solid #252b34;
-}
+/*table.ea tr.selected td:last-child {*/
+    /*border-right: 2px solid #252b34;*/
+/*}*/
 
 table.ea tbody tr:hover {
     cursor: pointer;
