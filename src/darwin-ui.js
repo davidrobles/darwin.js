@@ -2,6 +2,8 @@ Darwin.vent = _.extend({}, Backbone.Events);
 
 var EAConfigurationView = Backbone.View.extend({
 
+    className: "widget",
+
     template: _.template($("#ea-configuration-view").html()),
 
     events: {

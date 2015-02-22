@@ -170,3 +170,11 @@ table.population tbody tr td + td {
     margin: 10px;
     padding: 10px;
 }
+
+.widget {
+    float: left;
+    display: inline;
+    border: 2px solid #ccffcc;
+    padding: 10px;
+    margin: 10px 0 0 10px;
+}
