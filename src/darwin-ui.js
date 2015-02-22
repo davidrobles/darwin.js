@@ -1,5 +1,35 @@
 Darwin.vent = _.extend({}, Backbone.Events);
 
+var EAConfigurationView = Backbone.View.extend({
+
+    template: _.template($("#ea-configuration-view").html()),
+
+    events: {
+        "click .start-ea": "startClick"
+    },
+
+    initialize: function(ga) {
+        this.ga = ga;
+    },
+
+    render: function() {
+        this.$el.html(this.template());
+        return this;
+    },
+
+    startClick: function() {
+        this.disableAll();
+        this.ga.populationSize = parseInt(this.$(".population-size").val());
+        this.ga.run();
+    },
+
+    disableAll: function() {
+        this.$(".population-size").prop("disabled", true);
+        this.$(".start-ea").prop("disabled", true);
+    }
+
+});
+
 var DashboardView = Backbone.View.extend({
 
     className: "dashboard",
@@ -16,6 +46,7 @@ var DashboardView = Backbone.View.extend({
         this.generationsView = new GenerationsView({ collection: this.generationsCollection });
         this.generationDetailsView = new GenerationDetailsView();
         this.candidateDetailsView = new CandidateDetailsView();
+        this.configurationView = new EAConfigurationView(this.ga);
     },
 
     registerCallbacks: function() {
@@ -40,11 +71,13 @@ var DashboardView = Backbone.View.extend({
 
     render: function() {
         this.$el.html();
+        this.$el.append(this.configurationView.render().el);
         this.$el.append(this.generationsView.render().el);
         this.$el.append(this.generationDetailsView.render().el);
         this.$el.append(this.candidateDetailsView.render().el);
         return this;
     }
+
 });
 
 var GenerationsView = Backbone.View.extend({
