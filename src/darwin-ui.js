@@ -142,17 +142,29 @@ var GenerationsTableView = Backbone.View.extend({
 
 });
 
-var GenerationRowView = Backbone.View.extend({
+var SelectableRowView = Backbone.View.extend({
 
     tagName: "tr",
+
+    events: {
+        "click": "selectClick"
+    },
+
+    select: function() {
+        this.$el.addClass("selected");
+    },
+
+    unselect: function() {
+        this.$el.removeClass("selected");
+    }
+
+});
+
+var GenerationRowView = SelectableRowView.extend({
 
     templates: {
         "complete": _.template($("#generation-row-view").html()),
         "in-progress": _.template($("#generation-row-view-in-progress").html())
-    },
-
-    events: {
-        "click": "selectClick"
     },
 
     initialize: function() {
@@ -167,14 +179,6 @@ var GenerationRowView = Backbone.View.extend({
 
     selectClick: function() {
         Darwin.vent.trigger("generation-selected", this.model);
-    },
-
-    select: function() {
-        this.$el.css('background-color', '#252b34'); // TODO move this color to a class
-    },
-
-    unselect: function() {
-        this.$el.css('background-color', '');
     }
 
 });
@@ -257,15 +261,9 @@ var PopulationTableView = Backbone.View.extend({
 });
 
 // todo use inheritance to avoid repeating table selection?
-var CandidateRowView = Backbone.View.extend({
-
-    tagName: "tr",
+var CandidateRowView = SelectableRowView.extend({
 
     template: _.template($("#candidate-row-view").html()),
-
-    events: {
-        "click": "selectClick"
-    },
 
     render: function() {
         var candidateLabelView = new CandidateLabelView({
@@ -280,18 +278,9 @@ var CandidateRowView = Backbone.View.extend({
         return this;
     },
 
-    // TODO fix this!!!!!!!!!!
-
+    // TODO fix this
     selectClick: function() {
         Darwin.vent.trigger("candidate-selected", this.model);
-    },
-
-    select: function() {
-        this.$el.addClass("selected");
-    },
-
-    unselect: function() {
-        this.$el.removeClass("selected");
     }
 
 });
