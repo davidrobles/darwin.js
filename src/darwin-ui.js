@@ -256,6 +256,7 @@ var PopulationTableView = Backbone.View.extend({
 
 });
 
+// todo use inheritance to avoid repeating table selection?
 var CandidateRowView = Backbone.View.extend({
 
     tagName: "tr",
@@ -286,11 +287,11 @@ var CandidateRowView = Backbone.View.extend({
     },
 
     select: function() {
-        this.$el.css('background-color', '#252b34');
+        this.$el.addClass("selected");
     },
 
     unselect: function() {
-        this.$el.css('background-color', '');
+        this.$el.removeClass("selected");
     }
 
 });

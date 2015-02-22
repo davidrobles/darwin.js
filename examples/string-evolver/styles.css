@@ -48,6 +48,10 @@ table.ea tbody tr {
     border-right: 2px solid #363f4a;
 }
 
+table.ea tbody tr.selected, table.ea tbody tr.selected:hover {
+    background-color: #252b34;
+}
+
 table.ea tbody tr:hover {
     cursor: pointer;
     background-color: #363f4a;
