@@ -66,7 +66,7 @@ table.ea tbody tr {
     border-right: 2px solid #363f4a;
 }
 
-table.ea tbody tr.selected, table.ea tbody tr.selected:hover {
+table.ea tr.selected, table.ea tr.selected:hover {
     background-color: #252b34;
 }
 
@@ -76,7 +76,7 @@ table.ea tbody tr:hover {
     border-right: 2px solid #363f4a;
 }
 
-table.ea tbody tr td {
+table.ea td {
     border-bottom: 2px solid #363f4a;
 }
 
