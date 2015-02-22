@@ -150,12 +150,6 @@ table.population {
     width: 340px;
 }
 
-/*table.population thead {*/
-    /*background-color: #5F6D79;*/
-    /*color: #ECF1F4;*/
-    /*text-align: left;*/
-/*}*/
-
 table.population thead tr {
     display: block;
     height: 3vh;
@@ -170,11 +164,6 @@ table.population tbody tr {
     height: 30px;
 }
 
-/*table.population tbody tr:hover {*/
-    /*cursor: pointer;*/
-    /*background-color: #ffffcc;*/
-/*}*/
-
 table.population tbody tr td {
     width: 30px;
 }
@@ -183,15 +172,9 @@ table.population tbody tr td + td {
     width: 350px;
 }
 
-.candidate-details {
-    float: left;
-    width: 250px;
-    height: 81vh;
-    display: inline;
-    border: 2px solid #ccffcc;
-    margin: 10px;
-    padding: 10px;
-}
+/************/
+/** Widget **/
+/************/
 
 .widget {
     float: left;
