@@ -64,6 +64,7 @@ var DashboardView = Backbone.View.extend({
         var gensMap = {};
 
         this.listenTo(this.ga, "reset", function() {
+            gensMap = {};
             this.initSubviews();
             this.render();
         });
