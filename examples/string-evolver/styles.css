@@ -103,6 +103,10 @@ table.generations th + th, table.generations td + td {
     width: 120px;
 }
 
+table.generations th + th + th, table.generations td + td + td {
+    width: 90px;
+}
+
 /**********************/
 /** Population Table **/
 /**********************/
@@ -117,7 +121,11 @@ table.population th, table.population td {
 }
 
 table.population th + th, table.population td + td {
-    width: 100px;
+    width: 120px;
+}
+
+table.population th + th + th, table.population td + td + td {
+    width: 80px;
 }
 
 /****************************/
