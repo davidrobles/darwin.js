@@ -148,7 +148,7 @@ var SelectableRowView = Backbone.View.extend({
     tagName: "tr",
 
     events: {
-        "click": "selectClick"
+        "click": "customSelect"
     },
 
     select: function() {
@@ -178,7 +178,7 @@ var GenerationRowView = SelectableRowView.extend({
         return this;
     },
 
-    selectClick: function() {
+    customSelect: function() {
         Darwin.vent.trigger("generation-selected", this.model);
     }
 
@@ -243,7 +243,7 @@ var PopulationTableView = Backbone.View.extend({
             var candidateRowView = new CandidateRowView({ model: candidate });
             this.candidateRowViews.push(candidateRowView);
             if (i == 0) {
-                candidateRowView.selectClick();
+                candidateRowView.customSelect();
             }
             this.$el.append(candidateRowView.render().el);
         }
@@ -278,8 +278,7 @@ var CandidateRowView = SelectableRowView.extend({
         return this;
     },
 
-    // TODO fix this
-    selectClick: function() {
+    customSelect: function() {
         Darwin.vent.trigger("candidate-selected", this.model);
     }
 
