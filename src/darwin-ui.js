@@ -60,6 +60,7 @@ var DashboardView = Backbone.View.extend({
         this.configurationView = new EAConfigurationView(this.ga);
     },
 
+    // TODO Refactor
     registerCallbacks: function() {
         var gensMap = {};
 
