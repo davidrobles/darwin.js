@@ -10,6 +10,7 @@ body p {
 }
 
 .dashboard {
+    color: #b5bfcc;
     background-color: #252b34;
     height: 100vh;
     margin: 0;
@@ -25,8 +26,11 @@ body p {
     display: inline;
     margin: 10px 0 0 10px;
     background-color: #313842;
-    /*border: 2px solid #363f4a;*/
-    color: #b5bfcc;
+}
+
+.widget-info {
+    border: 2px solid #363f4a;
+    padding: 10px;
 }
 
 /**************/

@@ -2,7 +2,7 @@ Darwin.vent = _.extend({}, Backbone.Events);
 
 var EAConfigurationView = Backbone.View.extend({
 
-    className: "widget",
+    className: "widget widget-info",
 
     template: _.template($("#ea-configuration-view").html()),
 
@@ -284,7 +284,7 @@ var CandidateRowView = SelectableRowView.extend({
 
 var CandidateDetailsView = Backbone.View.extend({
 
-    className: "widget candidate-details-view",
+    className: "widget widget-info candidate-details-view",
 
     template: {
         "full": _.template($("#candidate-details-view").html()),
