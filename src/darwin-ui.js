@@ -177,7 +177,7 @@ var GenerationRowView = SelectableRowView.extend({
         if (templateName === "complete") {
             var candidateLabelView = new CandidateLabelView({
                 actual: this.model.get("bestCandidate"),
-                target: "EVOLUTION"
+                target: "EVOLUTION" // TODO Move to model configuration
             });
             this.$el.html(this.templates[templateName]({
                 id: this.model.get("id"),
