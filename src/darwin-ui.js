@@ -65,6 +65,9 @@ var DashboardView = Backbone.View.extend({
 
         this.listenTo(this.ga, "reset", function() {
             gensMap = {};
+            this.generationsTableView.remove();
+            this.generationDetailsView.remove();
+            this.candidateDetailsView.remove();
             this.initSubviews();
             this.render();
         });
