@@ -138,6 +138,6 @@ table.population th + th + th, table.population td + td + td {
 
 .candidate-details-view {
     height: 95vh;
-    min-width: 200px;
+    min-width: 400px;
     padding: 10px;
 }
