@@ -323,9 +323,9 @@ var CandidateLabelView = Backbone.View.extend({
     render: function() {
         for (var i = 0; i < this.target.length; i++) {
             if (this.target.charAt(i) === this.actual.charAt(i)) {
-                this.$el.append('<span style="color: #00ff00;">' + this.actual.charAt(i) + '</span>');
+                this.$el.append('<span style="color: rgb(141, 199, 63);">' + this.actual.charAt(i) + '</span>');
             } else {
-                this.$el.append('<span style="color: #ff0000;">' + this.actual.charAt(i) + "</span>");
+                this.$el.append('<span style="color: rgb(237, 28, 36);">' + this.actual.charAt(i) + "</span>");
             }
         }
         return this;
