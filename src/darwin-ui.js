@@ -171,9 +171,23 @@ var GenerationRowView = SelectableRowView.extend({
         this.listenTo(this.model, "change", this.render);
     },
 
+    // TODO Refactor
     render: function() {
         var templateName = this.model.get("status");
-        this.$el.html(this.templates[templateName](this.model.toJSON()));
+        if (templateName === "complete") {
+            var candidateLabelView = new CandidateLabelView({
+                actual: this.model.get("bestCandidate"),
+                target: "EVOLUTION"
+            });
+            this.$el.html(this.templates[templateName]({
+                id: this.model.get("id"),
+                bestCandidate: candidateLabelView.render().el.innerHTML,
+                bestCandidateFitness: this.model.get("bestCandidateFitness"),
+                averageFitness: this.model.get("averageFitness") // TODO rename to avgFitness
+            }));
+        } else {
+            this.$el.html(this.templates[templateName](this.model.toJSON()));
+        }
         return this;
     },
 
