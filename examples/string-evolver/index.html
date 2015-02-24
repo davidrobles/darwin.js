@@ -108,7 +108,7 @@
         });
         var dashboardView = new DashboardView({
             ga: stringEvolver,
-            individualView: IndividualLabelView
+            individualView: StringEvolver.createStringDiffView(wordToFind)
         });
         $("body").prepend(dashboardView.render().el);
     })();

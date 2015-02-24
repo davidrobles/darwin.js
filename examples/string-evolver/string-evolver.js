@@ -36,6 +36,29 @@ var StringEvolver = {
             }
         }
         return newString;
+    },
+
+    createStringDiffView: function(target) {
+        return Backbone.View.extend({
+
+            tagName: "p",
+
+            initialize: function(opts) { // Change options in the other views!
+                this.actual = opts.actual;
+                this.target = target;
+            },
+
+            render: function() {
+                for (var i = 0; i < this.target.length; i++) {
+                    if (this.target.charAt(i) === this.actual.charAt(i)) {
+                        this.$el.append('<span style="color: rgb(141, 199, 63);">' + this.actual.charAt(i) + '</span>');
+                    } else {
+                        this.$el.append('<span style="color: rgb(237, 28, 36);">' + this.actual.charAt(i) + "</span>");
+                    }
+                }
+                return this;
+            }
+        });
     }
 
 };
