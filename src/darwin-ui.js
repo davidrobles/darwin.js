@@ -182,7 +182,6 @@ var GenerationRowView = SelectableRowView.extend({
     },
 
     initialize: function(options) {
-        //this.model = options.model;
         this.individualView = options.individualView;
         this.listenTo(this.model, "change", this.render);
     },
