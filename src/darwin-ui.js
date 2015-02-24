@@ -237,6 +237,7 @@ var PopulationTableView = Backbone.View.extend({
     render: function() {
         this.$el.html(this.template());
         if (this.collection) {
+            var container = document.createDocumentFragment();
             for (var i = 0; i < this.collection.length; i++) {
                 var individual = this.collection.get(i);
                 var individualRowView = new IndividualRowView({
@@ -247,8 +248,9 @@ var PopulationTableView = Backbone.View.extend({
                 if (i == 0) {
                     individualRowView.customSelect();
                 }
-                this.$el.append(individualRowView.render().el);
+                container.appendChild(individualRowView.render().el);
             }
+            this.$el.append(container);
         }
         return this;
     },
