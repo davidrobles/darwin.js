@@ -53,8 +53,7 @@ var DashboardView = Backbone.View.extend({
     },
 
     initSubviews: function() {
-        this.GenerationsCollection = Backbone.Collection.extend();
-        this.generationsCollection = new this.GenerationsCollection();
+        this.generationsCollection = new Backbone.Collection();
         this.generationsTableView = new GenerationsTableView({
             collection: this.generationsCollection,
             phenotypeView: this.phenotypeView
