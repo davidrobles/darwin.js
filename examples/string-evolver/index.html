@@ -6,19 +6,22 @@
     <link rel="stylesheet" href="styles.css">
 
     <script type="text/template" id="ea-configuration-view">
-        <label>
-            Population size:
-            <select class="population-size">
-                <option value="50">50</option>
-                <option value="100" selected="selected">100</option>
-                <option value="250">250</option>
-                <option value="500">500</option>
-                <option value="1000">1000</option>
-            </select>
-        </label>
-        <br/><br/>
-        <button class="start">Start</button>
-        <button class="reset" disabled="disabled">Reset</button>
+        <p class="widget-title">Evolutionary Algorithm<br/>Configuration</p>
+        <div class="widget-content">
+            <label>
+                Population size:
+                <select class="population-size">
+                    <option value="50">50</option>
+                    <option value="100" selected="selected">100</option>
+                    <option value="250">250</option>
+                    <option value="500">500</option>
+                    <option value="1000">1000</option>
+                </select>
+            </label>
+            <br/><br/>
+            <button class="start">Start</button>
+            <button class="reset" disabled="disabled">Reset</button>
+        </div>
     </script>
 
     <script type="text/template" id="generations-table-view">
