@@ -56,7 +56,7 @@ var DashboardView = Backbone.View.extend({
         this.GenerationsCollection = Backbone.Collection.extend();
         this.generationsCollection = new this.GenerationsCollection();
         this.generationsTableView = new GenerationsTableView({ collection: this.generationsCollection });
-        this.generationDetailsView = new GenerationDetailsView();
+        this.populationTableView = new PopulationTableView();
         this.individualDetailsView = new IndividualDetailsView({
             individualView: this.individualView
         });
@@ -70,7 +70,7 @@ var DashboardView = Backbone.View.extend({
         this.listenTo(this.ga, "reset", function() {
             gensMap = {};
             this.generationsTableView.remove();
-            this.generationDetailsView.remove();
+            this.populationTableView.remove();
             this.individualDetailsView.remove();
             this.initSubviews();
             this.render();
@@ -88,8 +88,7 @@ var DashboardView = Backbone.View.extend({
         this.listenTo(this.ga, "generation-finished", function(generation) {
             var generationModel = gensMap[generation.id];
             generationModel.set(generation);
-            this.generationDetailsView.model = generationModel;
-            this.generationDetailsView.render();
+            this.populationTableView.generationSelected(generationModel);
         });
     },
 
@@ -97,7 +96,7 @@ var DashboardView = Backbone.View.extend({
         this.$el.empty();
         this.$el.append(this.configurationView.render().el);
         this.$el.append(this.generationsTableView.render().el);
-        this.$el.append(this.generationDetailsView.render().el);
+        this.$el.append(this.populationTableView.render().el);
         this.$el.append(this.individualDetailsView.render().el);
         return this;
     }
@@ -204,44 +203,6 @@ var GenerationRowView = SelectableRowView.extend({
 
 });
 
-var GenerationDetailsView = Backbone.View.extend({
-
-    template: {
-        "full": _.template($("#generation-details-view").html()),
-        "empty": _.template($("#generation-details-view-empty").html())
-    },
-
-    initialize: function() {
-        this.populationTableView = null;
-        this.listenTo(Darwin.vent, "generation-selected", this.generationSelected);
-    },
-
-    generationSelected: function(generation) {
-        this.model = generation;
-        this.render();
-    },
-
-    // TODO listener if the model changes? how to do that?
-
-    render: function() {
-        if (this.model) {
-            //this.$el.html(this.template["full"](this.model.toJSON()));
-            this.$el.html();
-            if (this.populationTableView) {
-                this.populationTableView.remove();
-            }
-            this.populationTableView = new PopulationTableView({
-                collection: new Backbone.Collection(this.model.get("population"))
-            });
-            this.$el.append(this.populationTableView.render().el);
-        } else {
-            this.$el.html(this.template["empty"]());
-        }
-        return this;
-    }
-
-});
-
 var PopulationTableView = Backbone.View.extend({
 
     tagName: "table",
@@ -253,19 +214,30 @@ var PopulationTableView = Backbone.View.extend({
     initialize: function() {
         this.selectedIndividualRowView = null;
         this.individualRowViews = [];
+        this.listenTo(Darwin.vent, "generation-selected", this.generationSelected);
         this.listenTo(Darwin.vent, "individual-selected", this.selectIndividual);
+    },
+
+    generationSelected: function(generation) {
+        this.model = generation;
+        this.selectedIndividualRowView = null;
+        this.individualRowViews = [];
+        this.collection = new Backbone.Collection(this.model.get("population"));
+        this.render();
     },
 
     render: function() {
         this.$el.html(this.template());
-        for (var i = 0; i <this.collection.length; i++) {
-            var individual = this.collection.get(i);
-            var individualRowView = new IndividualRowView({ model: individual });
-            this.individualRowViews.push(individualRowView);
-            if (i == 0) {
-                individualRowView.customSelect();
+        if (this.collection) {
+            for (var i = 0; i < this.collection.length; i++) {
+                var individual = this.collection.get(i);
+                var individualRowView = new IndividualRowView({ model: individual });
+                this.individualRowViews.push(individualRowView);
+                if (i == 0) {
+                    individualRowView.customSelect();
+                }
+                this.$el.append(individualRowView.render().el);
             }
-            this.$el.append(individualRowView.render().el);
         }
         return this;
     },
