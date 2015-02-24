@@ -56,7 +56,9 @@ var DashboardView = Backbone.View.extend({
         this.GenerationsCollection = Backbone.Collection.extend();
         this.generationsCollection = new this.GenerationsCollection();
         this.generationsTableView = new GenerationsTableView({ collection: this.generationsCollection });
-        this.populationTableView = new PopulationTableView();
+        this.populationTableView = new PopulationTableView({
+            individualView: this.individualView
+        });
         this.individualDetailsView = new IndividualDetailsView({
             individualView: this.individualView
         });
@@ -211,7 +213,8 @@ var PopulationTableView = Backbone.View.extend({
 
     template: _.template($("#population-table-view").html()),
 
-    initialize: function() {
+    initialize: function(options) {
+        this.individualView = options.individualView;
         this.selectedIndividualRowView = null;
         this.individualRowViews = [];
         this.listenTo(Darwin.vent, "generation-selected", this.generationSelected);
@@ -231,7 +234,10 @@ var PopulationTableView = Backbone.View.extend({
         if (this.collection) {
             for (var i = 0; i < this.collection.length; i++) {
                 var individual = this.collection.get(i);
-                var individualRowView = new IndividualRowView({ model: individual });
+                var individualRowView = new IndividualRowView({
+                    model: individual,
+                    individualView: this.individualView
+                });
                 this.individualRowViews.push(individualRowView);
                 if (i == 0) {
                     individualRowView.customSelect();
@@ -256,14 +262,16 @@ var IndividualRowView = SelectableRowView.extend({
 
     template: _.template($("#individual-row-view").html()),
 
+    initialize: function(options) {
+        this.individualView = options.individualView
+    },
+
     render: function() {
-        var individualLabelView = new IndividualLabelView({
-            actual: this.model.get("individual"),
-            target: "EVOLUTION"
-        });
         this.$el.html(this.template({
             id: this.model.get("id"),
-            phenotype: individualLabelView.render().el.innerHTML,
+            phenotype: new this.individualView({
+                actual: this.model.get("individual")
+            }).render().el.innerHTML,
             fitness: this.model.get("fitness")
         }));
         return this;
