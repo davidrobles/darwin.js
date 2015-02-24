@@ -47,7 +47,7 @@ var DashboardView = Backbone.View.extend({
 
     initialize: function(options) {
         this.ga = options.ga;
-        this.individualView = options.individualView;
+        this.phenotypeView = options.phenotypeView;
         this.initSubviews();
         this.registerCallbacks();
     },
@@ -57,13 +57,13 @@ var DashboardView = Backbone.View.extend({
         this.generationsCollection = new this.GenerationsCollection();
         this.generationsTableView = new GenerationsTableView({
             collection: this.generationsCollection,
-            individualView: this.individualView
+            phenotypeView: this.phenotypeView
         });
         this.populationTableView = new PopulationTableView({
-            individualView: this.individualView
+            phenotypeView: this.phenotypeView
         });
         this.individualDetailsView = new IndividualDetailsView({
-            individualView: this.individualView
+            phenotypeView: this.phenotypeView
         });
         this.configurationView = new EAConfigurationView(this.ga);
     },
@@ -118,7 +118,7 @@ var GenerationsTableView = Backbone.View.extend({
 
     initialize: function(options) {
         this.collection = options.collection;
-        this.individualView = options.individualView;
+        this.phenotypeView = options.phenotypeView;
         this.selectedGenerationRowView = null;
         this.generationRowViews = [];
         this.listenTo(Darwin.vent, "generation-selected", this.selectGeneration);
@@ -130,7 +130,7 @@ var GenerationsTableView = Backbone.View.extend({
     addGeneration: function(generation) {
         this.generationRowView = new GenerationRowView({
             model: generation,
-            individualView: this.individualView
+            phenotypeView: this.phenotypeView
         });
         this.generationRowViews.push(this.generationRowView);
         this.$("tbody").append(this.generationRowView.render().el);
@@ -182,7 +182,7 @@ var GenerationRowView = SelectableRowView.extend({
     },
 
     initialize: function(options) {
-        this.individualView = options.individualView;
+        this.phenotypeView = options.phenotypeView;
         this.listenTo(this.model, "change", this.render);
     },
 
@@ -192,7 +192,7 @@ var GenerationRowView = SelectableRowView.extend({
         if (templateName === "complete") {
             this.$el.html(this.templates[templateName]({
                 id: this.model.get("id"),
-                bestIndividual: new this.individualView({
+                bestIndividual: new this.phenotypeView({
                     actual: this.model.get("bestIndividual")
                 }).render().el.innerHTML,
                 bestIndividualFitness: this.model.get("bestIndividualFitness"),
@@ -219,7 +219,7 @@ var PopulationTableView = Backbone.View.extend({
     template: _.template($("#population-table-view").html()),
 
     initialize: function(options) {
-        this.individualView = options.individualView;
+        this.phenotypeView = options.phenotypeView;
         this.selectedIndividualRowView = null;
         this.individualRowViews = [];
         this.listenTo(Darwin.vent, "generation-selected", this.generationSelected);
@@ -241,7 +241,7 @@ var PopulationTableView = Backbone.View.extend({
                 var individual = this.collection.get(i);
                 var individualRowView = new IndividualRowView({
                     model: individual,
-                    individualView: this.individualView
+                    phenotypeView: this.phenotypeView
                 });
                 this.individualRowViews.push(individualRowView);
                 if (i == 0) {
@@ -268,13 +268,13 @@ var IndividualRowView = SelectableRowView.extend({
     template: _.template($("#individual-row-view").html()),
 
     initialize: function(options) {
-        this.individualView = options.individualView
+        this.phenotypeView = options.phenotypeView
     },
 
     render: function() {
         this.$el.html(this.template({
             id: this.model.get("id"),
-            phenotype: new this.individualView({
+            phenotype: new this.phenotypeView({
                 actual: this.model.get("individual")
             }).render().el.innerHTML,
             fitness: this.model.get("fitness")
@@ -295,7 +295,7 @@ var IndividualDetailsView = Backbone.View.extend({
     template: _.template($("#individual-details-view").html()),
 
     initialize: function(options) {
-        this.individualView = options.individualView;
+        this.phenotypeView = options.phenotypeView;
         this.listenTo(Darwin.vent, "individual-selected", this.changeIndividual);
     },
 
@@ -308,7 +308,7 @@ var IndividualDetailsView = Backbone.View.extend({
         if (this.model) {
             this.$el.html(this.template({
                 id: this.model.get("id"),
-                phenotype: new this.individualView({
+                phenotype: new this.phenotypeView({
                     actual: this.model.get("individual")
                 }).render().el.innerHTML,
                 fitness: this.model.get("fitness")
