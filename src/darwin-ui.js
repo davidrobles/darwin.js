@@ -289,7 +289,7 @@ var IndividualDetailsView = Backbone.View.extend({
     changeIndividual: function(individual) {
         this.model = individual;
         this.render();
-    }
+    },
 
     render: function() {
         if (this.model) {
