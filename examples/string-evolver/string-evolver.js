@@ -24,15 +24,15 @@ var StringEvolver = {
         }
     },
 
-    randomCharacterMutation: function(candidate) {
+    randomCharacterMutation: function(individual) {
         var newString = "";
         var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ "; // fix this
-        for (var i = 0; i < candidate.length; i++) {
+        for (var i = 0; i < individual.length; i++) {
             if (Math.random() < 0.01) {
                 var randChar = _.random(0, alphabet.length - 1);
                 newString += alphabet.charAt(randChar);
             } else {
-                newString += candidate.charAt(i);
+                newString += individual.charAt(i);
             }
         }
         return newString;

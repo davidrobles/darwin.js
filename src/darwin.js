@@ -80,7 +80,7 @@ var Darwin = Darwin || {};
             for (var i = 0; i < halfLength; i++) {
                 var parentA = Darwin.Selection.randomTopPercent(this.evaluatedPopulation);
                 var parentB = Darwin.Selection.randomTopPercent(this.evaluatedPopulation);
-                var children = this.reproduce(parentA.candidate, parentB.candidate); // remove .candidate
+                var children = this.reproduce(parentA.individual, parentB.individual); // remove .individual
                 var childA = this.mutate(children.childA);
                 var childB = this.mutate(children.childB);
                 newPopulation.push(childA);

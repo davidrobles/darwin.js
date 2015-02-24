@@ -47,7 +47,7 @@ var DashboardView = Backbone.View.extend({
 
     initialize: function(options) {
         this.ga = options.ga;
-        this.candidateView = options.candidateView;
+        this.individualView = options.individualView;
         this.initSubviews();
         this.registerCallbacks();
     },
@@ -57,8 +57,8 @@ var DashboardView = Backbone.View.extend({
         this.generationsCollection = new this.GenerationsCollection();
         this.generationsTableView = new GenerationsTableView({ collection: this.generationsCollection });
         this.generationDetailsView = new GenerationDetailsView();
-        this.candidateDetailsView = new CandidateDetailsView({
-            candidateView: this.candidateView
+        this.individualDetailsView = new IndividualDetailsView({
+            individualView: this.individualView
         });
         this.configurationView = new EAConfigurationView(this.ga);
     },
@@ -71,7 +71,7 @@ var DashboardView = Backbone.View.extend({
             gensMap = {};
             this.generationsTableView.remove();
             this.generationDetailsView.remove();
-            this.candidateDetailsView.remove();
+            this.individualDetailsView.remove();
             this.initSubviews();
             this.render();
         });
@@ -98,7 +98,7 @@ var DashboardView = Backbone.View.extend({
         this.$el.append(this.configurationView.render().el);
         this.$el.append(this.generationsTableView.render().el);
         this.$el.append(this.generationDetailsView.render().el);
-        this.$el.append(this.candidateDetailsView.render().el);
+        this.$el.append(this.individualDetailsView.render().el);
         return this;
     }
 
@@ -182,14 +182,14 @@ var GenerationRowView = SelectableRowView.extend({
     render: function() {
         var templateName = this.model.get("status");
         if (templateName === "complete") {
-            var candidateLabelView = new CandidateLabelView({
-                actual: this.model.get("bestCandidate"),
+            var individualLabelView = new IndividualLabelView({
+                actual: this.model.get("bestIndividual"),
                 target: "EVOLUTION" // TODO Move to model configuration
             });
             this.$el.html(this.templates[templateName]({
                 id: this.model.get("id"),
-                bestCandidate: candidateLabelView.render().el.innerHTML,
-                bestCandidateFitness: this.model.get("bestCandidateFitness"),
+                bestIndividual: individualLabelView.render().el.innerHTML,
+                bestIndividualFitness: this.model.get("bestIndividualFitness"),
                 averageFitness: this.model.get("averageFitness") // TODO rename to avgFitness
             }));
         } else {
@@ -251,75 +251,75 @@ var PopulationTableView = Backbone.View.extend({
     template: _.template($("#population-table-view").html()),
 
     initialize: function() {
-        this.selectedCandidateRowView = null;
-        this.candidateRowViews = [];
-        this.listenTo(Darwin.vent, "candidate-selected", this.selectCandidate);
+        this.selectedIndividualRowView = null;
+        this.individualRowViews = [];
+        this.listenTo(Darwin.vent, "individual-selected", this.selectIndividual);
     },
 
     render: function() {
         this.$el.html(this.template());
         for (var i = 0; i <this.collection.length; i++) {
-            var candidate = this.collection.get(i);
-            var candidateRowView = new CandidateRowView({ model: candidate });
-            this.candidateRowViews.push(candidateRowView);
+            var individual = this.collection.get(i);
+            var individualRowView = new IndividualRowView({ model: individual });
+            this.individualRowViews.push(individualRowView);
             if (i == 0) {
-                candidateRowView.customSelect();
+                individualRowView.customSelect();
             }
-            this.$el.append(candidateRowView.render().el);
+            this.$el.append(individualRowView.render().el);
         }
         return this;
     },
 
-    selectCandidate: function(candidate) {
-        if (this.selectedCandidateRowView) {
-            this.selectedCandidateRowView.unselect();
+    selectIndividual: function(individual) {
+        if (this.selectedIndividualRowView) {
+            this.selectedIndividualRowView.unselect();
         }
-        this.selectedCandidateRowView = this.candidateRowViews[candidate.get("id")];
-        this.selectedCandidateRowView.select();
+        this.selectedIndividualRowView = this.individualRowViews[individual.get("id")];
+        this.selectedIndividualRowView.select();
     }
 
 });
 
-var CandidateRowView = SelectableRowView.extend({
+var IndividualRowView = SelectableRowView.extend({
 
-    template: _.template($("#candidate-row-view").html()),
+    template: _.template($("#individual-row-view").html()),
 
     render: function() {
-        var candidateLabelView = new CandidateLabelView({
-            actual: this.model.get("candidate"),
+        var individualLabelView = new IndividualLabelView({
+            actual: this.model.get("individual"),
             target: "EVOLUTION"
         });
         this.$el.html(this.template({
             id: this.model.get("id"),
-            candidate: candidateLabelView.render().el.innerHTML,
+            individual: individualLabelView.render().el.innerHTML,
             fitness: this.model.get("fitness")
         }));
         return this;
     },
 
     customSelect: function() {
-        Darwin.vent.trigger("candidate-selected", this.model);
+        Darwin.vent.trigger("individual-selected", this.model);
     }
 
 });
 
-var CandidateDetailsView = Backbone.View.extend({
+var IndividualDetailsView = Backbone.View.extend({
 
-    className: "widget widget-info candidate-details-view",
+    className: "widget widget-info individual-details-view",
 
-    template: _.template($("#candidate-details-view").html()),
+    template: _.template($("#individual-details-view").html()),
 
     initialize: function(options) {
-        this.candidateView = options.candidateView;
-        this.listenTo(Darwin.vent, "candidate-selected", this.changeCandidate);
+        this.individualView = options.individualView;
+        this.listenTo(Darwin.vent, "individual-selected", this.changeIndividual);
     },
 
     render: function() {
         if (this.model) {
             this.$el.html(this.template({
                 id: this.model.get("id"),
-                candidate: new this.candidateView({
-                    actual: this.model.get("candidate")
+                individual: new this.individualView({
+                    actual: this.model.get("individual")
                 }).render().el.innerHTML,
                 fitness: this.model.get("fitness")
             }));
@@ -327,14 +327,14 @@ var CandidateDetailsView = Backbone.View.extend({
         return this;
     },
 
-    changeCandidate: function(candidate) {
-        this.model = candidate;
+    changeIndividual: function(individual) {
+        this.model = individual;
         this.render();
     }
 
 });
 
-var CandidateLabelView = Backbone.View.extend({
+var IndividualLabelView = Backbone.View.extend({
 
     tagName: "p",
 

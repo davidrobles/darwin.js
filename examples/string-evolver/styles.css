@@ -133,10 +133,10 @@ table.population th + th + th, table.population td + td + td {
 }
 
 /****************************/
-/** Candidate Details View **/
+/** Individual Details View **/
 /****************************/
 
-.candidate-details-view {
+.individual-details-view {
     height: 95vh;
     min-width: 400px;
     padding: 10px;

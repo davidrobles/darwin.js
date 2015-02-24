@@ -26,7 +26,7 @@
             </tr>
             <tr>
                 <th>#</th>
-                <th>Best Candidate</th>
+                <th>Best Individual</th>
                 <th>Best Fitness</th>
                 <th>Avg. Fitness</th>
             </tr>
@@ -41,23 +41,23 @@
             </tr>
             <tr>
                 <th>#</th>
-                <th>Best Candidate</th>
+                <th>Best Individual</th>
                 <th>Fitness</th>
             </tr>
         </thead>
         <tbody></tbody>
     </script>
 
-    <script type="text/template" id="candidate-row-view">
+    <script type="text/template" id="individual-row-view">
         <td><%= id %></td>
-        <td><%= candidate %></td>
+        <td><%= individual %></td>
         <td><%= fitness %></td>
     </script>
 
     <script type="text/template" id="generation-row-view">
         <td><%= id %></td>
-        <td><%= bestCandidate %></td>
-        <td><%= bestCandidateFitness %></td>
+        <td><%= bestIndividual %></td>
+        <td><%= bestIndividualFitness %></td>
         <td><%= averageFitness.toFixed(2) %></td>
     </script>
 
@@ -71,8 +71,8 @@
     <script type="text/template" id="generation-details-view">
         <!--<div class="population-details-stats">-->
             <!--<p>Generation:      <%= id %></p>-->
-            <!--<p>Best candidate:  <%= bestCandidate %></p>-->
-            <!--<p>Best fitness:    <%= bestCandidateFitness %></p>-->
+            <!--<p>Best individual:  <%= bestIndividual %></p>-->
+            <!--<p>Best fitness:    <%= bestIndividualFitness %></p>-->
             <!--<p>Average fitness: <%= averageFitness %></p>-->
         <!--</div>-->
     </script>
@@ -83,14 +83,14 @@
         <!--</div>-->
     </script>
 
-    <script type="text/template" id="candidate-details-view">
-        <p>Candidate Details View</p>
+    <script type="text/template" id="individual-details-view">
+        <p>Individual Details View</p>
         <p>ID: <%= id %></p>
         <p>Fitness: <%= fitness %></p>
-        <p>String: <%= candidate %></p>
+        <p>String: <%= individual %></p>
     </script>
 
-    <script type="text/template" id="candidate-details-view-empty">
+    <script type="text/template" id="individual-details-view-empty">
         <p>Empty</p>
     </script>
 
@@ -120,7 +120,7 @@
         });
         var dashboardView = new DashboardView({
             ga: stringEvolver,
-            candidateView: CandidateLabelView
+            individualView: IndividualLabelView
         });
         $("body").prepend(dashboardView.render().el);
     })();
