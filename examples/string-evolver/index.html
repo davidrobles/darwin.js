@@ -118,7 +118,10 @@
             mutate: StringEvolver.randomCharacterMutation,
             terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
         });
-        var dashboardView = new DashboardView(stringEvolver);
+        var dashboardView = new DashboardView({
+            ga: stringEvolver,
+            candidateView: CandidateLabelView
+        });
         $("body").prepend(dashboardView.render().el);
     })();
     </script>

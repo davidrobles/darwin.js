@@ -45,8 +45,9 @@ var DashboardView = Backbone.View.extend({
 
     className: "dashboard",
 
-    initialize: function(ga) {
-        this.ga = ga;
+    initialize: function(options) {
+        this.ga = options.ga;
+        this.candidateView = options.candidateView;
         this.initSubviews();
         this.registerCallbacks();
     },
@@ -56,7 +57,9 @@ var DashboardView = Backbone.View.extend({
         this.generationsCollection = new this.GenerationsCollection();
         this.generationsTableView = new GenerationsTableView({ collection: this.generationsCollection });
         this.generationDetailsView = new GenerationDetailsView();
-        this.candidateDetailsView = new CandidateDetailsView();
+        this.candidateDetailsView = new CandidateDetailsView({
+            candidateView: this.candidateView
+        });
         this.configurationView = new EAConfigurationView(this.ga);
     },
 
@@ -309,13 +312,20 @@ var CandidateDetailsView = Backbone.View.extend({
         "empty": _.template($("#candidate-details-view-empty").html())
     },
 
-    initialize: function() {
+    initialize: function(options) {
+        this.candidateView = options.candidateView;
         this.listenTo(Darwin.vent, "candidate-selected", this.changeCandidate);
     },
 
     render: function() {
         if (this.model) {
-            this.$el.html(this.template["full"](this.model.toJSON()));
+            this.$el.html(this.template["full"]({
+                id: this.model.get("id"),
+                candidate: new this.candidateView({
+                    actual: this.model.get("candidate")
+                }).render().el.innerHTML,
+                fitness: this.model.get("fitness")
+            }));
         } else {
             this.$el.html(this.template["empty"]());
         }
@@ -335,7 +345,7 @@ var CandidateLabelView = Backbone.View.extend({
 
     initialize: function(opts) { // Change options in the other views!
         this.actual = opts.actual;
-        this.target = opts.target;
+        this.target = "EVOLUTION";
     },
 
     render: function() {
