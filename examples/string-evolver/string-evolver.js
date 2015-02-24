@@ -41,10 +41,6 @@ var StringEvolver = {
     createStringDiffView: function(target) {
         return Backbone.View.extend({
             tagName: "p",
-            colors: {
-                match: "rgb(141, 199, 63)",
-                mismatch: "rgb(237, 28, 36)"
-            },
             initialize: function(options) { // Change options in the other views!
                 this.actual = options.actual;
                 this.target = target;
@@ -52,7 +48,7 @@ var StringEvolver = {
             render: function() {
                 for (var i = 0; i < this.target.length; i++) {
                     var type = this.target.charAt(i) === this.actual.charAt(i) ? "match" : "mismatch";
-                    this.$el.append('<span style="color: ' + this.colors[type] + ';">' + this.actual.charAt(i) + '</span>');
+                    this.$el.append('<span class="' + type + '">' + this.actual.charAt(i) + '</span>');
                 }
                 return this;
             }

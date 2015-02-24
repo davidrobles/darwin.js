@@ -147,3 +147,11 @@ table.population th + th + th, table.population td + td + td {
     height: 97vh;
     min-width: 400px;
 }
+
+.match {
+    color: rgb(141, 199, 63);
+}
+
+.mismatch {
+    color: rgb(237, 28, 36);
+}
