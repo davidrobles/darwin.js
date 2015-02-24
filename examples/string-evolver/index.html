@@ -103,7 +103,7 @@
             genIndFunc: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
             fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
             reproduce: Darwin.Operators.singlePointCrossover,
-            mutate: StringEvolver.randomCharacterMutation,
+            mutate: StringEvolver.createRandomCharacterMutation(charPool),
             terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
         });
         var dashboardView = new DashboardView({

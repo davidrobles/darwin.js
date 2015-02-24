@@ -116,7 +116,8 @@ var GenerationsTableView = Backbone.View.extend({
     template: _.template($("#generations-table-view").html()),
 
     initialize: function(options) {
-        this.phenotypeView = options.phenotypeView;
+        options = options || {};
+        this.PhenotypeView = options.phenotypeView;
         this.selectedGenerationRowView = null;
         this.generationRowViews = [];
         this.listenTo(Darwin.vent, "generation-selected", this.selectGeneration);
@@ -128,7 +129,7 @@ var GenerationsTableView = Backbone.View.extend({
     addGeneration: function(generation) {
         this.generationRowView = new GenerationRowView({
             model: generation,
-            phenotypeView: this.phenotypeView
+            phenotypeView: this.PhenotypeView
         });
         this.generationRowViews.push(this.generationRowView);
         this.$("tbody").append(this.generationRowView.render().el);
