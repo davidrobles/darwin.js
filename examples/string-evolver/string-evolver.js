@@ -41,7 +41,7 @@ var StringEvolver = {
     createStringDiffView: function(target) {
         return Backbone.View.extend({
             tagName: "p",
-            initialize: function(options) { // Change options in the other views!
+            initialize: function(options) {
                 this.actual = options.actual;
                 this.target = target;
             },
