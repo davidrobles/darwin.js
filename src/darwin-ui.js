@@ -286,6 +286,11 @@ var IndividualDetailsView = Backbone.View.extend({
         this.listenTo(Darwin.vent, "individual-selected", this.changeIndividual);
     },
 
+    changeIndividual: function(individual) {
+        this.model = individual;
+        this.render();
+    }
+
     render: function() {
         if (this.model) {
             this.$el.html(this.template({
@@ -297,11 +302,6 @@ var IndividualDetailsView = Backbone.View.extend({
             }));
         }
         return this;
-    },
-
-    changeIndividual: function(individual) {
-        this.model = individual;
-        this.render();
     }
 
 });
