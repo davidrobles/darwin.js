@@ -307,10 +307,7 @@ var CandidateDetailsView = Backbone.View.extend({
 
     className: "widget widget-info candidate-details-view",
 
-    template: {
-        "full": _.template($("#candidate-details-view").html()),
-        "empty": _.template($("#candidate-details-view-empty").html())
-    },
+    template: _.template($("#candidate-details-view").html()),
 
     initialize: function(options) {
         this.candidateView = options.candidateView;
@@ -319,15 +316,13 @@ var CandidateDetailsView = Backbone.View.extend({
 
     render: function() {
         if (this.model) {
-            this.$el.html(this.template["full"]({
+            this.$el.html(this.template({
                 id: this.model.get("id"),
                 candidate: new this.candidateView({
                     actual: this.model.get("candidate")
                 }).render().el.innerHTML,
                 fitness: this.model.get("fitness")
             }));
-        } else {
-            this.$el.html(this.template["empty"]());
         }
         return this;
     },
