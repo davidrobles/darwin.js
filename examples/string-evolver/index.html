@@ -96,8 +96,8 @@
     <script src="string-evolver.js"></script>
     <script>
     (function() {
-        var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        var wordToFind = "PEPE";
+        var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+        var wordToFind = "EVOLVING HELLO WORLD";
         var stringEvolver = new Darwin.GA({
             populationSize: 100,
             genIndFunc: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),

@@ -111,7 +111,7 @@ table.generations th, table.generations td {
 }
 
 table.generations th + th, table.generations td + td {
-    width: 120px;
+    width: 160px;
 }
 
 table.generations th + th + th, table.generations td + td + td {
@@ -132,7 +132,7 @@ table.population th, table.population td {
 }
 
 table.population th + th, table.population td + td {
-    width: 120px;
+    width: 160px;
 }
 
 table.population th + th + th, table.population td + td + td {
