@@ -51,9 +51,8 @@ var StringEvolver = {
             },
             render: function() {
                 for (var i = 0; i < this.target.length; i++) {
-                    var type = this.target.charAt(i) === this.actual.charAt(i) ? "match" : "mismatch",
-                        color = this.colors[type];
-                    this.$el.append('<span style="color: ' + color + ';">' + this.actual.charAt(i) + '</span>');
+                    var type = this.target.charAt(i) === this.actual.charAt(i) ? "match" : "mismatch";
+                    this.$el.append('<span style="color: ' + this.colors[type] + ';">' + this.actual.charAt(i) + '</span>');
                 }
                 return this;
             }
