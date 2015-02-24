@@ -55,7 +55,10 @@ var DashboardView = Backbone.View.extend({
     initSubviews: function() {
         this.GenerationsCollection = Backbone.Collection.extend();
         this.generationsCollection = new this.GenerationsCollection();
-        this.generationsTableView = new GenerationsTableView({ collection: this.generationsCollection });
+        this.generationsTableView = new GenerationsTableView({
+            collection: this.generationsCollection,
+            individualView: this.individualView
+        });
         this.populationTableView = new PopulationTableView({
             individualView: this.individualView
         });
@@ -113,7 +116,9 @@ var GenerationsTableView = Backbone.View.extend({
 
     template: _.template($("#generations-table-view").html()),
 
-    initialize: function() {
+    initialize: function(options) {
+        this.collection = options.collection;
+        this.individualView = options.individualView;
         this.selectedGenerationRowView = null;
         this.generationRowViews = [];
         this.listenTo(Darwin.vent, "generation-selected", this.selectGeneration);
@@ -124,7 +129,8 @@ var GenerationsTableView = Backbone.View.extend({
 
     addGeneration: function(generation) {
         this.generationRowView = new GenerationRowView({
-            model: generation
+            model: generation,
+            individualView: this.individualView
         });
         this.generationRowViews.push(this.generationRowView);
         this.$("tbody").append(this.generationRowView.render().el);
@@ -175,7 +181,9 @@ var GenerationRowView = SelectableRowView.extend({
         "in-progress": _.template($("#generation-row-view-in-progress").html())
     },
 
-    initialize: function() {
+    initialize: function(options) {
+        //this.model = options.model;
+        this.individualView = options.individualView;
         this.listenTo(this.model, "change", this.render);
     },
 
@@ -183,13 +191,11 @@ var GenerationRowView = SelectableRowView.extend({
     render: function() {
         var templateName = this.model.get("status");
         if (templateName === "complete") {
-            var individualLabelView = new IndividualLabelView({
-                actual: this.model.get("bestIndividual"),
-                target: "EVOLUTION" // TODO Move to model configuration
-            });
             this.$el.html(this.templates[templateName]({
                 id: this.model.get("id"),
-                bestIndividual: individualLabelView.render().el.innerHTML,
+                bestIndividual: new this.individualView({
+                    actual: this.model.get("bestIndividual")
+                }).render().el.innerHTML,
                 bestIndividualFitness: this.model.get("bestIndividualFitness"),
                 averageFitness: this.model.get("averageFitness") // TODO rename to avgFitness
             }));
