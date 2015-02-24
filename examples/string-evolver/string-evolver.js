@@ -45,8 +45,8 @@ var StringEvolver = {
                 match: "rgb(141, 199, 63)",
                 mismatch: "rgb(237, 28, 36)"
             },
-            initialize: function(opts) { // Change options in the other views!
-                this.actual = opts.actual;
+            initialize: function(options) { // Change options in the other views!
+                this.actual = options.actual;
                 this.target = target;
             },
             render: function() {
