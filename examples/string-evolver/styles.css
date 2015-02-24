@@ -1,5 +1,5 @@
 body {
-    font-family: "Menlo", "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;;
+    font-family: "Menlo", "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;
     font-size: 12px;
     margin: 0;
     background-color: #252b34;
@@ -10,7 +10,8 @@ body p {
 }
 
 .dashboard {
-    color: #b5bfcc;
+    /*color: #b5bfcc;*/
+    color: #ecf1f4;
     background-color: #252b34;
     height: 100vh;
     margin: 0;
@@ -26,10 +27,17 @@ body p {
     display: inline;
     margin: 10px 0 0 10px;
     background-color: #313842;
+    border: 2px solid #363f4a;
 }
 
-.widget-info {
-    border: 2px solid #363f4a;
+.widget-title {
+    text-align: center;
+    font-size: 1.3em;
+    border-bottom: 2px solid #363f4a;
+    padding: 10px;
+}
+
+.widget-content {
     padding: 10px;
 }
 
@@ -38,7 +46,6 @@ body p {
 /**************/
 
 table.ea {
-    color: #ecf1f4;
     border-spacing: 0;
     text-align: left;
     border: 2px solid #363f4a;
@@ -137,7 +144,6 @@ table.population th + th + th, table.population td + td + td {
 /****************************/
 
 .individual-details-view {
-    height: 95vh;
+    height: 97vh;
     min-width: 400px;
-    padding: 10px;
 }
