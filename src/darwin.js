@@ -4,6 +4,10 @@ var Darwin = Darwin || {};
 
     "use strict";
 
+    /////////////////////////////////
+    // Base Evolutionary Algorithm //
+    /////////////////////////////////
+
     Darwin.EA = function(options) {
         this.options = options || {};
         this.populationSize = options.populationSize;
@@ -123,5 +127,18 @@ var Darwin = Darwin || {};
     };
 
     _.extend(Darwin.EA.prototype, Backbone.Events);
+
+    ////////////////////////
+    // Evolution Strategy //
+    ////////////////////////
+
+    Darwin.ES = function(options) {
+
+    };
+
+    Darwin.ES.prototype = {
+
+    };
+
 
 })();
