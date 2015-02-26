@@ -8,7 +8,7 @@ var Darwin = Darwin || {};
         this.options = options || {};
         this.populationSize = options.populationSize;
         this.fitnessFunction = options.fitnessFunction;
-        this.genIndFunc = options.genIndFunc;
+        this.individualFactory = options.individualFactory;
         this.reproduce = options.reproduce;
         this.mutate = options.mutate;
         this.terminationConditions = options.terminationConditions;
@@ -38,7 +38,7 @@ var Darwin = Darwin || {};
 
         generatePopulation: function() {
             this.population = this.currentGeneration.id === 0 ?
-                              Darwin.Utils.generatePopulation(this.genIndFunc, this.populationSize) :
+                              Darwin.Utils.generatePopulation(this.individualFactory, this.populationSize) :
                               this.breed();
             this.trigger("population-generated", this.population);
         },

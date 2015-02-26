@@ -100,7 +100,7 @@
         var wordToFind = "HELLO WORLD";
         var stringEvolver = new Darwin.EA({
             populationSize: 100,
-            genIndFunc: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
+            individualFactory: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
             fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
             reproduce: Darwin.Operators.singlePointCrossover,
             mutate: StringEvolver.createRandomCharacterMutation(charPool),
