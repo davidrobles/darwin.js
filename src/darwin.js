@@ -117,26 +117,37 @@ var Darwin = Darwin || {};
     ////////////////////////
 
     Darwin.ES = function(options) {
-
+        Darwin.EA.call(this, options);
+        this.parentsSize = options.parentsSize;    // μ
+        this.childrenSize = options.childrenSize;  // λ
     };
 
-    Darwin.ES.prototype = {
-        evolutionStrategy: function() {
-            var parentsSize = 5;
-            var childrenSize = 20;
-            var parents = selectParents();
-            var nTimes = parentsSize / childrenSize;
-            var newPopulation = [];
-            for (var i = 0; i < parents.length; i++) {
-                for (var j = 0; j < nTimes; j++) {
-                    var parent = parents[i];
-                    var child = this.mutate(parent);
-                    newPopulation.push(child)
-                }
+    Darwin.ES.prototype = Object.create(Darwin.EA.prototype, {
+        constructor: {
+            configurable: true,
+            enumerable: true,
+            value: Darwin.ES,
+            writable: true
+        }
+    });
+
+    Darwin.ES.prototype.breed = function() {
+        var newPopulation = [],
+            parents = this.selectParents(),
+            childrenPerParent = this.parentsSize / this.childrenSize;
+        for (var i = 0; i < parents.length; i++) {
+            for (var j = 0; j < childrenPerParent; j++) {
+                var parent = parents[i];
+                var child = this.mutate(parent);
+                newPopulation.push(child)
             }
-            return newPopulation;
-        },
+        }
+        return newPopulation;
     };
 
+    Darwin.ES.prototype.selectParents = function() {
+        var randIndex = _.random(0, this.parentsSize - 1);
+        return this.evaluatedPopulation[randIndex];
+    };
 
 })();
