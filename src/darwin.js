@@ -133,10 +133,11 @@ var Darwin = Darwin || {};
     Darwin.ES.prototype.breed = function() {
         var newPopulation = [],
             parents = this.selectParents(),
-            childrenPerParent = this.parentsSize / this.childrenSize;
+            childrenPerParent = this.childrenSize / this.parentsSize;
+        debugger;
         for (var i = 0; i < parents.length; i++) {
             for (var j = 0; j < childrenPerParent; j++) {
-                var parent = parents[i];
+                var parent = parents[i].individual;
                 var child = this.mutate(parent);
                 newPopulation.push(child)
             }
@@ -145,8 +146,9 @@ var Darwin = Darwin || {};
     };
 
     Darwin.ES.prototype.selectParents = function() {
-        var randIndex = _.random(0, this.parentsSize - 1);
-        return this.evaluatedPopulation[randIndex];
+        return this.evaluatedPopulation.slice(0, this.parentsSize);
+        //var randIndex = _.random(0, this.parentsSize - 1);
+        //return this.evaluatedPopulation[randIndex];
     };
 
 })();

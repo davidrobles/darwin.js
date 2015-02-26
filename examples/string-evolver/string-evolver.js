@@ -24,11 +24,11 @@ var StringEvolver = {
         }
     },
 
-    createRandomCharacterMutation: function(alphabet) {
+    createRandomCharacterMutation: function(alphabet, mutationRate) {
         return function(individual) {
             var newString = "";
             for (var i = 0; i < individual.length; i++) {
-                if (Math.random() < 0.01) {
+                if (Math.random() < mutationRate) {
                     var randChar = _.random(0, alphabet.length - 1);
                     newString += alphabet.charAt(randChar);
                 } else {
