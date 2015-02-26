@@ -95,6 +95,11 @@
     <script src="../../src/termination.js"></script>
     <script src="string-evolver.js"></script>
     <script>
+
+    ///////////////////////
+    // Genetic Algorithm //
+    ///////////////////////
+
     (function() {
         var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
         var wordToFind = "HELLO WORLD";
@@ -112,6 +117,30 @@
         });
         $("body").prepend(dashboardView.render().el);
     })();
+
+    ///////////////////////////
+    // Evolutionary Strategy //
+    ///////////////////////////
+
+//    (function() {
+//        var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+//        var wordToFind = "HELLO WORLD";
+//        var stringEvolver = new Darwin.ES({
+//            parentsSize: 5,
+//            childrenSize: 20,    // TODO same
+//            populationSize: 20, // TODO same
+//            individualFactory: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
+//            fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
+//            mutate: StringEvolver.createRandomCharacterMutation(charPool),
+//            terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
+//        });
+//        var dashboardView = new DashboardView({
+//            ga: stringEvolver,
+//            phenotypeView: StringEvolver.createStringDiffView(wordToFind)
+//        });
+//        $("body").prepend(dashboardView.render().el);
+//    })();
+
     </script>
 </body>
 </html>
