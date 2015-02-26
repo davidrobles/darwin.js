@@ -92,22 +92,6 @@ var Darwin = Darwin || {};
             return newPopulation;
         },
 
-        evolutionStrategy: function() {
-            var parentsSize = 5;
-            var childrenSize = 20;
-            var parents = selectParents();
-            var nTimes = parentsSize / childrenSize;
-            var newPopulation = [];
-            for (var i = 0; i < parents.length; i++) {
-                for (var j = 0; j < nTimes; j++) {
-                    var parent = parents[i];
-                    var child = this.mutate(parent);
-                    newPopulation.push(child)
-                }
-            }
-            return newPopulation;
-        },
-
         // Controls
 
         start: function() {
@@ -137,7 +121,21 @@ var Darwin = Darwin || {};
     };
 
     Darwin.ES.prototype = {
-
+        evolutionStrategy: function() {
+            var parentsSize = 5;
+            var childrenSize = 20;
+            var parents = selectParents();
+            var nTimes = parentsSize / childrenSize;
+            var newPopulation = [];
+            for (var i = 0; i < parents.length; i++) {
+                for (var j = 0; j < nTimes; j++) {
+                    var parent = parents[i];
+                    var child = this.mutate(parent);
+                    newPopulation.push(child)
+                }
+            }
+            return newPopulation;
+        },
     };
 
 
