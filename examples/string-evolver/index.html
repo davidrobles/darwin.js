@@ -98,7 +98,7 @@
     (function() {
         var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
         var wordToFind = "HELLO WORLD";
-        var stringEvolver = new Darwin.GA({
+        var stringEvolver = new Darwin.EA({
             populationSize: 100,
             genIndFunc: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
             fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),

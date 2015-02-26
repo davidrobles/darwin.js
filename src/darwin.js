@@ -4,7 +4,7 @@ var Darwin = Darwin || {};
 
     "use strict";
 
-    Darwin.GA = function(options) {
+    Darwin.EA = function(options) {
         this.options = options || {};
         this.populationSize = options.populationSize;
         this.fitnessFunction = options.fitnessFunction;
@@ -17,7 +17,7 @@ var Darwin = Darwin || {};
         this.currentGeneration = null;
     };
 
-    Darwin.GA.prototype = {
+    Darwin.EA.prototype = {
 
         evolutionaryStep: function() {
             this.initGeneration();
@@ -107,6 +107,6 @@ var Darwin = Darwin || {};
 
     };
 
-    _.extend(Darwin.GA.prototype, Backbone.Events);
+    _.extend(Darwin.EA.prototype, Backbone.Events);
 
 })();
