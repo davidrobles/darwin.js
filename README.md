@@ -3,6 +3,13 @@ darwin.js
 
 A JavaScript framework for Evolutionary Algorithms.
 
+This framework is work in progress. The goal is to provide a general framework for the following type of
+evolutionary algorithms:
+
+- Evolution Strategy.
+- Genetic Algorithm.
+- Genetic Programming.
+
 Example
 =======
 
