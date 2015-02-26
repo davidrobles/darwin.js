@@ -9,7 +9,6 @@ var Darwin = Darwin || {};
     /////////////////////////////////
 
     Darwin.EA = function(options) {
-        this.options = options || {};
         this.populationSize = options.populationSize;
         this.fitnessFunction = options.fitnessFunction;
         this.individualFactory = options.individualFactory;
