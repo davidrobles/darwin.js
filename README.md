@@ -15,6 +15,8 @@ Example
 
 [String Evolver](https://rawgit.com/davidrobles/darwin.js/master/examples/string-evolver/index.html)
 
+![Monte Carlo PI Demo](examples/string-evolver/string-evolver.png "Monte Carlo PI Demo")
+
 Callbacks
 =========
 
