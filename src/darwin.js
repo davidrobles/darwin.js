@@ -8,7 +8,7 @@ var Darwin = Darwin || {};
     // Abstract Evolutionary Algorithm //
     /////////////////////////////////////
 
-    Darwin.EA = function(options) {
+    Darwin.EvolutionaryAlgorithm = function(options) {
         this.populationSize = options.populationSize;
         this.fitnessFunction = options.fitnessFunction;
         this.individualFactory = options.individualFactory;
@@ -20,7 +20,7 @@ var Darwin = Darwin || {};
         this.currentGeneration = null;
     };
 
-    Darwin.EA.prototype = {
+    Darwin.EvolutionaryAlgorithm.prototype = {
 
         evolutionaryStep: function() {
             this.initGeneration();
@@ -108,17 +108,17 @@ var Darwin = Darwin || {};
 
     };
 
-    _.extend(Darwin.EA.prototype, Backbone.Events);
+    _.extend(Darwin.EvolutionaryAlgorithm.prototype, Backbone.Events);
 
     ///////////////////////
     // Genetic Algorithm //
     ///////////////////////
 
     Darwin.GeneticAlgorithm = function(options) {
-        Darwin.EA.call(this, options);
+        Darwin.EvolutionaryAlgorithm.call(this, options);
     };
 
-    Darwin.GeneticAlgorithm.prototype = Object.create(Darwin.EA.prototype, {
+    Darwin.GeneticAlgorithm.prototype = Object.create(Darwin.EvolutionaryAlgorithm.prototype, {
         constructor: {
             configurable: true,
             enumerable: true,
@@ -152,10 +152,10 @@ var Darwin = Darwin || {};
         this.plusSelection = options.plusSelection; // if true (μ, λ), if false (μ + λ)
         this.childrenPerParent = this.childrenSize / this.parentsSize;
         options.populationSize = this.plusSelection ? (this.parentsSize + this.childrenSize) : this.childrenSize;
-        Darwin.EA.call(this, options);
+        Darwin.EvolutionaryAlgorithm.call(this, options);
     };
 
-    Darwin.EvolutionStrategy.prototype = Object.create(Darwin.EA.prototype, {
+    Darwin.EvolutionStrategy.prototype = Object.create(Darwin.EvolutionaryAlgorithm.prototype, {
         constructor: {
             configurable: true,
             enumerable: true,
