@@ -134,7 +134,6 @@ var Darwin = Darwin || {};
         var newPopulation = [],
             parents = this.selectParents(),
             childrenPerParent = this.childrenSize / this.parentsSize;
-        debugger;
         for (var i = 0; i < parents.length; i++) {
             for (var j = 0; j < childrenPerParent; j++) {
                 var parent = parents[i].individual;
