@@ -129,6 +129,7 @@
             stringEvolver = new Darwin.ES({
                 parentsSize: 10,
                 childrenSize: 40,
+                plusSelection: true,
                 individualFactory: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
                 fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
                 mutate: StringEvolver.createRandomCharacterMutation(charPool, mutationRate),

@@ -116,11 +116,12 @@ var Darwin = Darwin || {};
     ////////////////////////
 
     Darwin.ES = function(options) {
-        options.populationSize = options.childrenSize;
-        Darwin.EA.call(this, options);
-        this.parentsSize = options.parentsSize;    // μ
-        this.childrenSize = options.childrenSize;  // λ
+        this.parentsSize = options.parentsSize;     // μ
+        this.childrenSize = options.childrenSize;   // λ
+        this.plusSelection = options.plusSelection; // if true (μ, λ), if false (μ + λ)
         this.childrenPerParent = this.childrenSize / this.parentsSize;
+        options.populationSize = this.plusSelection ? (this.parentsSize + this.childrenSize) : this.childrenSize;
+        Darwin.EA.call(this, options);
     };
 
     Darwin.ES.prototype = Object.create(Darwin.EA.prototype, {
@@ -135,6 +136,11 @@ var Darwin = Darwin || {};
     Darwin.ES.prototype.breed = function() {
         var newPopulation = [],
             parents = this.selectParents();
+        if (this.plusSelection) {
+            newPopulation = _.map(parents, function(parent) {
+                return parent.individual;
+            });
+        }
         _.each(parents, function(parent) {
             for (var i = 0; i < this.childrenPerParent; i++) {
                 var child = this.mutate(parent.individual); // TODO change .individual to genotype? or phenotype?
