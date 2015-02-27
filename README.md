@@ -6,7 +6,7 @@ A JavaScript framework for Evolutionary Algorithms.
 This framework is work in progress. The goal is to provide a general framework for the following type of
 evolutionary algorithms:
 
-- Genetic Algorithm
+- Genetic Algorithms
 - Genetic Programming
 - Evolution Strategies - Support for both (μ + λ) and (μ, λ) evolution strategies.
 
