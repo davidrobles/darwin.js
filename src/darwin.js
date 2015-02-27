@@ -136,8 +136,8 @@ var Darwin = Darwin || {};
         var newPopulation = [],
             parents = this.selectParents();
         _.each(parents, function(parent) {
-            for (var j = 0; j < this.childrenPerParent; j++) {
-                var child = this.mutate(parent.individual);
+            for (var i = 0; i < this.childrenPerParent; i++) {
+                var child = this.mutate(parent.individual); // TODO change .individual to genotype? or phenotype?
                 newPopulation.push(child)
             }
         }, this);
