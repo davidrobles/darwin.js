@@ -77,18 +77,7 @@ var Darwin = Darwin || {};
         },
 
         breed: function() {
-            var newPopulation = [];
-            var halfLength = this.population.length / 2;
-            for (var i = 0; i < halfLength; i++) {
-                var parentA = Darwin.Selection.randomTopPercent(this.evaluatedPopulation);
-                var parentB = Darwin.Selection.randomTopPercent(this.evaluatedPopulation);
-                var children = this.reproduce(parentA.individual, parentB.individual); // remove .individual
-                var childA = this.mutate(children.childA);
-                var childB = this.mutate(children.childB);
-                newPopulation.push(childA);
-                newPopulation.push(childB);
-            }
-            return newPopulation;
+            throw "Not implemented method: breed()";
         },
 
         // Controls
@@ -110,6 +99,38 @@ var Darwin = Darwin || {};
     };
 
     _.extend(Darwin.EA.prototype, Backbone.Events);
+
+    ///////////////////////
+    // Genetic Algorithm //
+    ///////////////////////
+
+    Darwin.GA = function(options) {
+        Darwin.EA.call(this, options);
+    };
+
+    Darwin.GA.prototype = Object.create(Darwin.EA.prototype, {
+        constructor: {
+            configurable: true,
+            enumerable: true,
+            value: Darwin.GA,
+            writable: true
+        }
+    });
+
+    Darwin.GA.prototype.breed = function() {
+        var newPopulation = [];
+        var halfLength = this.population.length / 2;
+        for (var i = 0; i < halfLength; i++) {
+            var parentA = Darwin.Selection.randomTopPercent(this.evaluatedPopulation);
+            var parentB = Darwin.Selection.randomTopPercent(this.evaluatedPopulation);
+            var children = this.reproduce(parentA.individual, parentB.individual); // remove .individual
+            var childA = this.mutate(children.childA);
+            var childB = this.mutate(children.childB);
+            newPopulation.push(childA);
+            newPopulation.push(childB);
+        }
+        return newPopulation;
+    };
 
     ////////////////////////
     // Evolution Strategy //

@@ -100,38 +100,15 @@
     // Genetic Algorithm //
     ///////////////////////
 
-//    (function() {
-//        var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
-//        var wordToFind = "HELLO WORLD";
-//        var stringEvolver = new Darwin.EA({
-//            populationSize: 100,
-//            individualFactory: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
-//            fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
-//            reproduce: Darwin.Operators.singlePointCrossover,
-//            mutate: StringEvolver.createRandomCharacterMutation(charPool, , 0.10),
-//            terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
-//        });
-//        var dashboardView = new DashboardView({
-//            ga: stringEvolver,
-//            phenotypeView: StringEvolver.createStringDiffView(wordToFind)
-//        });
-//        $("body").prepend(dashboardView.render().el);
-//    })();
-
-    ///////////////////////////
-    // Evolutionary Strategy //
-    ///////////////////////////
-
     (function() {
-        var wordToFind = "HELLO WORLD",
-            charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
+        var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
             mutationRate = 0.10,
-            stringEvolver = new Darwin.ES({
-                parentsSize: 10,
-                childrenSize: 40,
-                plusSelection: true,
+            wordToFind = "HELLO WORLD",
+            stringEvolver = new Darwin.GA({
+                populationSize: 100,
                 individualFactory: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
                 fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
+                reproduce: Darwin.Operators.singlePointCrossover,
                 mutate: StringEvolver.createRandomCharacterMutation(charPool, mutationRate),
                 terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
             }),
@@ -141,6 +118,30 @@
             });
         $("body").prepend(dashboardView.render().el);
     })();
+
+    ///////////////////////////
+    // Evolutionary Strategy //
+    ///////////////////////////
+
+//    (function() {
+//        var wordToFind = "HELLO WORLD",
+//            charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
+//            mutationRate = 0.10,
+//            stringEvolver = new Darwin.ES({
+//                parentsSize: 10,
+//                childrenSize: 40,
+//                plusSelection: true,
+//                individualFactory: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
+//                fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
+//                mutate: StringEvolver.createRandomCharacterMutation(charPool, mutationRate),
+//                terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
+//            }),
+//            dashboardView = new DashboardView({
+//                ga: stringEvolver,
+//                phenotypeView: StringEvolver.createStringDiffView(wordToFind)
+//            });
+//        $("body").prepend(dashboardView.render().el);
+//    })();
 
     </script>
 </body>
