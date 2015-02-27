@@ -12,6 +12,7 @@ var Darwin = Darwin || {};
         this.populationSize = options.populationSize;
         this.fitnessFunction = options.fitnessFunction;
         this.individualFactory = options.individualFactory;
+        this.select = options.select;
         this.reproduce = options.reproduce;
         this.mutate = options.mutate;
         this.terminationConditions = options.terminationConditions;
