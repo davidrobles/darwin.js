@@ -41,9 +41,7 @@ var Darwin = Darwin || {};
         },
 
         generatePopulation: function() {
-            this.population = this.currentGeneration.id === 0 ?
-                              Darwin.Utils.generatePopulation(this.individualFactory, this.populationSize) :
-                              this.breed();
+            this.population = this.currentGeneration.id === 0 ? this.generateInitialPopulation() : this.breed();
             this.trigger("population-generated", this.population);
         },
 
@@ -75,6 +73,10 @@ var Darwin = Darwin || {};
                 this.trigger("ea-finished");
                 clearInterval(this.interval);
             }
+        },
+
+        generateInitialPopulation: function() {
+            return _.map(_.range(this.populationSize), this.individualFactory);
         },
 
         breed: function() {

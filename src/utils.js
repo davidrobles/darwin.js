@@ -32,10 +32,6 @@ var Darwin = Darwin || {};
             });
         },
 
-        generatePopulation: function(individualFactory, populationSize) {
-            return _.map(_.range(populationSize), individualFactory);
-        },
-
         shouldContinue: function(popData, conditions) {
             return _.every(conditions, function(condition) {
                 return !condition.shouldTerminate(popData);
