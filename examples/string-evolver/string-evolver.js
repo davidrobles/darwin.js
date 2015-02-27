@@ -25,7 +25,9 @@ var StringEvolver = {
         }
     },
 
-    createRandomCharacterMutation: function(alphabet, mutationRate) {
+    // creates a mutation operator function that is applied with the given
+    // probability and draws its characters from the specified alphabet
+    createStringMutation: function(alphabet, mutationRate) {
         return function(individual) {
             var newString = "";
             for (var i = 0; i < individual.length; i++) {

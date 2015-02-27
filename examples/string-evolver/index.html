@@ -101,8 +101,8 @@
     ///////////////////////
 
     (function() {
-        var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
-            mutationRate = 0.10,
+        var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
+            mutationProbability = 0.10,
             wordToFind = "HELLO WORLD",
             stringEvolver = new Darwin.GA({
                 populationSize: 100,
@@ -110,7 +110,7 @@
                 fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
                 select: Darwin.Selection.randomTopPercent,
                 reproduce: Darwin.Operators.singlePointCrossover,
-                mutate: StringEvolver.createRandomCharacterMutation(charPool, mutationRate),
+                mutate: StringEvolver.createStringMutation(alphabet, mutationProbability),
                 terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
             }),
             dashboardView = new DashboardView({
@@ -126,7 +126,7 @@
 
 //    (function() {
 //        var wordToFind = "HELLO WORLD",
-//            charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
+//            alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
 //            mutationRate = 0.10,
 //            stringEvolver = new Darwin.ES({
 //                parentsSize: 10,
@@ -134,7 +134,7 @@
 //                plusSelection: true,
 //                individualFactory: StringEvolver.createStringFactory(charPool, wordToFind.length),
 //                fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
-//                mutate: StringEvolver.createRandomCharacterMutation(charPool, mutationRate),
+//                mutate: StringEvolver.createStringMutation(alphabet, mutationProbability),
 //                terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
 //            }),
 //            dashboardView = new DashboardView({
