@@ -108,6 +108,7 @@
                 populationSize: 100,
                 individualFactory: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
                 fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
+                select: Darwin.Selection.randomTopPercent,
                 reproduce: Darwin.Operators.singlePointCrossover,
                 mutate: StringEvolver.createRandomCharacterMutation(charPool, mutationRate),
                 terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
