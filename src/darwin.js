@@ -116,6 +116,7 @@ var Darwin = Darwin || {};
     ////////////////////////
 
     Darwin.ES = function(options) {
+        options.populationSize = options.childrenSize;
         Darwin.EA.call(this, options);
         this.parentsSize = options.parentsSize;    // μ
         this.childrenSize = options.childrenSize;  // λ

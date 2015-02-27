@@ -127,8 +127,7 @@
         var wordToFind = "HELLO WORLD";
         var stringEvolver = new Darwin.ES({
             parentsSize: 5,
-            childrenSize: 20,    // TODO same
-            populationSize: 20, // TODO same
+            childrenSize: 20,
             individualFactory: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
             fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
             mutate: StringEvolver.createRandomCharacterMutation(charPool, 0.10),
