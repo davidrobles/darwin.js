@@ -25,23 +25,6 @@ var StringEvolver = {
         }
     },
 
-    // creates a mutation operator function that is applied with the given
-    // probability and draws its characters from the specified alphabet
-    createStringMutation: function(alphabet, mutationRate) {
-        return function(individual) {
-            var newString = "";
-            for (var i = 0; i < individual.length; i++) {
-                if (Math.random() < mutationRate) {
-                    var randChar = _.random(0, alphabet.length - 1);
-                    newString += alphabet.charAt(randChar);
-                } else {
-                    newString += individual.charAt(i);
-                }
-            }
-            return newString;
-        };
-    },
-
     createStringDiffView: function(target) {
         return Backbone.View.extend({
             tagName: "p",

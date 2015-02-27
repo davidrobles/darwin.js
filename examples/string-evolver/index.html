@@ -110,7 +110,7 @@
                 fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
                 select: Darwin.Selection.randomTopPercent,
                 reproduce: Darwin.Operators.singlePointCrossover,
-                mutate: StringEvolver.createStringMutation(alphabet, mutationProbability),
+                mutate: Darwin.Operators.createStringMutation(alphabet, mutationProbability),
                 terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
             }),
             dashboardView = new DashboardView({
@@ -134,7 +134,7 @@
 //                plusSelection: true,
 //                individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
 //                fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
-//                mutate: StringEvolver.createStringMutation(alphabet, mutationProbability),
+//                mutate: Darwin.Operators.createStringMutation(alphabet, mutationProbability),
 //                terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
 //            }),
 //            dashboardView = new DashboardView({
