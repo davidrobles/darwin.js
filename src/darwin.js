@@ -46,7 +46,14 @@ var Darwin = Darwin || {};
         },
 
         evaluatePopulation: function() {
-            this.evaluatedPopulation = Darwin.Utils.evaluatePopulation(this.population, this.fitnessFunction);
+            var index = 0;
+            this.evaluatedPopulation = _.map(this.population, function(individual) {
+                return {
+                    id: index++,
+                    individual: individual,
+                    fitness: this.fitnessFunction(individual)
+                };
+            }, this);
             this.trigger("population-evaluated");
         },
 

@@ -21,17 +21,6 @@ var Darwin = Darwin || {};
             };
         },
 
-        evaluatePopulation: function(population, fitnessFunction) {
-            var index = 0; // TODO hacky, fix it
-            return _.map(population, function(individual) {
-                return {
-                    id: index++,
-                    individual: individual,
-                    fitness: fitnessFunction(individual)
-                };
-            });
-        },
-
         shouldContinue: function(popData, conditions) {
             return _.every(conditions, function(condition) {
                 return !condition.shouldTerminate(popData);
