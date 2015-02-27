@@ -135,13 +135,12 @@ var Darwin = Darwin || {};
     Darwin.ES.prototype.breed = function() {
         var newPopulation = [],
             parents = this.selectParents();
-        for (var i = 0; i < parents.length; i++) {
+        _.each(parents, function(parent) {
             for (var j = 0; j < this.childrenPerParent; j++) {
-                var parent = parents[i].individual;
-                var child = this.mutate(parent);
+                var child = this.mutate(parent.individual);
                 newPopulation.push(child)
             }
-        }
+        }, this);
         return newPopulation;
     };
 
