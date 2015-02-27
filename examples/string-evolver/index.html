@@ -100,7 +100,7 @@
     // Genetic Algorithm //
     ///////////////////////
 
-    (function() {
+    var runGA = function() {
         var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
             mutationProbability = 0.10,
             wordToFind = "HELLO WORLD",
@@ -118,31 +118,33 @@
                 phenotypeView: StringEvolver.createStringDiffView(wordToFind)
             });
         $("body").prepend(dashboardView.render().el);
-    })();
+    };
 
     ///////////////////////////
     // Evolutionary Strategy //
     ///////////////////////////
 
-//    (function() {
-//        var wordToFind = "HELLO WORLD",
-//            alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
-//            mutationRate = 0.10,
-//            stringEvolver = new Darwin.ES({
-//                parentsSize: 10,
-//                childrenSize: 40,
-//                plusSelection: true,
-//                individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
-//                fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
-//                mutate: Darwin.Operators.createStringMutation(alphabet, mutationProbability),
-//                terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
-//            }),
-//            dashboardView = new DashboardView({
-//                ga: stringEvolver,
-//                phenotypeView: StringEvolver.createStringDiffView(wordToFind)
-//            });
-//        $("body").prepend(dashboardView.render().el);
-//    })();
+    var runES = function() {
+        var wordToFind = "HELLO WORLD",
+            alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
+            mutationProbability = 0.10,
+            stringEvolver = new Darwin.EvolutionStrategy({
+                parentsSize: 10,
+                childrenSize: 40,
+                plusSelection: true,
+                individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
+                fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
+                mutate: Darwin.Operators.createStringMutation(alphabet, mutationProbability),
+                terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
+            }),
+            dashboardView = new DashboardView({
+                ga: stringEvolver,
+                phenotypeView: StringEvolver.createStringDiffView(wordToFind)
+            });
+        $("body").prepend(dashboardView.render().el);
+    };
+
+    runES();
 
     </script>
 </body>

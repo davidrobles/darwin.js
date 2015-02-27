@@ -146,7 +146,7 @@ var Darwin = Darwin || {};
     // Evolution Strategy //
     ////////////////////////
 
-    Darwin.ES = function(options) {
+    Darwin.EvolutionStrategy = function(options) {
         this.parentsSize = options.parentsSize;     // μ
         this.childrenSize = options.childrenSize;   // λ
         this.plusSelection = options.plusSelection; // if true (μ, λ), if false (μ + λ)
@@ -155,16 +155,16 @@ var Darwin = Darwin || {};
         Darwin.EA.call(this, options);
     };
 
-    Darwin.ES.prototype = Object.create(Darwin.EA.prototype, {
+    Darwin.EvolutionStrategy.prototype = Object.create(Darwin.EA.prototype, {
         constructor: {
             configurable: true,
             enumerable: true,
-            value: Darwin.ES,
+            value: Darwin.EvolutionStrategy,
             writable: true
         }
     });
 
-    Darwin.ES.prototype.breed = function() {
+    Darwin.EvolutionStrategy.prototype.breed = function() {
         var newPopulation = [],
             parents = this.selectParents();
         if (this.plusSelection) {
@@ -181,7 +181,7 @@ var Darwin = Darwin || {};
         return newPopulation;
     };
 
-    Darwin.ES.prototype.selectParents = function() {
+    Darwin.EvolutionStrategy.prototype.selectParents = function() {
         return this.evaluatedPopulation.slice(0, this.parentsSize);
     };
 
