@@ -120,6 +120,7 @@ var Darwin = Darwin || {};
         Darwin.EA.call(this, options);
         this.parentsSize = options.parentsSize;    // μ
         this.childrenSize = options.childrenSize;  // λ
+        this.childrenPerParent = this.childrenSize / this.parentsSize;
     };
 
     Darwin.ES.prototype = Object.create(Darwin.EA.prototype, {
@@ -133,10 +134,9 @@ var Darwin = Darwin || {};
 
     Darwin.ES.prototype.breed = function() {
         var newPopulation = [],
-            parents = this.selectParents(),
-            childrenPerParent = this.childrenSize / this.parentsSize;
+            parents = this.selectParents();
         for (var i = 0; i < parents.length; i++) {
-            for (var j = 0; j < childrenPerParent; j++) {
+            for (var j = 0; j < this.childrenPerParent; j++) {
                 var parent = parents[i].individual;
                 var child = this.mutate(parent);
                 newPopulation.push(child)
