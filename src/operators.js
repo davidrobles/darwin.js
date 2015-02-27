@@ -10,6 +10,9 @@ var Darwin = Darwin || {};
         // Recombination //
         ///////////////////
 
+
+        // One point random crossover for two String candidates.
+        // Assumes that both candidate Strings are the same length.
         singlePointCrossover: function(parentA, parentB) {
             var parentLength = parentA.length;
             var crossoverPoint = _.random(0, parentLength);
@@ -25,8 +28,8 @@ var Darwin = Darwin || {};
         // Mutation //
         //////////////
 
-        // creates a mutation operator function that is applied with the given
-        // probability and draws its characters from the specified alphabet
+        // Creates a mutation operator function that is applied with the given
+        // probability and draws its characters from the specified alphabet.
         createStringMutation: function(alphabet, mutationProbability) {
             return function(individual) {
                 var newString = "";
