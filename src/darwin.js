@@ -4,9 +4,9 @@ var Darwin = Darwin || {};
 
     "use strict";
 
-    /////////////////////////////////
-    // Base Evolutionary Algorithm //
-    /////////////////////////////////
+    /////////////////////////////////////
+    // Abstract Evolutionary Algorithm //
+    /////////////////////////////////////
 
     Darwin.EA = function(options) {
         this.populationSize = options.populationSize;
