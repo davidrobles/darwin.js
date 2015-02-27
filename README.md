@@ -10,15 +10,49 @@ evolutionary algorithms:
 - Genetic Programming
 - Evolution Strategies - Support for both (μ + λ) and (μ, λ) evolution strategies.
 
-Example
-=======
+### Genetic Algorithm Example
+
+```javascript
+var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
+    mutationRate = 0.10,
+    wordToFind = "HELLO WORLD",
+    stringEvolver = new Darwin.GA({
+        populationSize: 100,
+        individualFactory: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
+        fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
+        select: Darwin.Selection.randomTopPercent,
+        reproduce: Darwin.Operators.singlePointCrossover,
+        mutate: StringEvolver.createRandomCharacterMutation(charPool, mutationRate),
+        terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
+    });
+    stringEvolver.run()
+```
+
+### Evolution Strategy Example
+
+```javascript
+var wordToFind = "HELLO WORLD",
+    charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
+    mutationRate = 0.10,
+    stringEvolver = new Darwin.ES({
+        parentsSize: 10,
+        childrenSize: 40,
+        plusSelection: true,
+        individualFactory: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
+        fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
+        mutate: StringEvolver.createRandomCharacterMutation(charPool, mutationRate),
+        terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
+    }),
+    stringEvolver.run()
+```
+
+## Dashboard
 
 [String Evolver](https://rawgit.com/davidrobles/darwin.js/master/examples/string-evolver/index.html)
 
 ![Monte Carlo PI Demo](examples/string-evolver/string-evolver.png "Monte Carlo PI Demo")
 
-Callbacks
-=========
+## Callbacks
 
 | Callback                   | Description
 | -------------------------- | -----------
