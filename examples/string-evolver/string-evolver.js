@@ -13,6 +13,7 @@ var StringEvolver = {
         }
     },
 
+    // generates random strings of a fixed length from a given alphabet
     createStringFactory: function(alphabet, stringLength) {
         return function() {
             var str = "";
