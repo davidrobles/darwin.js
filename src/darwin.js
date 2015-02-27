@@ -114,20 +114,20 @@ var Darwin = Darwin || {};
     // Genetic Algorithm //
     ///////////////////////
 
-    Darwin.GA = function(options) {
+    Darwin.GeneticAlgorithm = function(options) {
         Darwin.EA.call(this, options);
     };
 
-    Darwin.GA.prototype = Object.create(Darwin.EA.prototype, {
+    Darwin.GeneticAlgorithm.prototype = Object.create(Darwin.EA.prototype, {
         constructor: {
             configurable: true,
             enumerable: true,
-            value: Darwin.GA,
+            value: Darwin.GeneticAlgorithm,
             writable: true
         }
     });
 
-    Darwin.GA.prototype.breed = function() {
+    Darwin.GeneticAlgorithm.prototype.breed = function() {
         var newPopulation = [];
         var halfLength = this.population.length / 2;
         for (var i = 0; i < halfLength; i++) {

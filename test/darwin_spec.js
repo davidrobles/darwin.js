@@ -2,7 +2,7 @@ describe('Simple object', function() {
     var ga;
 
     beforeEach(function() {
-        ga = new Darwin.GA({});
+        ga = new Darwin.GeneticAlgorithm({});
     });
 
     it('should say hi', function() {

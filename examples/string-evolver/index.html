@@ -104,7 +104,7 @@
         var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
             mutationProbability = 0.10,
             wordToFind = "HELLO WORLD",
-            stringEvolver = new Darwin.GA({
+            stringEvolver = new Darwin.GeneticAlgorithm({
                 populationSize: 100,
                 individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
                 fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
