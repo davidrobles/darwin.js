@@ -106,7 +106,7 @@
             wordToFind = "HELLO WORLD",
             stringEvolver = new Darwin.GA({
                 populationSize: 100,
-                individualFactory: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
+                individualFactory: StringEvolver.createStringFactory(charPool, wordToFind.length),
                 fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
                 select: Darwin.Selection.randomTopPercent,
                 reproduce: Darwin.Operators.singlePointCrossover,
@@ -132,7 +132,7 @@
 //                parentsSize: 10,
 //                childrenSize: 40,
 //                plusSelection: true,
-//                individualFactory: StringEvolver.createRandomStringGenerator(charPool, wordToFind.length),
+//                individualFactory: StringEvolver.createStringFactory(charPool, wordToFind.length),
 //                fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
 //                mutate: StringEvolver.createRandomCharacterMutation(charPool, mutationRate),
 //                terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]

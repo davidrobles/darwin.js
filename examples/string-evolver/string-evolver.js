@@ -13,8 +13,8 @@ var StringEvolver = {
         }
     },
 
-    createRandomStringGenerator: function(alphabet, stringLength) {
-        return function generateRandomString() {
+    createStringFactory: function(alphabet, stringLength) {
+        return function() {
             var str = "";
             for (var i = 0; i < stringLength; i++) {
                 var randChar = _.random(0, alphabet.length - 1);
