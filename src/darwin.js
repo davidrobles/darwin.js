@@ -146,8 +146,6 @@ var Darwin = Darwin || {};
 
     Darwin.ES.prototype.selectParents = function() {
         return this.evaluatedPopulation.slice(0, this.parentsSize);
-        //var randIndex = _.random(0, this.parentsSize - 1);
-        //return this.evaluatedPopulation[randIndex];
     };
 
 })();
