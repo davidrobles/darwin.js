@@ -13,12 +13,12 @@ var StringEvolver = {
         }
     },
 
-    createRandomStringGenerator: function(charPool, wordLength) {
+    createRandomStringGenerator: function(alphabet, stringLength) {
         return function generateRandomString() {
             var str = "";
-            for (var i = 0; i < wordLength; i++) {
-                var randChar = _.random(0, charPool.length - 1);
-                str += charPool.charAt(randChar);
+            for (var i = 0; i < stringLength; i++) {
+                var randChar = _.random(0, alphabet.length - 1);
+                str += alphabet.charAt(randChar);
             }
             return str
         }
