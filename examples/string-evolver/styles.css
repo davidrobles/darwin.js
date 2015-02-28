@@ -103,7 +103,7 @@ table.ea tbody tr:hover {
 
 table.generations tbody {
     overflow-y: auto;
-    height: 90vh;
+    height: 50vh;
 }
 
 table.generations th, table.generations td {
@@ -124,7 +124,7 @@ table.generations th + th + th, table.generations td + td + td {
 
 table.population tbody {
     overflow-y: auto;
-    height: 90vh;
+    height: 50vh;
 }
 
 table.population th, table.population td {
@@ -144,7 +144,7 @@ table.population th + th + th, table.population td + td + td {
 /****************************/
 
 .individual-details-view {
-    height: 97vh;
+    height: 57vh;
     min-width: 200px;
 }
 

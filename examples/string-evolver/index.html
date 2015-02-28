@@ -82,11 +82,40 @@
         </div>
     </script>
 
+    <style>
+
+        body {
+            font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        .x.axis path {
+            display: none;
+        }
+
+        .line {
+            fill: none;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
+
+    </style>
+
 </head>
 <body>
+
+    <div id="robles"></div>
+
     <script src="../../lib/jquery-2.1.1.js"></script>
     <script src="../../lib/underscore.js"></script>
     <script src="../../lib/backbone.js"></script>
+    <script src="../../lib/d3.js"></script>
     <script src="../../src/darwin.js"></script>
     <script src="../../src/darwin-ui.js"></script>
     <script src="../../src/selection.js"></script>
