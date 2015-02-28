@@ -346,7 +346,7 @@ var EAGraph = Backbone.View.extend({
             height = 300 - margin.top - margin.bottom;
 
         this.x = d3.scale.linear()
-            .domain([0, 80])
+            .domain([0, 60])
             .range([0, width]);
 
         this.y = d3.scale.linear()
@@ -396,13 +396,13 @@ var EAGraph = Backbone.View.extend({
 
         var self = this;
 
-        self.x.domain(d3.extent(self.data, function (d) {
-            return d.id;
-        }));
-
-        self.y.domain(d3.extent(self.data, function (d) {
-            return d.avgFitness;
-        }));
+        //self.x.domain(d3.extent(self.data, function (d) {
+        //    return d.id;
+        //}));
+        //
+        //self.y.domain(d3.extent(self.data, function (d) {
+        //    return d.avgFitness;
+        //}));
 
         // Data Join
         var path = self.svg.selectAll("path").datum(self.data);
