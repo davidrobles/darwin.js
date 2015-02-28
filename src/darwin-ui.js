@@ -345,10 +345,12 @@ var EAGraph = Backbone.View.extend({
             width = 560 - margin.left - margin.right,
             height = 300 - margin.top - margin.bottom;
 
-        this.x = d3.time.scale()
+        this.x = d3.scale.linear()
+            .domain([0, 80])
             .range([0, width]);
 
         this.y = d3.scale.linear()
+            .domain([0, "HELLO WORLD".length])
             .range([height, 0]);
 
         var xAxis = d3.svg.axis()
