@@ -94,6 +94,10 @@ var DashboardView = Backbone.View.extend({
             var generationModel = gensMap[generation.id];
             generationModel.set(generation);
             this.populationTableView.generationSelected(generationModel);
+            this.graph.addPoint({
+                id: generation.id,
+                avgFitness: generation.averageFitness
+            });
         });
     },
 
@@ -103,7 +107,7 @@ var DashboardView = Backbone.View.extend({
         this.$el.append(this.generationsTableView.render().el);
         this.$el.append(this.populationTableView.render().el);
         this.$el.append(this.individualDetailsView.render().el);
-        this.$el.append(this.graph.render().el);
+        this.$el.append(this.graph.el);
         return this;
     }
 
@@ -328,6 +332,12 @@ var EAGraph = Backbone.View.extend({
 
     initialize: function() {
         this.renderBase();
+        this.data = [];
+    },
+
+    addPoint: function(point) {
+        this.data.push(point);
+        this.render();
     },
 
     renderBase: function() {
@@ -351,8 +361,8 @@ var EAGraph = Backbone.View.extend({
         var self = this;
 
         this.line = d3.svg.line()
-            .x(function(d) { return self.x(d.date); })
-            .y(function(d) { return self.y(d.close); });
+            .x(function(d) { return self.x(d.id); })
+            .y(function(d) { return self.y(d.avgFitness); });
 
         this.svg = d3.select(this.el).append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -379,23 +389,23 @@ var EAGraph = Backbone.View.extend({
     render: function() {
         var parseDate = d3.time.format("%d-%b-%y").parse;
         var self = this;
-        d3.tsv("/data.tsv", function(error, data) {
-            data.forEach(function (d) {
-                d.date = parseDate(d.date);
-                d.close = +d.close;
-            });
+        //d3.tsv("/data.tsv", function(error, data) {
+        //    data.forEach(function (d) {
+        //        d.date = parseDate(d.date);
+        //        d.close = +d.close;
+        //    });
 
-            self.x.domain(d3.extent(data, function (d) {
-                return d.date;
-            }));
-            self.y.domain(d3.extent(data, function (d) {
-                return d.close;
-            }));
-            self.svg.append("path")
-                .datum(data)
-                .attr("class", "line")
-                .attr("d", self.line);
-        });
+        self.x.domain(d3.extent(self.data, function (d) {
+            return d.id;
+        }));
+        self.y.domain(d3.extent(self.data, function (d) {
+            return d.avgFitness;
+        }));
+        self.svg.append("path")
+            .datum(self.data)
+            .attr("class", "line")
+            .attr("d", self.line);
+        //});
         return this;
     }
 
