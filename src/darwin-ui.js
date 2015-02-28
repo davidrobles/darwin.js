@@ -355,10 +355,10 @@ var EAGraph = Backbone.View.extend({
         var self = this;
 
         var margin = {
-                top:    20,
-                right:  20,
-                bottom: 30,
-                left:   50
+                top:    30,
+                right:  30,
+                bottom: 45,
+                left:   45
             },
             width = 560 - margin.left - margin.right,
             height = 300 - margin.top - margin.bottom;
@@ -396,15 +396,20 @@ var EAGraph = Backbone.View.extend({
         this.svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
+            .call(xAxis)
+            .append("text")
+            .attr("x", width / 2)
+            .attr("y", 35)
+            .style("text-anchor", "middle")
+            .text("Generations");
 
         this.svg.append("g")
             .attr("class", "y axis")
             .call(yAxis)
             .append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
+            .attr("x", -100)
+            .attr("y", -27)
             .style("text-anchor", "end")
             .text("Fitness");
 
