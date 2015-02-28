@@ -399,6 +399,10 @@ var EAGraph = Backbone.View.extend({
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        this.path1 = self.svg.append("path");
+        this.path2 = self.svg.append("path");
+        this.path3 = self.svg.append("path");
+
         this.svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
@@ -418,10 +422,6 @@ var EAGraph = Backbone.View.extend({
             .attr("y", -27)
             .style("text-anchor", "end")
             .text("Fitness");
-
-        this.path1 = self.svg.append("path");
-        this.path2 = self.svg.append("path");
-        this.path3 = self.svg.append("path");
     },
 
     render: function() {
