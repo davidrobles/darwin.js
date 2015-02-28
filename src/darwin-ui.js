@@ -344,6 +344,8 @@ var EAGraph = Backbone.View.extend({
 
     renderBase: function() {
 
+        var self = this;
+
         var margin = {
                 top:    20,
                 right:  20,
@@ -368,7 +370,6 @@ var EAGraph = Backbone.View.extend({
         var yAxis = d3.svg.axis()
             .scale(this.y)
             .orient("left");
-        var self = this;
 
         this.line = d3.svg.line()
             .x(function(d) {
