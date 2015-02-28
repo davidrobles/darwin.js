@@ -443,9 +443,13 @@ var EAGraph = Backbone.View.extend({
         this.path2.attr("d", self.line)
             .style({
                 "fill": "none",
-                "stroke": "red",
+                "stroke": "#CC3824",
                 "stroke-width": "2px"
             });
+
+        // third color: FFA787
+
+        // fourth color: 47F1FF
 
         return this;
     }
