@@ -343,10 +343,10 @@ var EAGraph = Backbone.View.extend({
     initialize: function() {
         this.maxX = 60;
         this.maxY = "HELLO WORLD".length;
-        this.renderBase();
         this.data1 = [];
         this.data2 = [];
         this.data3 = [];
+        this.renderBase();
     },
 
     addPoints: function(points) {
