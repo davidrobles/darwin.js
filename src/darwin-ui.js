@@ -442,16 +442,6 @@ var EAGraph = Backbone.View.extend({
                 "stroke-width": "2px"
             });
 
-        // Enter
-        //path.enter().append("path")
-        //    .attr("class", "line")
-        //    .attr("d", self.line);
-
-        //self.svg.append("path")
-        //    .datum(self.data)
-        //    .attr("class", "line")
-        //    .attr("d", self.line);
-
         return this;
     }
 
