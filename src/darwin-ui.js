@@ -428,6 +428,7 @@ var EAGraph = Backbone.View.extend({
 
         this.path1.attr("d", self.line)
             .style({
+                "fill": "none",
                 "stroke": "#3a76d0",
                 "stroke-width": "2px"
             });
@@ -436,7 +437,8 @@ var EAGraph = Backbone.View.extend({
 
         this.path2.attr("d", self.line)
             .style({
-                "stroke": "#3a76d0",
+                "fill": "none",
+                "stroke": "red",
                 "stroke-width": "2px"
             });
 
