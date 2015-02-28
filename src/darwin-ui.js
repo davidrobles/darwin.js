@@ -94,9 +94,15 @@ var DashboardView = Backbone.View.extend({
             var generationModel = gensMap[generation.id];
             generationModel.set(generation);
             this.populationTableView.generationSelected(generationModel);
-            this.graph.addPoint({
-                id: generation.id,
-                avgFitness: generation.averageFitness
+            this.graph.addPoints({
+                best: {
+                    id: generation.id,
+                    fitness: generation.bestIndividualFitness
+                },
+                avg: {
+                    id: generation.id,
+                    fitness: generation.averageFitness
+                }
             });
         });
     },
@@ -334,11 +340,13 @@ var EAGraph = Backbone.View.extend({
         this.maxX = 60;
         this.maxY = "HELLO WORLD".length;
         this.renderBase();
-        this.data = [];
+        this.data1 = [];
+        this.data2 = [];
     },
 
-    addPoint: function(point) {
-        this.data.push(point);
+    addPoints: function(points) {
+        this.data1.push(points.best);
+        this.data2.push(points.avg);
         this.render();
     },
 
@@ -376,7 +384,7 @@ var EAGraph = Backbone.View.extend({
                 return self.x(d.id);
             })
             .y(function(d) {
-                return self.y(d.avgFitness);
+                return self.y(d.fitness);
             });
 
         this.svg = d3.select(this.el).append("svg")
@@ -399,6 +407,9 @@ var EAGraph = Backbone.View.extend({
             .attr("dy", ".71em")
             .style("text-anchor", "end")
             .text("Fitness");
+
+        this.path1 = self.svg.append("path");
+        this.path2 = self.svg.append("path");
     },
 
     render: function() {
@@ -413,11 +424,17 @@ var EAGraph = Backbone.View.extend({
         //    return d.avgFitness;
         //}));
 
-        // Data Join
-        var path = self.svg.selectAll("path").datum(self.data);
+        this.path1.datum(self.data1);
 
-        // Update
-        path.attr("d", self.line)
+        this.path1.attr("d", self.line)
+            .style({
+                "stroke": "#3a76d0",
+                "stroke-width": "2px"
+            });
+
+        this.path2.datum(self.data2);
+
+        this.path2.attr("d", self.line)
             .style({
                 "stroke": "#3a76d0",
                 "stroke-width": "2px"
