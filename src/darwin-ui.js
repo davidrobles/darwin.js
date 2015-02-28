@@ -387,7 +387,7 @@ var EAGraph = Backbone.View.extend({
             .attr("y", 6)
             .attr("dy", ".71em")
             .style("text-anchor", "end")
-            .text("Price ($)");
+            .text("Fitness");
     },
 
     render: function() {
