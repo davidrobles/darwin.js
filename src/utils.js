@@ -17,6 +17,7 @@ var Darwin = Darwin || {};
                 averageFitness: average,
                 bestIndividual: evaluatedPopulation[0].individual,
                 bestIndividualFitness: evaluatedPopulation[0].fitness,
+                worstIndividualFitness: evaluatedPopulation[evaluatedPopulation.length - 1].fitness,
                 population: evaluatedPopulation // sorted from best to worst?
             };
         },

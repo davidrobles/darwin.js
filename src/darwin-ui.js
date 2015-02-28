@@ -102,6 +102,10 @@ var DashboardView = Backbone.View.extend({
                 avg: {
                     id: generation.id,
                     fitness: generation.averageFitness
+                },
+                worst: {
+                    id: generation.id,
+                    fitness: generation.worstIndividualFitness
                 }
             });
         });
@@ -342,11 +346,13 @@ var EAGraph = Backbone.View.extend({
         this.renderBase();
         this.data1 = [];
         this.data2 = [];
+        this.data3 = [];
     },
 
     addPoints: function(points) {
         this.data1.push(points.best);
         this.data2.push(points.avg);
+        this.data3.push(points.worst);
         this.render();
     },
 
@@ -415,6 +421,7 @@ var EAGraph = Backbone.View.extend({
 
         this.path1 = self.svg.append("path");
         this.path2 = self.svg.append("path");
+        this.path3 = self.svg.append("path");
     },
 
     render: function() {
@@ -444,6 +451,15 @@ var EAGraph = Backbone.View.extend({
             .style({
                 "fill": "none",
                 "stroke": "#CC3824",
+                "stroke-width": "2px"
+            });
+
+        this.path3.datum(self.data3);
+
+        this.path3.attr("d", self.line)
+            .style({
+                "fill": "none",
+                "stroke": "#FFA787",
                 "stroke-width": "2px"
             });
 
