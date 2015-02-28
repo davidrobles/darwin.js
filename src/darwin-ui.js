@@ -361,8 +361,12 @@ var EAGraph = Backbone.View.extend({
         var self = this;
 
         this.line = d3.svg.line()
-            .x(function(d) { return self.x(d.id); })
-            .y(function(d) { return self.y(d.avgFitness); });
+            .x(function(d) {
+                return self.x(d.id);
+            })
+            .y(function(d) {
+                return self.y(d.avgFitness);
+            });
 
         this.svg = d3.select(this.el).append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -387,25 +391,37 @@ var EAGraph = Backbone.View.extend({
     },
 
     render: function() {
-        var parseDate = d3.time.format("%d-%b-%y").parse;
+
         var self = this;
-        //d3.tsv("/data.tsv", function(error, data) {
-        //    data.forEach(function (d) {
-        //        d.date = parseDate(d.date);
-        //        d.close = +d.close;
-        //    });
 
         self.x.domain(d3.extent(self.data, function (d) {
             return d.id;
         }));
+
         self.y.domain(d3.extent(self.data, function (d) {
             return d.avgFitness;
         }));
-        self.svg.append("path")
-            .datum(self.data)
-            .attr("class", "line")
-            .attr("d", self.line);
-        //});
+
+        // Data Join
+        var path = self.svg.selectAll("path").datum(self.data);
+
+        // Update
+        path.attr("d", self.line)
+            .style({
+                "stroke": "#3a76d0",
+                "stroke-width": "2px"
+            });
+
+        // Enter
+        //path.enter().append("path")
+        //    .attr("class", "line")
+        //    .attr("d", self.line);
+
+        //self.svg.append("path")
+        //    .datum(self.data)
+        //    .attr("class", "line")
+        //    .attr("d", self.line);
+
         return this;
     }
 
