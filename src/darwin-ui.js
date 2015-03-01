@@ -365,7 +365,7 @@ var EAGraph = Backbone.View.extend({
 
     initialize: function() {
         this.maxX = 60;
-        this.maxY = "111111111111111".length;
+        this.maxY = "74fa37baf279abef92".length;
         this.data1 = [];
         this.data2 = [];
         this.data3 = [];
