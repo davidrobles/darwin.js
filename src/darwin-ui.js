@@ -416,6 +416,15 @@ var EAGraph = Backbone.View.extend({
                 return self.y(d.fitness);
             });
 
+        this.area = d3.svg.area()
+            .x(function(d) {
+                return self.x(d.id);
+            })
+            .y0(height)
+            .y1(function(d) {
+                return self.y(d.fitness);
+            });
+
         this.svg = d3.select(this.el).append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -464,27 +473,30 @@ var EAGraph = Backbone.View.extend({
 
         this.path1.datum(self.data1);
 
-        this.path1.attr("d", self.line)
+        this.path1.attr("d", self.area)
             .style({
-                "fill": "none",
+                "fill": "rgb(58, 118, 208)",
+                "fill-opacity": .25,
                 "stroke": "#3a76d0",
                 "stroke-width": "2px"
             });
 
         this.path2.datum(self.data2);
 
-        this.path2.attr("d", self.line)
+        this.path2.attr("d", self.area)
             .style({
-                "fill": "none",
+                "fill": "rgb(204, 56, 36)",
+                "fill-opacity": .25,
                 "stroke": "#CC3824",
                 "stroke-width": "2px"
             });
 
         this.path3.datum(self.data3);
 
-        this.path3.attr("d", self.line)
+        this.path3.attr("d", self.area)
             .style({
-                "fill": "none",
+                "fill": "rgb(255, 167, 135)",
+                "fill-opacity": .25,
                 "stroke": "#FFA787",
                 "stroke-width": "2px"
             });
