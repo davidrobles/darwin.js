@@ -463,9 +463,9 @@ var EAGraph = Backbone.View.extend({
 
         var self = this;
 
-        self.x.domain(d3.extent(self.data1, function (d) {
-            return d.id;
-        }));
+        //self.x.domain(d3.extent(self.data1, function (d) {
+        //    return d.id;
+        //}));
         //
         //self.y.domain(d3.extent(self.data, function (d) {
         //    return d.avgFitness;
