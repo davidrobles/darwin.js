@@ -41,6 +41,25 @@ var EAConfigurationView = Backbone.View.extend({
 
 });
 
+var EADetailsView = Backbone.View.extend({
+
+    className: "widget widget-info",
+
+    template: _.template($("#ea-details-view").html()),
+
+    initialize: function(ga) {
+        this.ga = ga;
+    },
+
+    render: function() {
+        this.$el.html(this.template({
+            populationSize: this.ga.populationSize
+        }));
+        return this;
+    }
+
+});
+
 var DashboardView = Backbone.View.extend({
 
     className: "dashboard",
@@ -65,6 +84,7 @@ var DashboardView = Backbone.View.extend({
             phenotypeView: this.phenotypeView
         });
         this.configurationView = new EAConfigurationView(this.ga);
+        this.eaDetailsView = new EADetailsView(this.ga);
         this.graph = new EAGraph();
     },
 
@@ -114,6 +134,7 @@ var DashboardView = Backbone.View.extend({
     render: function() {
         this.$el.empty();
         this.$el.append(this.configurationView.render().el);
+        this.$el.append(this.eaDetailsView.render().el);
         this.$el.append(this.generationsTableView.render().el);
         this.$el.append(this.populationTableView.render().el);
         this.$el.append(this.individualDetailsView.render().el);
