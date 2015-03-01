@@ -1,5 +1,6 @@
 body {
-    font-family: "Menlo", "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;
+    /*font-family: "Menlo", "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;*/
+    font-family: "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;
     font-size: 12px;
     margin: 0;
     background-color: #252b34;

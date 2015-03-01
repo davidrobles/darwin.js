@@ -397,6 +397,7 @@ var EAGraph = Backbone.View.extend({
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
+            .attr("stroke", "#ecf1f4")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         this.path1 = self.svg.append("path");
@@ -410,6 +411,7 @@ var EAGraph = Backbone.View.extend({
             .append("text")
             .attr("x", width / 2)
             .attr("y", 35)
+            .attr("stroke", "#ecf1f4")
             .style("text-anchor", "middle")
             .text("Generations");
 
@@ -420,6 +422,7 @@ var EAGraph = Backbone.View.extend({
             .attr("transform", "rotate(-90)")
             .attr("x", -100)
             .attr("y", -27)
+            .attr("stroke", "#ecf1f4")
             .style("text-anchor", "end")
             .text("Fitness");
     },
