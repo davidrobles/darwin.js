@@ -164,3 +164,13 @@ table.population th + th + th, table.population td + td + td {
 .mismatch {
     color: rgb(237, 28, 36);
 }
+
+.best-fitness {
+    background-color: #82f079;
+    padding: 3px 5px 3px 6px;
+}
+
+.worst-fitness {
+    background-color: #d45a53;
+    padding: 3px 5px 3px 6px;
+}
