@@ -366,8 +366,8 @@ var EAGraph = Backbone.View.extend({
                 bottom: 45,
                 left:   45
             },
-            width = 560 - margin.left - margin.right,
-            height = 300 - margin.top - margin.bottom;
+            width = 600 - margin.left - margin.right,
+            height = 350 - margin.top - margin.bottom;
 
         this.x = d3.scale.linear()
             .domain([0, this.maxX])
