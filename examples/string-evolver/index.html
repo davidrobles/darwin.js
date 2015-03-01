@@ -27,7 +27,36 @@
     <script type="text/template" id="ea-details-view">
         <p class="widget-title">Evolutionary Algorithm<br/>Details</p>
         <div class="widget-content">
-            <p>Population size: <%= populationSize %></p>
+            <table>
+                <tr>
+                    <td>Initialization:</td>
+                    <td>Random</td>
+                </tr>
+                <tr>
+                    <td>Population size:</td>
+                    <td><%= populationSize %></td>
+                </tr>
+                <tr>
+                    <td>Recombination:</td>
+                    <td>One point crossover</td>
+                </tr>
+                <tr>
+                    <td>Recombination probability:</td>
+                    <td>70%</td>
+                </tr>
+                <tr>
+                    <td>Mutation:</td>
+                    <td>Each character replaced with probability pm</td>
+                </tr>
+                <tr>
+                    <td>Mutation probability:</td>
+                    <td>1/n</td>
+                </tr>
+                <tr>
+                    <td>Termination condition:</td>
+                    <td>Find the total fitness</td>
+                </tr>
+            </table>
         </div>
     </script>
 

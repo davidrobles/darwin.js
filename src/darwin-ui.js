@@ -53,7 +53,8 @@ var EADetailsView = Backbone.View.extend({
 
     render: function() {
         this.$el.html(this.template({
-            populationSize: this.ga.populationSize
+            populationSize: this.ga.populationSize,
+            mutationProbability: "1%"
         }));
         return this;
     }
