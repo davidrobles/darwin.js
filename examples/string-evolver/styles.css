@@ -154,7 +154,7 @@ table.population th + th + th, table.population td + td + td {
 
 .individual-details-view {
     height: 57vh;
-    min-width: 200px;
+    min-width: 250px;
 }
 
 .match {

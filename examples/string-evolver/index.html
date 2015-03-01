@@ -76,10 +76,24 @@
     <script type="text/template" id="individual-details-view">
         <div class="widget-title">Individual</div>
         <div class="widget-content">
-            <p>Individual #: <%= id %></p>
-            <p>Generation #: <%= generationId %></p>
-            <p>Phenotype: <%= phenotype %></p>
-            <p>Fitness: <%= fitness %></p>
+            <table>
+                <tr>
+                    <td>Individual:</td>
+                    <td><%= id %></td>
+                </tr>
+                <tr>
+                    <td>Generation:</td>
+                    <td><%= generationId %></td>
+                </tr>
+                <tr>
+                    <td>Phenotype:</td>
+                    <td><%= phenotype %></td>
+                </tr>
+                <tr>
+                    <td>Fitness:</td>
+                    <td><%= fitness %></td>
+                </tr>
+            </table>
         </div>
     </script>
 
