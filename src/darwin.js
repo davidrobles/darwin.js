@@ -144,6 +144,10 @@ var Darwin = Darwin || {};
         return newPopulation;
     };
 
+    Darwin.GeneticAlgorithm.prototype.toString = function() {
+        return "Genetic Algorithm";
+    };
+
     ////////////////////////
     // Evolution Strategy //
     ////////////////////////
@@ -185,6 +189,10 @@ var Darwin = Darwin || {};
 
     Darwin.EvolutionStrategy.prototype.selectParents = function() {
         return this.evaluatedPopulation.slice(0, this.parentsSize);
+    };
+
+    Darwin.EvolutionStrategy.prototype.toString = function() {
+        return "Evolution Strategy";
     };
 
 })();
