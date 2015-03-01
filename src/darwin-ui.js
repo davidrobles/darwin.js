@@ -397,7 +397,7 @@ var EAGraph = Backbone.View.extend({
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
-            .attr("stroke", "#ecf1f4")
+            .attr("stroke", "#939ba5")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         this.path1 = self.svg.append("path");

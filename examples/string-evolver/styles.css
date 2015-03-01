@@ -1,6 +1,8 @@
 body {
+    font-family: "Helvetica";
+    letter-spacing: 0.1em;
     /*font-family: "Menlo", "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;*/
-    font-family: "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;
+    /*font-family: "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;*/
     font-size: 12px;
     margin: 0;
     background-color: #252b34;
