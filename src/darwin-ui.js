@@ -463,9 +463,9 @@ var EAGraph = Backbone.View.extend({
 
         var self = this;
 
-        //self.x.domain(d3.extent(self.data, function (d) {
-        //    return d.id;
-        //}));
+        self.x.domain(d3.extent(self.data1, function (d) {
+            return d.id;
+        }));
         //
         //self.y.domain(d3.extent(self.data, function (d) {
         //    return d.avgFitness;
@@ -476,7 +476,7 @@ var EAGraph = Backbone.View.extend({
         this.path1.attr("d", self.area)
             .style({
                 "fill": "rgb(58, 118, 208)",
-                "fill-opacity": .25,
+                "fill-opacity": .425,
                 "stroke": "#3a76d0",
                 "stroke-width": "2px"
             });
@@ -486,7 +486,7 @@ var EAGraph = Backbone.View.extend({
         this.path2.attr("d", self.area)
             .style({
                 "fill": "rgb(204, 56, 36)",
-                "fill-opacity": .25,
+                "fill-opacity": .425,
                 "stroke": "#CC3824",
                 "stroke-width": "2px"
             });
@@ -496,7 +496,7 @@ var EAGraph = Backbone.View.extend({
         this.path3.attr("d", self.area)
             .style({
                 "fill": "rgb(255, 167, 135)",
-                "fill-opacity": .25,
+                "fill-opacity": .425,
                 "stroke": "#FFA787",
                 "stroke-width": "2px"
             });
