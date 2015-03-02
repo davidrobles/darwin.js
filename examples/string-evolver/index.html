@@ -178,9 +178,9 @@
     ///////////////////////
 
     var runGA = function() {
-        var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
+        var wordToFind = "GENETIC HELLO WORLD",
+            alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
             mutationProbability = 0.05,
-            wordToFind = "HELLO WORLD",
             stringEvolver = new Darwin.GeneticAlgorithm({
                 populationSize: 100,
                 individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
@@ -202,8 +202,8 @@
     ///////////////////////////
 
     var runES = function() {
-        var wordToFind = "74fa37baf279abef92",
-            alphabet = "0123456789abcdef",
+        var wordToFind = "GENETIC HELLO WORLD",
+            alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
             mutationProbability = 0.10,
             stringEvolver = new Darwin.EvolutionStrategy({
                 parentsSize: 10,
