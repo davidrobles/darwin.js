@@ -179,7 +179,7 @@
 
     var runGA = function() {
         var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
-            mutationProbability = 0.10,
+            mutationProbability = 0.05,
             wordToFind = "HELLO WORLD",
             stringEvolver = new Darwin.GeneticAlgorithm({
                 populationSize: 100,
@@ -221,7 +221,7 @@
         $("body").prepend(dashboardView.render().el);
     };
 
-    runES();
+    runGA();
 
     </script>
 </body>
