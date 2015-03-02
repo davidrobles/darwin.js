@@ -364,7 +364,7 @@ var EAGraph = Backbone.View.extend({
     className: "widget",
 
     initialize: function() {
-        this.maxX = 50;
+        this.maxX = 150;
         this.maxY = "GENETIC HELLO WORLD".length;
         this.data1 = [];
         this.data2 = [];

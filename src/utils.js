@@ -6,19 +6,28 @@ var Darwin = Darwin || {};
 
     Darwin.Utils = {
 
-        generateStats: function(evaluatedPopulation) {
-            var totalFitness = evaluatedPopulation.map(function(individual) {
-                return individual.fitness;
-            }).reduce(function(prev, cur) {
-                return prev + cur;
+        // TODO assumes the best fitness is a high value (not always true!)
+        // TODO what if more than one individual have the best fitness?
+        generateStats: function(population) {
+            var totalFitness = 0,
+                bestIndividual = null,
+                worstIndividual = null;
+            _.each(population, function(individual) {
+                totalFitness += individual.fitness;
+                if (!bestIndividual || individual.fitness > bestIndividual.fitness) {
+                    bestIndividual = individual;
+                }
+                if (!worstIndividual || individual.fitness < worstIndividual.fitness) {
+                    worstIndividual = individual;
+                }
             });
-            var average = totalFitness / evaluatedPopulation.length;
+            var average = totalFitness / population.length;
             return {
                 averageFitness: average,
-                bestIndividual: evaluatedPopulation[0].genotype, // TODO Pass the entire individual?
-                bestIndividualFitness: evaluatedPopulation[0].fitness,
-                worstIndividualFitness: evaluatedPopulation[evaluatedPopulation.length - 1].fitness,
-                population: evaluatedPopulation // sorted from best to worst?
+                bestIndividual: bestIndividual.genotype, // TODO Pass the entire individual?
+                bestIndividualFitness: bestIndividual.fitness,
+                worstIndividualFitness: worstIndividual.fitness,
+                population: population
             };
         },
 

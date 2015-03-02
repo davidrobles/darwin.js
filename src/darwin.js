@@ -28,7 +28,6 @@ var Darwin = Darwin || {};
             this.initGeneration();
             this.generatePopulation();
             this.evaluatePopulation();
-            this.sortPopulation();
             this.computeStats();
             this.endGeneration();
             this.checkTermination();
@@ -58,13 +57,6 @@ var Darwin = Darwin || {};
                 };
             }, this);
             this.trigger("population-evaluated");
-        },
-
-        sortPopulation: function() {
-            this.evaluatedPopulation.sort(function(a, b) {
-                return b.fitness - a.fitness;
-            });
-            this.trigger("population-sorted");
         },
 
         computeStats: function() {
@@ -197,6 +189,7 @@ var Darwin = Darwin || {};
     };
 
     Darwin.EvolutionStrategy.prototype.selectParents = function() {
+        // TODO this doesn't work if the population is not sorted
         return this.evaluatedPopulation.slice(0, this.parentsSize);
     };
 

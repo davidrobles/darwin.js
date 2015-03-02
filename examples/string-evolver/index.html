@@ -181,7 +181,7 @@
         var wordToFind = "GENETIC HELLO WORLD",
             alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
             stringEvolver = new Darwin.GeneticAlgorithm({
-                populationSize: 250,
+                populationSize: 100,
                 individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
                 fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
                 select: Darwin.Selection.randomTopPercent,
