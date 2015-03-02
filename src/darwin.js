@@ -154,7 +154,7 @@ var Darwin = Darwin || {};
     Darwin.EvolutionStrategy = function(options) {
         this.parentsSize = options.parentsSize;     // μ
         this.childrenSize = options.childrenSize;   // λ
-        this.plusSelection = options.plusSelection; // if true (μ, λ), if false (μ + λ)
+        this.plusSelection = options.plusSelection; // if true (μ + λ), if false (μ, λ)
         this.childrenPerParent = this.childrenSize / this.parentsSize;
         options.populationSize = this.plusSelection ? (this.parentsSize + this.childrenSize) : this.childrenSize;
         Darwin.EvolutionaryAlgorithm.call(this, options);
