@@ -7,7 +7,7 @@ var Darwin = Darwin || {};
     Darwin.Selection = {
         randomTopPercent: function(evaluatedPopulation) {
             // TODO get percentage as a parameter
-            // TODO I should get a copy of evaluatedPopulation, or make a copy here
+            evaluatedPopulation = _.clone(evaluatedPopulation);
             evaluatedPopulation.sort(function(a, b) {
                 return b.fitness - a.fitness;
             });
