@@ -30,11 +30,11 @@ var Darwin = Darwin || {};
 
         // Creates a mutation operator function that is applied with the given
         // probability and draws its characters from the specified alphabet.
-        createStringMutation: function(alphabet, mutationProbability) {
-            return function(individual) {
+        createStringMutation: function(alphabet) {
+            return function(individual, mutationRate) {
                 var newString = "";
                 for (var i = 0; i < individual.length; i++) {
-                    if (Math.random() < mutationProbability) {
+                    if (Math.random() < mutationRate) {
                         var randChar = _.random(0, alphabet.length - 1);
                         newString += alphabet.charAt(randChar);
                     } else {
@@ -44,7 +44,6 @@ var Darwin = Darwin || {};
                 return newString;
             };
         }
-
     }
 
 })();

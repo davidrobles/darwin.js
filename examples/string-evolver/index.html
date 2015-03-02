@@ -180,14 +180,15 @@
     var runGA = function() {
         var wordToFind = "GENETIC HELLO WORLD",
             alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
-            mutationProbability = 0.05,
             stringEvolver = new Darwin.GeneticAlgorithm({
-                populationSize: 100,
+                populationSize: 250,
                 individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
                 fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
                 select: Darwin.Selection.randomTopPercent,
                 reproduce: Darwin.Operators.singlePointCrossover,
-                mutate: Darwin.Operators.createStringMutation(alphabet, mutationProbability),
+                recombinationRate: 0.80,
+                mutate: Darwin.Operators.createStringMutation(alphabet),
+                mutationRate: 0.05,
                 terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
             }),
             dashboardView = new DashboardView({
@@ -204,14 +205,14 @@
     var runES = function() {
         var wordToFind = "GENETIC HELLO WORLD",
             alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
-            mutationProbability = 0.10,
             stringEvolver = new Darwin.EvolutionStrategy({
                 parentsSize: 10,
                 childrenSize: 40,
                 plusSelection: true,
                 individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
                 fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
-                mutate: Darwin.Operators.createStringMutation(alphabet, mutationProbability),
+                mutate: Darwin.Operators.createStringMutation(alphabet),
+                mutationRate: 0.05,
                 terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
             }),
             dashboardView = new DashboardView({

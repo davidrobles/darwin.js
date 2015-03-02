@@ -13,9 +13,10 @@ var Darwin = Darwin || {};
         this.fitnessFunction = options.fitnessFunction;
         this.individualFactory = options.individualFactory;
         this.select = options.select;
-        this.recombinationRate = 0.80;
         this.reproduce = options.reproduce;
+        this.recombinationRate = options.recombinationRate;
         this.mutate = options.mutate;
+        this.mutationRate = options.mutationRate;
         this.terminationConditions = options.terminationConditions;
         this.generations = [];
         this.currentGeneration = null;
@@ -144,10 +145,10 @@ var Darwin = Darwin || {};
                     childB: parentB.genotype
                 };
             }
-            var childA = this.mutate(children.childA);
-            var childB = this.mutate(children.childB);
-            newPopulation.push(childA);
-            newPopulation.push(childB);
+            children.childA = this.mutate(children.childA, this.mutationRate);
+            children.childB = this.mutate(children.childB, this.mutationRate);
+            newPopulation.push(children.childA);
+            newPopulation.push(children.childB);
         }
         return newPopulation;
     };
@@ -188,7 +189,7 @@ var Darwin = Darwin || {};
         }
         _.each(parents, function(parent) {
             for (var i = 0; i < this.childrenPerParent; i++) {
-                var child = this.mutate(parent.genotype);
+                var child = this.mutate(parent.genotype, this.mutationRate);
                 newPopulation.push(child)
             }
         }, this);
