@@ -13,6 +13,7 @@ var Darwin = Darwin || {};
         this.fitnessFunction = options.fitnessFunction;
         this.individualFactory = options.individualFactory;
         this.select = options.select;
+        this.recombinationRate = 0.80;
         this.reproduce = options.reproduce;
         this.mutate = options.mutate;
         this.terminationConditions = options.terminationConditions;
@@ -134,7 +135,15 @@ var Darwin = Darwin || {};
         for (var i = 0; i < halfLength; i++) {
             var parentA = this.select(this.evaluatedPopulation);
             var parentB = this.select(this.evaluatedPopulation);
-            var children = this.reproduce(parentA.genotype, parentB.genotype);
+            var children;
+            if (Math.random() < this.recombinationRate) {
+                children = this.reproduce(parentA.genotype, parentB.genotype);
+            } else {
+                children = {
+                    childA: parentA.genotype,
+                    childB: parentB.genotype
+                };
+            }
             var childA = this.mutate(children.childA);
             var childB = this.mutate(children.childB);
             newPopulation.push(childA);
