@@ -47,11 +47,10 @@ var Darwin = Darwin || {};
 
         evaluatePopulation: function() {
             var index = 0;
-            var self = this;
             this.evaluatedPopulation = _.map(this.population, function(individual) {
                 return {
                     id: index++,
-                    generationId: self.currentGeneration.id,
+                    generationId: this.currentGeneration.id,
                     individual: individual,
                     fitness: this.fitnessFunction(individual)
                 };
