@@ -6,11 +6,12 @@ var Darwin = Darwin || {};
 
     Darwin.Selection = {
         randomTopPercent: function(evaluatedPopulation) {
+            // TODO get percentage as a parameter
             // TODO I should get a copy of evaluatedPopulation, or make a copy here
             evaluatedPopulation.sort(function(a, b) {
                 return b.fitness - a.fitness;
             });
-            var randIndex = _.random(0, (evaluatedPopulation.length / 2) -1);
+            var randIndex = _.random(0, (evaluatedPopulation.length / 5) -1);
             return evaluatedPopulation[randIndex];
         },
         // Also known as fitness proportionate selection
