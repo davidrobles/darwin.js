@@ -15,7 +15,7 @@ var Darwin = Darwin || {};
             var average = totalFitness / evaluatedPopulation.length;
             return {
                 averageFitness: average,
-                bestIndividual: evaluatedPopulation[0].individual,
+                bestIndividual: evaluatedPopulation[0].genotype, // TODO Pass the entire individual?
                 bestIndividualFitness: evaluatedPopulation[0].fitness,
                 worstIndividualFitness: evaluatedPopulation[evaluatedPopulation.length - 1].fitness,
                 population: evaluatedPopulation // sorted from best to worst?

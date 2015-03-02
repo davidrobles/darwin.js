@@ -314,7 +314,7 @@ var IndividualRowView = SelectableRowView.extend({
         this.$el.html(this.template({
             id: this.model.get("id"),
             phenotype: new this.phenotypeView({
-                actual: this.model.get("individual")
+                actual: this.model.get("genotype")
             }).render().el.innerHTML,
             fitness: this.model.get("fitness")
         }));
@@ -349,7 +349,7 @@ var IndividualDetailsView = Backbone.View.extend({
                 id: this.model.get("id"),
                 generationId: this.model.get("generationId"),
                 phenotype: new this.phenotypeView({
-                    actual: this.model.get("individual")
+                    actual: this.model.get("genotype")
                 }).render().el.innerHTML,
                 fitness: this.model.get("fitness")
             }));

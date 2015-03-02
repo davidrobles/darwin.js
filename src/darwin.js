@@ -47,12 +47,12 @@ var Darwin = Darwin || {};
 
         evaluatePopulation: function() {
             var index = 0;
-            this.evaluatedPopulation = _.map(this.population, function(individual) {
+            this.evaluatedPopulation = _.map(this.population, function(genotype) {
                 return {
                     id: index++,
                     generationId: this.currentGeneration.id,
-                    individual: individual,
-                    fitness: this.fitnessFunction(individual)
+                    genotype: genotype,
+                    fitness: this.fitnessFunction(genotype)
                 };
             }, this);
             this.trigger("population-evaluated");
@@ -134,7 +134,7 @@ var Darwin = Darwin || {};
         for (var i = 0; i < halfLength; i++) {
             var parentA = this.select(this.evaluatedPopulation);
             var parentB = this.select(this.evaluatedPopulation);
-            var children = this.reproduce(parentA.individual, parentB.individual); // remove .individual
+            var children = this.reproduce(parentA.genotype, parentB.genotype);
             var childA = this.mutate(children.childA);
             var childB = this.mutate(children.childB);
             newPopulation.push(childA);
@@ -174,12 +174,12 @@ var Darwin = Darwin || {};
             parents = this.selectParents();
         if (this.plusSelection) {
             newPopulation = _.map(parents, function(parent) {
-                return parent.individual;
+                return parent.genotype;
             });
         }
         _.each(parents, function(parent) {
             for (var i = 0; i < this.childrenPerParent; i++) {
-                var child = this.mutate(parent.individual); // TODO change .individual to genotype? or phenotype?
+                var child = this.mutate(parent.genotype);
                 newPopulation.push(child)
             }
         }, this);
