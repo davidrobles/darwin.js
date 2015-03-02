@@ -24,9 +24,8 @@ var Darwin = Darwin || {};
             var average = totalFitness / population.length;
             return {
                 averageFitness: average,
-                bestIndividual: bestIndividual.genotype, // TODO Pass the entire individual?
-                bestIndividualFitness: bestIndividual.fitness,
-                worstIndividualFitness: worstIndividual.fitness,
+                bestIndividual: bestIndividual,
+                worstIndividualFitness: worstIndividual.fitness, // TODO save the individual
                 population: population
             };
         },

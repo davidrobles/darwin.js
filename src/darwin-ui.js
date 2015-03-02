@@ -118,7 +118,7 @@ var DashboardView = Backbone.View.extend({
             this.graph.addPoints({
                 best: {
                     id: generation.id,
-                    fitness: generation.bestIndividualFitness
+                    fitness: generation.bestIndividual.fitness
                 },
                 avg: {
                     id: generation.id,
@@ -227,12 +227,13 @@ var GenerationRowView = SelectableRowView.extend({
     render: function() {
         var templateName = this.model.get("status");
         if (templateName === "complete") {
+            debugger;
             this.$el.html(this.templates[templateName]({
                 id: this.model.get("id"),
                 bestIndividual: new this.phenotypeView({
-                    actual: this.model.get("bestIndividual")
+                    actual: this.model.get("bestIndividual").genotype
                 }).render().el.innerHTML,
-                bestIndividualFitness: this.model.get("bestIndividualFitness"),
+                bestIndividualFitness: this.model.get("bestIndividual").fitness,
                 averageFitness: this.model.get("averageFitness") // TODO rename to avgFitness
             }));
         } else {

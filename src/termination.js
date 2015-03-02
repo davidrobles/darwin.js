@@ -11,7 +11,7 @@ var Darwin = Darwin || {};
     };
 
     Darwin.Termination.TargetFitness.prototype.shouldTerminate = function(populationData) {
-        return populationData.bestIndividualFitness >= this.targetFitness;
+        return populationData.bestIndividual.fitness >= this.targetFitness;
     };
 
     Darwin.Termination.MaxNumGens = function(numGens) {
