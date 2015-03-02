@@ -364,7 +364,7 @@ var EAGraph = Backbone.View.extend({
     className: "widget",
 
     initialize: function() {
-        this.maxX = 60;
+        this.maxX = 120;
         this.maxY = "74fa37baf279abef92".length;
         this.data1 = [];
         this.data2 = [];
@@ -389,7 +389,7 @@ var EAGraph = Backbone.View.extend({
                 bottom: 45,
                 left:   45
             },
-            width = 600 - margin.left - margin.right,
+            width = 800 - margin.left - margin.right,
             height = 350 - margin.top - margin.bottom;
 
         this.x = d3.scale.linear()
