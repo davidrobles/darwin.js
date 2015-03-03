@@ -184,7 +184,7 @@
                 populationSize: 100,
                 individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
                 fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
-                select: Darwin.Selection.randomTopPercent,
+                select: Darwin.Selection.createRandomTopPercent(0.20),
                 reproduce: Darwin.Operators.singlePointCrossover,
                 recombinationRate: 0.80,
                 mutate: Darwin.Operators.createStringMutation(alphabet),
