@@ -18,8 +18,8 @@ var Darwin = Darwin || {};
         this.mutate = options.mutate;
         this.mutationRate = options.mutationRate;
         this.terminationConditions = options.terminationConditions;
-        this.population = [];
         this.generations = [];
+        this.population = [];
         this.currentGeneration = null;
     };
 
@@ -96,8 +96,8 @@ var Darwin = Darwin || {};
         reset: function() {
             clearInterval(this.interval);
             this.generations = [];
-            this.currentGeneration = null;
             this.population = [];
+            this.currentGeneration = null;
             this.trigger("reset");
         }
 
