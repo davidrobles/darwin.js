@@ -151,8 +151,8 @@ var Darwin = Darwin || {};
         render: function() {
             this.$el.empty();
             this.$el.append(this.configurationView.render().el);
-            this.$el.append(this.eaDetailsView.render().el);
-            this.$el.append(this.generationsTableView.render().el);
+            //this.$el.append(this.eaDetailsView.render().el);
+                this.$el.append(this.generationsTableView.render().el);
             this.$el.append(this.populationTableView.render().el);
             this.$el.append(this.individualDetailsView.render().el);
             this.$el.append(this.graph.el);

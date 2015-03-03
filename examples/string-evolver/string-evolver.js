@@ -36,7 +36,7 @@ var StringEvolver = {
             render: function() {
                 for (var i = 0; i < this.target.length; i++) {
                     var type = this.target.charAt(i) === this.actual.charAt(i) ? "match" : "mismatch";
-                    this.$el.append('<span class="' + type + '">' + this.actual.charAt(i) + '</span>');
+                    this.$el.append('<span class="fixed-str ' + type + '">' + this.actual.charAt(i) + '</span>');
                 }
                 return this;
             }

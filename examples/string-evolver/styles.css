@@ -174,3 +174,8 @@ table.population th + th + th, table.population td + td + td {
     background-color: #d45a53;
     padding: 3px 5px 3px 6px;
 }
+
+/* String Evolver */
+.fixed-str {
+    font-family: 'Menlo', Arial, sans-serif;
+}
