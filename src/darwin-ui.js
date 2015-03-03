@@ -126,7 +126,7 @@ var DashboardView = Backbone.View.extend({
                 },
                 worst: {
                     id: generation.id,
-                    fitness: generation.worstIndividualFitness
+                    fitness: generation.worstIndividual.fitness
                 }
             });
         });

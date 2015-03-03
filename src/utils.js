@@ -25,7 +25,7 @@ var Darwin = Darwin || {};
             return {
                 averageFitness: average,
                 bestIndividual: bestIndividual,
-                worstIndividualFitness: worstIndividual.fitness, // TODO save the individual
+                worstIndividual: worstIndividual,
                 population: population
             };
         },
