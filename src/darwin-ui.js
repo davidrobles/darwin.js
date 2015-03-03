@@ -227,7 +227,6 @@ var GenerationRowView = SelectableRowView.extend({
     render: function() {
         var templateName = this.model.get("status");
         if (templateName === "complete") {
-            debugger;
             this.$el.html(this.templates[templateName]({
                 id: this.model.get("id"),
                 bestIndividual: new this.phenotypeView({
