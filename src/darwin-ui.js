@@ -348,7 +348,7 @@ var IndividualDetailsView = Backbone.View.extend({
         if (this.model) {
             this.$el.html(this.template({
                 id: this.model.get("id"),
-                generationId: this.model.get("generationId"),
+                generationId: this.model.get("generation").id,
                 phenotype: new this.phenotypeView({
                     actual: this.model.get("genotype")
                 }).render().el.innerHTML,

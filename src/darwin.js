@@ -51,7 +51,7 @@ var Darwin = Darwin || {};
             this.evaluatedPopulation = _.map(this.population, function(genotype) {
                 return {
                     id: index++,
-                    generationId: this.currentGeneration.id,
+                    generation: this.currentGeneration,
                     genotype: genotype,
                     fitness: this.fitnessFunction(genotype)
                 };
