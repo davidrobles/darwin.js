@@ -82,6 +82,8 @@ var Darwin = Darwin || {};
             }, this);
         },
 
+        // Abstract methods
+
         breed: function() {
             throw "Not implemented method: breed()";
         },
