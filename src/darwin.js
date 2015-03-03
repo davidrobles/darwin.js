@@ -48,7 +48,7 @@ var Darwin = Darwin || {};
 
         evaluatePopulation: function() {
             _.each(this.population, function(individual) {
-                individual.fitness = this.fitnessFunction(individual.genotype);
+                individual.fitness = this.fitnessFunction(individual);
             }, this);
             this.trigger("population-evaluated");
         },

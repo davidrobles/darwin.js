@@ -1,11 +1,12 @@
 var StringEvolver = {
 
     createWordFitnessFunction: function(targetWord) {
-        return function fitnessFunc(actualWord) {
-            var total = 0;
+        return function(individual) {
+            var total = 0,
+                actualWord = individual.genotype;
             var actualWordLength = actualWord.length;
             for (var i = 0; i < actualWordLength; i++) {
-                if (actualWord.charAt(i) == targetWord.charAt(i)) {
+                if (actualWord.charAt(i) === targetWord.charAt(i)) {
                     total++;
                 }
             }
