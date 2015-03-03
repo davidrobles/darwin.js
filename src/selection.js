@@ -14,7 +14,7 @@ var Darwin = Darwin || {};
                 });
                 var topSize = Math.round(population.length * percentage);
                 var randIndex = _.random(0, topSize - 1);
-                return population[randIndex];
+                return population[randIndex].genotype;
             }
         },
 

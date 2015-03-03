@@ -133,11 +133,11 @@ var Darwin = Darwin || {};
             var parentB = this.select(this.population);
             var children;
             if (Math.random() < this.recombinationRate) {
-                children = this.reproduce(parentA.genotype, parentB.genotype);
+                children = this.reproduce(parentA, parentB);
             } else {
                 children = {
-                    childA: parentA.genotype,
-                    childB: parentB.genotype
+                    childA: parentA,
+                    childB: parentB
                 };
             }
             children.childA = this.mutate(children.childA, this.mutationRate);
