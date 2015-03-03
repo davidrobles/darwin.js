@@ -23,6 +23,7 @@ var Darwin = Darwin || {};
                 }
             });
             var average = totalFitness / population.length;
+            // TODO Refactor, use_.reduce() ?
             _.each(population, function(individual) {
                 diff += Math.pow(individual.fitness - average, 2);
             });
