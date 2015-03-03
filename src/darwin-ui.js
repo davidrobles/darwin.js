@@ -30,7 +30,7 @@ var Darwin = Darwin || {};
 
         start: function() {
             this.run();
-            //this.ga.populationSize = parseInt(this.$(".population-size").val());
+            this.ga.populationSize = parseInt(this.$(".population-size").val());
             this.ga.start();
         },
 
