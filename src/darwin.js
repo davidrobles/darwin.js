@@ -124,7 +124,6 @@ var Darwin = Darwin || {};
         }
     });
 
-    // TODO Needs refactoring
     Darwin.GeneticAlgorithm.prototype.breed = function() {
         var newPopulation = [],
             halfLength = this.population.length / 2;
