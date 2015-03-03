@@ -5,14 +5,14 @@ var Darwin = Darwin || {};
     "use strict";
 
     Darwin.Selection = {
-        randomTopPercent: function(evaluatedPopulation) {
+        randomTopPercent: function(population) {
             // TODO get percentage as a parameter
-            evaluatedPopulation = _.clone(evaluatedPopulation);
-            evaluatedPopulation.sort(function(a, b) {
+            population = _.clone(population);
+            population.sort(function(a, b) {
                 return b.fitness - a.fitness;
             });
-            var randIndex = _.random(0, (evaluatedPopulation.length / 5) -1);
-            return evaluatedPopulation[randIndex];
+            var randIndex = _.random(0, (population.length / 5) -1);
+            return population[randIndex];
         },
         // Also known as fitness proportionate selection
         routletteWheelSelection: function(evalPop) {
