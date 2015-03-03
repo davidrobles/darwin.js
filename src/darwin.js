@@ -42,7 +42,7 @@ var Darwin = Darwin || {};
         },
 
         generatePopulation: function() {
-            this.population = this.currentGeneration.id === 0 ? this.generateInitialPopulation() : this.breed();
+            this.population = this.currentGeneration.id === 0 ? this.initializePopulation() : this.breed();
             this.trigger("population-generated", this.population);
         },
 
@@ -71,7 +71,7 @@ var Darwin = Darwin || {};
             }
         },
 
-        generateInitialPopulation: function() {
+        initializePopulation: function() {
             return _.map(_.range(this.populationSize), function(index) {
                 return {
                     id: index,
