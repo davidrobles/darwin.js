@@ -21,9 +21,11 @@ var Darwin = Darwin || {};
                 if (!worstIndividual || individual.fitness < worstIndividual.fitness) {
                     worstIndividual = individual;
                 }
-                diff += Math.pow(individual.fitness, 2);
             });
             var average = totalFitness / population.length;
+            _.each(population, function(individual) {
+                diff += Math.pow(individual.fitness - average, 2);
+            });
             var variance = diff / population.length;
             var std = Math.sqrt(variance);
             return {

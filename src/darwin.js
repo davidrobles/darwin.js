@@ -30,7 +30,6 @@ var Darwin = Darwin || {};
             this.generatePopulation();
             this.evaluatePopulation();
             this.computeStats();
-            debugger;
             this.endGeneration();
             this.checkTermination();
         },

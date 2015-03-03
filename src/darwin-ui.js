@@ -135,6 +135,14 @@ var Darwin = Darwin || {};
                     worst: {
                         id: generation.id,
                         fitness: generation.worstIndividual.fitness
+                    },
+                    stdUp: {
+                        id: generation.id,
+                        fitness: generation.averageFitness + generation.stdFitness
+                    },
+                    stdDown: {
+                        id: generation.id,
+                        fitness: generation.averageFitness - generation.stdFitness
                     }
                 });
             });
@@ -377,6 +385,8 @@ var Darwin = Darwin || {};
             this.data1 = [];
             this.data2 = [];
             this.data3 = [];
+            this.data4 = [];
+            this.data5 = [];
             this.renderBase();
         },
 
@@ -384,6 +394,8 @@ var Darwin = Darwin || {};
             this.data1.push(points.best);
             this.data2.push(points.avg);
             this.data3.push(points.worst);
+            this.data4.push(points.stdUp);
+            this.data5.push(points.stdDown);
             this.render();
         },
 
@@ -443,6 +455,8 @@ var Darwin = Darwin || {};
             this.path1 = self.svg.append("path");
             this.path2 = self.svg.append("path");
             this.path3 = self.svg.append("path");
+            this.path4 = self.svg.append("path");
+            this.path5 = self.svg.append("path");
 
             this.svg.append("g")
                 .attr("class", "x axis")
@@ -509,9 +523,25 @@ var Darwin = Darwin || {};
                     "stroke-width": "2px"
                 });
 
-            // third color: FFA787
+            this.path4.datum(self.data4);
 
-            // fourth color: 47F1FF
+            this.path4.attr("d", self.area)
+                .style({
+                    "fill": "#FFA787",
+                    "fill-opacity": .1,
+                    "stroke": "#FFA787",
+                    "stroke-width": "2px"
+                });
+
+            this.path5.datum(self.data5);
+
+            this.path5.attr("d", self.area)
+                .style({
+                    "fill": "#47F1FF",
+                    "fill-opacity": .1,
+                    "stroke": "#47F1FF",
+                    "stroke-width": "2px"
+                });
 
             return this;
         }
