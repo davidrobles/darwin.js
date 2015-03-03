@@ -392,10 +392,10 @@ var Darwin = Darwin || {};
 
         addPoints: function(points) {
             this.data1.push(points.best);
-            this.data2.push(points.avg);
-            this.data3.push(points.worst);
-            this.data4.push(points.stdUp);
-            this.data5.push(points.stdDown);
+            this.data2.push(points.stdUp);
+            this.data3.push(points.avg);
+            this.data4.push(points.stdDown);
+            this.data5.push(points.worst);
             this.render();
         },
 
@@ -493,8 +493,8 @@ var Darwin = Darwin || {};
             //    return d.avgFitness;
             //}));
 
+            // Best
             this.path1.datum(self.data1);
-
             this.path1.attr("d", self.area)
                 .style({
                     "fill": "#00a93e",
@@ -503,28 +503,28 @@ var Darwin = Darwin || {};
                     "stroke-width": "2px"
                 });
 
+            // Standard Deviation Over
             this.path2.datum(self.data2);
-
             this.path2.attr("d", self.area)
                 .style({
-                    "fill": "rgb(58, 118, 208)",
+                    "fill": "F1FF",
+                    "fill-opacity": .1,
+                    "stroke": "#F1FF",
+                    "stroke-width": "2px"
+                });
+
+            // Average
+            this.path3.datum(self.data3);
+            this.path3.attr("d", self.area)
+                .style({
+                    "fill": "#3a76d0",
                     "fill-opacity": .1,
                     "stroke": "#3a76d0",
                     "stroke-width": "2px"
                 });
 
-            this.path3.datum(self.data3);
-
-            this.path3.attr("d", self.area)
-                .style({
-                    "fill": "#CC3824",
-                    "fill-opacity": .1,
-                    "stroke": "#CC3824",
-                    "stroke-width": "2px"
-                });
-
+            // Standard Deviation Under
             this.path4.datum(self.data4);
-
             this.path4.attr("d", self.area)
                 .style({
                     "fill": "#FFA787",
@@ -533,13 +533,13 @@ var Darwin = Darwin || {};
                     "stroke-width": "2px"
                 });
 
+            // Worst
             this.path5.datum(self.data5);
-
             this.path5.attr("d", self.area)
                 .style({
-                    "fill": "#47F1FF",
+                    "fill": "#CC3824",
                     "fill-opacity": .1,
-                    "stroke": "#47F1FF",
+                    "stroke": "#CC3824",
                     "stroke-width": "2px"
                 });
 
