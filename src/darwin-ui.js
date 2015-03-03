@@ -380,7 +380,7 @@ var Darwin = Darwin || {};
         className: "widget",
 
         initialize: function() {
-            this.maxX = 50;
+            this.maxX = 100;
             this.maxY = "GENETIC HELLO WORLD".length;
             this.data1 = [];
             this.data2 = [];
@@ -409,7 +409,7 @@ var Darwin = Darwin || {};
                     bottom: 45,
                     left:   45
                 },
-                width = 600 - margin.left - margin.right,
+                width = 1000 - margin.left - margin.right,
                 height = 350 - margin.top - margin.bottom;
 
             this.x = d3.scale.linear()
