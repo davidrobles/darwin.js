@@ -13,7 +13,7 @@ var Darwin = Darwin || {};
                     return b.fitness - a.fitness;
                 });
                 var topSize = Math.round(population.length * percentage);
-                var randIndex = _.random(0, topSize -1);
+                var randIndex = _.random(0, topSize - 1);
                 return population[randIndex];
             }
         },
