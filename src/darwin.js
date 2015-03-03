@@ -121,9 +121,10 @@ var Darwin = Darwin || {};
         }
     });
 
+    // TODO Needs refactoring
     Darwin.GeneticAlgorithm.prototype.breed = function() {
-        var newPopulation = [];
-        var halfLength = this.population.length / 2;
+        var newPopulation = [],
+            halfLength = this.population.length / 2;
         for (var i = 0; i < halfLength; i++) {
             var parentA = this.select(this.population);
             var parentB = this.select(this.population);
