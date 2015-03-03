@@ -179,3 +179,11 @@ table.population th + th + th, table.population td + td + td {
 .fixed-str {
     font-family: 'Menlo', Arial, sans-serif;
 }
+
+.dashboard-sidebar {
+    width: 200px;
+}
+
+.dashboard-content {
+    margin-left: 200px;
+}

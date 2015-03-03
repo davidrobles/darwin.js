@@ -71,6 +71,8 @@ var Darwin = Darwin || {};
 
     Darwin.Views.DashboardView = Backbone.View.extend({
 
+        template: _.template($("#dashboard-layout").html()),
+
         className: "dashboard",
 
         initialize: function(options) {
@@ -150,12 +152,13 @@ var Darwin = Darwin || {};
 
         render: function() {
             this.$el.empty();
-            this.$el.append(this.configurationView.render().el);
+            this.$el.html(this.template());
+            this.$(".dashboard-sidebar").append(this.configurationView.render().el);
             //this.$el.append(this.eaDetailsView.render().el);
-                this.$el.append(this.generationsTableView.render().el);
-            this.$el.append(this.populationTableView.render().el);
-            this.$el.append(this.individualDetailsView.render().el);
-            this.$el.append(this.graph.el);
+            this.$(".dashboard-content").append(this.generationsTableView.render().el);
+            this.$(".dashboard-content").append(this.populationTableView.render().el);
+            this.$(".dashboard-content").append(this.individualDetailsView.render().el);
+            this.$(".dashboard-content").append(this.graph.el);
             return this;
         }
 
@@ -380,7 +383,7 @@ var Darwin = Darwin || {};
         className: "widget",
 
         initialize: function() {
-            this.maxX = 100;
+            this.maxX = 150;
             this.maxY = "GENETIC HELLO WORLD".length;
             this.data1 = [];
             this.data2 = [];
