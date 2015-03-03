@@ -129,28 +129,30 @@ var Darwin = Darwin || {};
         var newPopulation = [],
             halfLength = this.population.length / 2;
         for (var i = 0; i < halfLength; i++) {
+            // Select parents
             var parentA = this.select(this.population);
             var parentB = this.select(this.population);
-            var children;
+            var childA = parentA;
+            var childB = parentB;
+            // Recombination
             if (Math.random() < this.recombinationRate) {
-                children = this.reproduce(parentA, parentB);
-            } else {
-                children = {
-                    childA: parentA,
-                    childB: parentB
-                };
+                var children = this.reproduce(parentA, parentB);
+                childA = children.childA;
+                childB = children.childB;
             }
-            children.childA = this.mutate(children.childA, this.mutationRate);
-            children.childB = this.mutate(children.childB, this.mutationRate);
+            // Mutation
+            childA = this.mutate(childA, this.mutationRate);
+            childB = this.mutate(childB, this.mutationRate);
+            // Add to new population
             newPopulation.push({
                 id: i * 2,
                 generation: this.currentGeneration,
-                genotype: children.childA
+                genotype: childA
             });
             newPopulation.push({
                 id: i * 2 + 1,
                 generation: this.currentGeneration,
-                genotype: children.childB
+                genotype: childB
             });
         }
         return newPopulation;
