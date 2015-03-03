@@ -191,7 +191,7 @@
                 mutationRate: 0.05,
                 terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
             }),
-            dashboardView = new DashboardView({
+            dashboardView = new Darwin.Views.DashboardView({
                 ga: stringEvolver,
                 phenotypeView: StringEvolver.createStringDiffView(wordToFind)
             });
@@ -215,7 +215,7 @@
                 mutationRate: 0.05,
                 terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
             }),
-            dashboardView = new DashboardView({
+            dashboardView = new Darwin.Views.DashboardView({
                 ga: stringEvolver,
                 phenotypeView: StringEvolver.createStringDiffView(wordToFind)
             });

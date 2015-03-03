@@ -1,511 +1,521 @@
-Darwin.vent = _.extend({}, Backbone.Events);
+var Darwin = Darwin || {};
 
-var EAConfigurationView = Backbone.View.extend({
+(function(Darwin) {
 
-    className: "widget widget-info",
+    "use strict";
 
-    template: _.template($("#ea-configuration-view").html()),
+    Darwin.vent = _.extend({}, Backbone.Events);
 
-    events: {
-        "click .start": "start",
-        "click .reset": "reset"
-    },
+    Darwin.Views = {};
 
-    initialize: function(ga) {
-        this.ga = ga;
-    },
+    Darwin.Views.EAConfigurationView = Backbone.View.extend({
 
-    render: function() {
-        this.$el.html(this.template());
-        return this;
-    },
+        className: "widget widget-info",
 
-    start: function() {
-        this.run();
-        //this.ga.populationSize = parseInt(this.$(".population-size").val());
-        this.ga.start();
-    },
+        template: _.template($("#ea-configuration-view").html()),
 
-    run: function() {
-        this.$(".population-size").prop("disabled", true);
-        this.$(".start").prop("disabled", true);
-        this.$(".reset").prop("disabled", false);
-    },
+        events: {
+            "click .start": "start",
+            "click .reset": "reset"
+        },
 
-    reset: function() {
-        this.$(".population-size").prop("disabled", false);
-        this.$(".start").prop("disabled", false);
-        this.$(".reset").prop("disabled", true);
-        this.ga.reset();
-    }
+        initialize: function(ga) {
+            this.ga = ga;
+        },
 
-});
+        render: function() {
+            this.$el.html(this.template());
+            return this;
+        },
 
-var EADetailsView = Backbone.View.extend({
+        start: function() {
+            this.run();
+            //this.ga.populationSize = parseInt(this.$(".population-size").val());
+            this.ga.start();
+        },
 
-    className: "widget widget-info",
+        run: function() {
+            this.$(".population-size").prop("disabled", true);
+            this.$(".start").prop("disabled", true);
+            this.$(".reset").prop("disabled", false);
+        },
 
-    template: _.template($("#ea-details-view").html()),
-
-    initialize: function(ga) {
-        this.ga = ga;
-    },
-
-    render: function() {
-        this.$el.html(this.template({
-            populationSize: this.ga.populationSize,
-            mutationProbability: "1%"
-        }));
-        return this;
-    }
-
-});
-
-var DashboardView = Backbone.View.extend({
-
-    className: "dashboard",
-
-    initialize: function(options) {
-        this.ga = options.ga;
-        this.phenotypeView = options.phenotypeView;
-        this.initSubviews();
-        this.registerCallbacks();
-    },
-
-    initSubviews: function() {
-        this.generationsCollection = new Backbone.Collection();
-        this.generationsTableView = new GenerationsTableView({
-            collection: this.generationsCollection,
-            phenotypeView: this.phenotypeView
-        });
-        this.populationTableView = new PopulationTableView({
-            phenotypeView: this.phenotypeView
-        });
-        this.individualDetailsView = new IndividualDetailsView({
-            phenotypeView: this.phenotypeView
-        });
-        this.configurationView = new EAConfigurationView(this.ga);
-        this.eaDetailsView = new EADetailsView(this.ga);
-        this.graph = new EAGraph();
-    },
-
-    // TODO Refactor
-    registerCallbacks: function() {
-        var gensMap = {};
-
-        this.listenTo(this.ga, "reset", function() {
-            gensMap = {};
-            this.generationsTableView.remove();
-            this.populationTableView.remove();
-            this.individualDetailsView.remove();
-            this.initSubviews();
-            this.render();
-        });
-
-        this.listenTo(this.ga, "ea-started", function() {
-        });
-
-        this.listenTo(this.ga, "generation-started", function(generation) {
-            this.generationsCollection.add(generation);
-            var last = this.generationsCollection.last();
-            gensMap[last.get("id")] = last;
-        });
-
-        this.listenTo(this.ga, "generation-finished", function(generation) {
-            var generationModel = gensMap[generation.id];
-            generationModel.set(generation);
-            this.populationTableView.generationSelected(generationModel);
-            this.graph.addPoints({
-                best: {
-                    id: generation.id,
-                    fitness: generation.bestIndividual.fitness
-                },
-                avg: {
-                    id: generation.id,
-                    fitness: generation.averageFitness
-                },
-                worst: {
-                    id: generation.id,
-                    fitness: generation.worstIndividual.fitness
-                }
-            });
-        });
-    },
-
-    render: function() {
-        this.$el.empty();
-        this.$el.append(this.configurationView.render().el);
-        this.$el.append(this.eaDetailsView.render().el);
-        this.$el.append(this.generationsTableView.render().el);
-        this.$el.append(this.populationTableView.render().el);
-        this.$el.append(this.individualDetailsView.render().el);
-        this.$el.append(this.graph.el);
-        return this;
-    }
-
-});
-
-var GenerationsTableView = Backbone.View.extend({
-
-    tagName: "table",
-
-    className: "ea generations widget",
-
-    template: _.template($("#generations-table-view").html()),
-
-    initialize: function(options) {
-        options = options || {};
-        this.PhenotypeView = options.phenotypeView;
-        this.selectedGenerationRowView = null;
-        this.generationRowViews = [];
-        this.listenTo(Darwin.vent, "generation-selected", this.selectGeneration);
-        if (this.collection) {
-            this.listenTo(this.collection, "add", this.addGeneration);
+        reset: function() {
+            this.$(".population-size").prop("disabled", false);
+            this.$(".start").prop("disabled", false);
+            this.$(".reset").prop("disabled", true);
+            this.ga.reset();
         }
-    },
 
-    addGeneration: function(generation) {
-        this.generationRowView = new GenerationRowView({
-            model: generation,
-            phenotypeView: this.PhenotypeView
-        });
-        this.generationRowViews.push(this.generationRowView);
-        this.$("tbody").append(this.generationRowView.render().el);
-        this.selectGeneration(generation);
-        this.$("tbody").scrollTop(100000);
-    },
+    });
 
-    render: function() {
-        this.$el.html(this.template());
-        return this;
-    },
+    Darwin.Views.EADetailsView = Backbone.View.extend({
 
-    selectGeneration: function(generation) {
-        if (this.selectedGenerationRowView) {
-            if (this.selectedGenerationRowView.model.get("id") === generation.get("id")) {
-                return;
-            }
-            this.selectedGenerationRowView.unselect();
-        }
-        this.selectedGenerationRowView = this.generationRowViews[generation.get("id")];
-        this.selectedGenerationRowView.select();
-    }
+        className: "widget widget-info",
 
-});
+        template: _.template($("#ea-details-view").html()),
 
-var SelectableRowView = Backbone.View.extend({
+        initialize: function(ga) {
+            this.ga = ga;
+        },
 
-    tagName: "tr",
-
-    events: {
-        "click": "customSelect"
-    },
-
-    select: function() {
-        this.$el.addClass("selected");
-    },
-
-    unselect: function() {
-        this.$el.removeClass("selected");
-    }
-
-});
-
-var GenerationRowView = SelectableRowView.extend({
-
-    templates: {
-        "complete": _.template($("#generation-row-view").html()),
-        "in-progress": _.template($("#generation-row-view-in-progress").html())
-    },
-
-    initialize: function(options) {
-        this.phenotypeView = options.phenotypeView;
-        this.listenTo(this.model, "change", this.render);
-    },
-
-    // TODO Refactor
-    render: function() {
-        var templateName = this.model.get("status");
-        if (templateName === "complete") {
-            this.$el.html(this.templates[templateName]({
-                id: this.model.get("id"),
-                bestIndividual: new this.phenotypeView({
-                    actual: this.model.get("bestIndividual").genotype
-                }).render().el.innerHTML,
-                bestIndividualFitness: this.model.get("bestIndividual").fitness,
-                averageFitness: this.model.get("averageFitness") // TODO rename to avgFitness
+        render: function() {
+            this.$el.html(this.template({
+                populationSize: this.ga.populationSize,
+                mutationProbability: "1%"
             }));
-        } else {
-            this.$el.html(this.templates[templateName](this.model.toJSON()));
+            return this;
         }
-        return this;
-    },
 
-    customSelect: function() {
-        Darwin.vent.trigger("generation-selected", this.model);
-    }
+    });
 
-});
+    Darwin.Views.DashboardView = Backbone.View.extend({
 
-var PopulationTableView = Backbone.View.extend({
+        className: "dashboard",
 
-    tagName: "table",
+        initialize: function(options) {
+            this.ga = options.ga;
+            this.phenotypeView = options.phenotypeView;
+            this.initSubviews();
+            this.registerCallbacks();
+        },
 
-    className: "ea population widget",
+        initSubviews: function() {
+            this.generationsCollection = new Backbone.Collection();
+            this.generationsTableView = new Darwin.Views.GenerationsTableView({
+                collection: this.generationsCollection,
+                phenotypeView: this.phenotypeView
+            });
+            this.populationTableView = new Darwin.Views.PopulationTableView({
+                phenotypeView: this.phenotypeView
+            });
+            this.individualDetailsView = new Darwin.Views.IndividualDetailsView({
+                phenotypeView: this.phenotypeView
+            });
+            this.configurationView = new Darwin.Views.EAConfigurationView(this.ga);
+            this.eaDetailsView = new Darwin.Views.EADetailsView(this.ga);
+            this.graph = new Darwin.Views.EAGraph();
+        },
 
-    template: _.template($("#population-table-view").html()),
+        // TODO Refactor
+        registerCallbacks: function() {
+            var gensMap = {};
 
-    initialize: function(options) {
-        this.phenotypeView = options.phenotypeView;
-        this.selectedIndividualRowView = null;
-        this.individualRowViews = [];
-        this.listenTo(Darwin.vent, "generation-selected", this.generationSelected);
-        this.listenTo(Darwin.vent, "individual-selected", this.selectIndividual);
-    },
+            this.listenTo(this.ga, "reset", function() {
+                gensMap = {};
+                this.generationsTableView.remove();
+                this.populationTableView.remove();
+                this.individualDetailsView.remove();
+                this.initSubviews();
+                this.render();
+            });
 
-    generationSelected: function(generation) {
-        this.model = generation;
-        this.selectedIndividualRowView = null;
-        this.individualRowViews = [];
-        this.collection = new Backbone.Collection(this.model.get("population"));
-        this.render();
-    },
+            this.listenTo(this.ga, "ea-started", function() {
+            });
 
-    render: function() {
-        this.$el.html(this.template());
-        if (this.collection) {
-            var container = document.createDocumentFragment();
-            for (var i = 0; i < this.collection.length; i++) {
-                var individual = this.collection.get(i);
-                var individualRowView = new IndividualRowView({
-                    model: individual,
-                    phenotypeView: this.phenotypeView
+            this.listenTo(this.ga, "generation-started", function(generation) {
+                this.generationsCollection.add(generation);
+                var last = this.generationsCollection.last();
+                gensMap[last.get("id")] = last;
+            });
+
+            this.listenTo(this.ga, "generation-finished", function(generation) {
+                var generationModel = gensMap[generation.id];
+                generationModel.set(generation);
+                this.populationTableView.generationSelected(generationModel);
+                this.graph.addPoints({
+                    best: {
+                        id: generation.id,
+                        fitness: generation.bestIndividual.fitness
+                    },
+                    avg: {
+                        id: generation.id,
+                        fitness: generation.averageFitness
+                    },
+                    worst: {
+                        id: generation.id,
+                        fitness: generation.worstIndividual.fitness
+                    }
                 });
-                this.individualRowViews.push(individualRowView);
-                if (i == 0) {
-                    individualRowView.customSelect();
-                }
-                container.appendChild(individualRowView.render().el);
+            });
+        },
+
+        render: function() {
+            this.$el.empty();
+            this.$el.append(this.configurationView.render().el);
+            this.$el.append(this.eaDetailsView.render().el);
+            this.$el.append(this.generationsTableView.render().el);
+            this.$el.append(this.populationTableView.render().el);
+            this.$el.append(this.individualDetailsView.render().el);
+            this.$el.append(this.graph.el);
+            return this;
+        }
+
+    });
+
+    Darwin.Views.GenerationsTableView = Backbone.View.extend({
+
+        tagName: "table",
+
+        className: "ea generations widget",
+
+        template: _.template($("#generations-table-view").html()),
+
+        initialize: function(options) {
+            options = options || {};
+            this.PhenotypeView = options.phenotypeView;
+            this.selectedGenerationRowView = null;
+            this.generationRowViews = [];
+            this.listenTo(Darwin.vent, "generation-selected", this.selectGeneration);
+            if (this.collection) {
+                this.listenTo(this.collection, "add", this.addGeneration);
             }
-            this.$el.append(container);
+        },
+
+        addGeneration: function(generation) {
+            this.generationRowView = new Darwin.Views.GenerationRowView({
+                model: generation,
+                phenotypeView: this.PhenotypeView
+            });
+            this.generationRowViews.push(this.generationRowView);
+            this.$("tbody").append(this.generationRowView.render().el);
+            this.selectGeneration(generation);
+            this.$("tbody").scrollTop(100000);
+        },
+
+        render: function() {
+            this.$el.html(this.template());
+            return this;
+        },
+
+        selectGeneration: function(generation) {
+            if (this.selectedGenerationRowView) {
+                if (this.selectedGenerationRowView.model.get("id") === generation.get("id")) {
+                    return;
+                }
+                this.selectedGenerationRowView.unselect();
+            }
+            this.selectedGenerationRowView = this.generationRowViews[generation.get("id")];
+            this.selectedGenerationRowView.select();
         }
-        return this;
-    },
 
-    selectIndividual: function(individual) {
-        if (this.selectedIndividualRowView) {
-            this.selectedIndividualRowView.unselect();
+    });
+
+    Darwin.Views.SelectableRowView = Backbone.View.extend({
+
+        tagName: "tr",
+
+        events: {
+            "click": "customSelect"
+        },
+
+        select: function() {
+            this.$el.addClass("selected");
+        },
+
+        unselect: function() {
+            this.$el.removeClass("selected");
         }
-        this.selectedIndividualRowView = this.individualRowViews[individual.get("id")];
-        this.selectedIndividualRowView.select();
-    }
 
-});
+    });
 
-var IndividualRowView = SelectableRowView.extend({
+    Darwin.Views.GenerationRowView = Darwin.Views.SelectableRowView.extend({
 
-    template: _.template($("#individual-row-view").html()),
+        templates: {
+            "complete": _.template($("#generation-row-view").html()),
+            "in-progress": _.template($("#generation-row-view-in-progress").html())
+        },
 
-    initialize: function(options) {
-        this.phenotypeView = options.phenotypeView
-    },
+        initialize: function(options) {
+            this.phenotypeView = options.phenotypeView;
+            this.listenTo(this.model, "change", this.render);
+        },
 
-    render: function() {
-        this.$el.html(this.template({
-            id: this.model.get("id"),
-            phenotype: new this.phenotypeView({
-                actual: this.model.get("genotype")
-            }).render().el.innerHTML,
-            fitness: this.model.get("fitness")
-        }));
-        return this;
-    },
+        // TODO Refactor
+        render: function() {
+            var templateName = this.model.get("status");
+            if (templateName === "complete") {
+                this.$el.html(this.templates[templateName]({
+                    id: this.model.get("id"),
+                    bestIndividual: new this.phenotypeView({
+                        actual: this.model.get("bestIndividual").genotype
+                    }).render().el.innerHTML,
+                    bestIndividualFitness: this.model.get("bestIndividual").fitness,
+                    averageFitness: this.model.get("averageFitness") // TODO rename to avgFitness
+                }));
+            } else {
+                this.$el.html(this.templates[templateName](this.model.toJSON()));
+            }
+            return this;
+        },
 
-    customSelect: function() {
-        Darwin.vent.trigger("individual-selected", this.model);
-    }
+        customSelect: function() {
+            Darwin.vent.trigger("generation-selected", this.model);
+        }
 
-});
+    });
 
-var IndividualDetailsView = Backbone.View.extend({
+    Darwin.Views.PopulationTableView = Backbone.View.extend({
 
-    className: "widget widget-info individual-details-view",
+        tagName: "table",
 
-    template: _.template($("#individual-details-view").html()),
+        className: "ea population widget",
 
-    initialize: function(options) {
-        this.phenotypeView = options.phenotypeView;
-        this.listenTo(Darwin.vent, "individual-selected", this.changeIndividual);
-    },
+        template: _.template($("#population-table-view").html()),
 
-    changeIndividual: function(individual) {
-        this.model = individual;
-        this.render();
-    },
+        initialize: function(options) {
+            this.phenotypeView = options.phenotypeView;
+            this.selectedIndividualRowView = null;
+            this.individualRowViews = [];
+            this.listenTo(Darwin.vent, "generation-selected", this.generationSelected);
+            this.listenTo(Darwin.vent, "individual-selected", this.selectIndividual);
+        },
 
-    render: function() {
-        if (this.model) {
+        generationSelected: function(generation) {
+            this.model = generation;
+            this.selectedIndividualRowView = null;
+            this.individualRowViews = [];
+            this.collection = new Backbone.Collection(this.model.get("population"));
+            this.render();
+        },
+
+        render: function() {
+            this.$el.html(this.template());
+            if (this.collection) {
+                var container = document.createDocumentFragment();
+                for (var i = 0; i < this.collection.length; i++) {
+                    var individual = this.collection.get(i);
+                    var individualRowView = new Darwin.Views.IndividualRowView({
+                        model: individual,
+                        phenotypeView: this.phenotypeView
+                    });
+                    this.individualRowViews.push(individualRowView);
+                    if (i == 0) {
+                        individualRowView.customSelect();
+                    }
+                    container.appendChild(individualRowView.render().el);
+                }
+                this.$el.append(container);
+            }
+            return this;
+        },
+
+        selectIndividual: function(individual) {
+            if (this.selectedIndividualRowView) {
+                this.selectedIndividualRowView.unselect();
+            }
+            this.selectedIndividualRowView = this.individualRowViews[individual.get("id")];
+            this.selectedIndividualRowView.select();
+        }
+
+    });
+
+    Darwin.Views.IndividualRowView = Darwin.Views.SelectableRowView.extend({
+
+        template: _.template($("#individual-row-view").html()),
+
+        initialize: function(options) {
+            this.phenotypeView = options.phenotypeView
+        },
+
+        render: function() {
             this.$el.html(this.template({
                 id: this.model.get("id"),
-                generationId: this.model.get("generation").id,
                 phenotype: new this.phenotypeView({
                     actual: this.model.get("genotype")
                 }).render().el.innerHTML,
                 fitness: this.model.get("fitness")
             }));
+            return this;
+        },
+
+        customSelect: function() {
+            Darwin.vent.trigger("individual-selected", this.model);
         }
-        return this;
-    }
 
-});
+    });
 
-var EAGraph = Backbone.View.extend({
+    Darwin.Views.IndividualDetailsView = Backbone.View.extend({
 
-    className: "widget",
+        className: "widget widget-info individual-details-view",
 
-    initialize: function() {
-        this.maxX = 50;
-        this.maxY = "GENETIC HELLO WORLD".length;
-        this.data1 = [];
-        this.data2 = [];
-        this.data3 = [];
-        this.renderBase();
-    },
+        template: _.template($("#individual-details-view").html()),
 
-    addPoints: function(points) {
-        this.data1.push(points.best);
-        this.data2.push(points.avg);
-        this.data3.push(points.worst);
-        this.render();
-    },
+        initialize: function(options) {
+            this.phenotypeView = options.phenotypeView;
+            this.listenTo(Darwin.vent, "individual-selected", this.changeIndividual);
+        },
 
-    renderBase: function() {
+        changeIndividual: function(individual) {
+            this.model = individual;
+            this.render();
+        },
 
-        var self = this;
+        render: function() {
+            if (this.model) {
+                this.$el.html(this.template({
+                    id: this.model.get("id"),
+                    generationId: this.model.get("generation").id,
+                    phenotype: new this.phenotypeView({
+                        actual: this.model.get("genotype")
+                    }).render().el.innerHTML,
+                    fitness: this.model.get("fitness")
+                }));
+            }
+            return this;
+        }
 
-        var margin = {
-                top:    30,
-                right:  30,
-                bottom: 45,
-                left:   45
-            },
-            width = 600 - margin.left - margin.right,
-            height = 350 - margin.top - margin.bottom;
+    });
 
-        this.x = d3.scale.linear()
-            .domain([0, this.maxX])
-            .range([0, width]);
+    Darwin.Views.EAGraph = Backbone.View.extend({
 
-        this.y = d3.scale.linear()
-            .domain([0, this.maxY])
-            .range([height, 0]);
+        className: "widget",
 
-        var xAxis = d3.svg.axis()
-            .scale(this.x)
-            .orient("bottom");
+        initialize: function() {
+            this.maxX = 50;
+            this.maxY = "GENETIC HELLO WORLD".length;
+            this.data1 = [];
+            this.data2 = [];
+            this.data3 = [];
+            this.renderBase();
+        },
 
-        var yAxis = d3.svg.axis()
-            .scale(this.y)
-            .orient("left");
+        addPoints: function(points) {
+            this.data1.push(points.best);
+            this.data2.push(points.avg);
+            this.data3.push(points.worst);
+            this.render();
+        },
 
-        this.line = d3.svg.line()
-            .x(function(d) {
-                return self.x(d.id);
-            })
-            .y(function(d) {
-                return self.y(d.fitness);
-            });
+        renderBase: function() {
 
-        this.area = d3.svg.area()
-            .x(function(d) {
-                return self.x(d.id);
-            })
-            .y0(height)
-            .y1(function(d) {
-                return self.y(d.fitness);
-            });
+            var self = this;
 
-        this.svg = d3.select(this.el).append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("stroke", "#939ba5")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            var margin = {
+                    top:    30,
+                    right:  30,
+                    bottom: 45,
+                    left:   45
+                },
+                width = 600 - margin.left - margin.right,
+                height = 350 - margin.top - margin.bottom;
 
-        this.path1 = self.svg.append("path");
-        this.path2 = self.svg.append("path");
-        this.path3 = self.svg.append("path");
+            this.x = d3.scale.linear()
+                .domain([0, this.maxX])
+                .range([0, width]);
 
-        this.svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis)
-            .append("text")
-            .attr("x", width / 2)
-            .attr("y", 35)
-            .attr("stroke", "#ecf1f4")
-            .style("text-anchor", "middle")
-            .text("Generations");
+            this.y = d3.scale.linear()
+                .domain([0, this.maxY])
+                .range([height, 0]);
 
-        this.svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("x", -100)
-            .attr("y", -27)
-            .attr("stroke", "#ecf1f4")
-            .style("text-anchor", "end")
-            .text("Fitness");
-    },
+            var xAxis = d3.svg.axis()
+                .scale(this.x)
+                .orient("bottom");
 
-    render: function() {
+            var yAxis = d3.svg.axis()
+                .scale(this.y)
+                .orient("left");
 
-        var self = this;
+            this.line = d3.svg.line()
+                .x(function(d) {
+                    return self.x(d.id);
+                })
+                .y(function(d) {
+                    return self.y(d.fitness);
+                });
 
-        //self.x.domain(d3.extent(self.data1, function (d) {
-        //    return d.id;
-        //}));
-        //
-        //self.y.domain(d3.extent(self.data, function (d) {
-        //    return d.avgFitness;
-        //}));
+            this.area = d3.svg.area()
+                .x(function(d) {
+                    return self.x(d.id);
+                })
+                .y0(height)
+                .y1(function(d) {
+                    return self.y(d.fitness);
+                });
 
-        this.path1.datum(self.data1);
+            this.svg = d3.select(this.el).append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("stroke", "#939ba5")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        this.path1.attr("d", self.area)
-            .style({
-                "fill": "#00a93e",
-                "fill-opacity": .1,
-                "stroke": "#00a93e",
-                "stroke-width": "2px"
-            });
+            this.path1 = self.svg.append("path");
+            this.path2 = self.svg.append("path");
+            this.path3 = self.svg.append("path");
 
-        this.path2.datum(self.data2);
+            this.svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis)
+                .append("text")
+                .attr("x", width / 2)
+                .attr("y", 35)
+                .attr("stroke", "#ecf1f4")
+                .style("text-anchor", "middle")
+                .text("Generations");
 
-        this.path2.attr("d", self.area)
-            .style({
-                "fill": "rgb(58, 118, 208)",
-                "fill-opacity": .1,
-                "stroke": "#3a76d0",
-                "stroke-width": "2px"
-            });
+            this.svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("x", -100)
+                .attr("y", -27)
+                .attr("stroke", "#ecf1f4")
+                .style("text-anchor", "end")
+                .text("Fitness");
+        },
 
-        this.path3.datum(self.data3);
+        render: function() {
 
-        this.path3.attr("d", self.area)
-            .style({
-                "fill": "#CC3824",
-                "fill-opacity": .1,
-                "stroke": "#CC3824",
-                "stroke-width": "2px"
-            });
+            var self = this;
 
-        // third color: FFA787
+            //self.x.domain(d3.extent(self.data1, function (d) {
+            //    return d.id;
+            //}));
+            //
+            //self.y.domain(d3.extent(self.data, function (d) {
+            //    return d.avgFitness;
+            //}));
 
-        // fourth color: 47F1FF
+            this.path1.datum(self.data1);
 
-        return this;
-    }
+            this.path1.attr("d", self.area)
+                .style({
+                    "fill": "#00a93e",
+                    "fill-opacity": .1,
+                    "stroke": "#00a93e",
+                    "stroke-width": "2px"
+                });
 
-});
+            this.path2.datum(self.data2);
+
+            this.path2.attr("d", self.area)
+                .style({
+                    "fill": "rgb(58, 118, 208)",
+                    "fill-opacity": .1,
+                    "stroke": "#3a76d0",
+                    "stroke-width": "2px"
+                });
+
+            this.path3.datum(self.data3);
+
+            this.path3.attr("d", self.area)
+                .style({
+                    "fill": "#CC3824",
+                    "fill-opacity": .1,
+                    "stroke": "#CC3824",
+                    "stroke-width": "2px"
+                });
+
+            // third color: FFA787
+
+            // fourth color: 47F1FF
+
+            return this;
+        }
+
+    });
+
+})(Darwin);

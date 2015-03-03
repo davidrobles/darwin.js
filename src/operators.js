@@ -1,6 +1,6 @@
 var Darwin = Darwin || {};
 
-(function() {
+(function(Darwin) {
 
     "use strict";
 
@@ -46,4 +46,4 @@ var Darwin = Darwin || {};
         }
     }
 
-})();
+})(Darwin);

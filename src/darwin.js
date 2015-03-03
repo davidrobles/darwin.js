@@ -1,6 +1,6 @@
 var Darwin = Darwin || {};
 
-(function() {
+(function(Darwin) {
 
     "use strict";
 
@@ -209,4 +209,4 @@ var Darwin = Darwin || {};
         return "Evolution Strategy";
     };
 
-})();
+})(Darwin);
