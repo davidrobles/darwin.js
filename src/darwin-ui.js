@@ -383,7 +383,7 @@ var Darwin = Darwin || {};
         className: "widget",
 
         initialize: function() {
-            this.maxX = 500;
+            this.maxX = 200;
             this.maxY = "GENETIC HELLO WORLD".length;
             this.data1 = [];
             this.data2 = [];
