@@ -190,11 +190,11 @@
                 populationSize: 100,
                 individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
                 fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
-                select: Darwin.Selection.createRandomTopPercent(0.20),
+                select: Darwin.Selection.fitnessProportionalSelection,
                 reproduce: Darwin.Operators.singlePointCrossover,
-                recombinationRate: 0.80,
+                recombinationRate: 0.70,
                 mutate: Darwin.Operators.createStringMutation(alphabet),
-                mutationRate: 0.05,
+                mutationRate: 0.01,
                 terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
             }),
             dashboardView = new Darwin.Views.DashboardView({

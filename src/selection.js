@@ -18,9 +18,34 @@ var Darwin = Darwin || {};
             }
         },
 
+        // TODO implement binary search, right now is just O(n)
+        binarySearch: function(cumulativeFitnesses, fitness) {
+            var index = 0;
+            for (var i = 0; i < cumulativeFitnesses.length - 1; i++) {
+                if (fitness > cumulativeFitnesses[i])  {
+
+                } else {
+                    index = i;
+                    break;
+                }
+            }
+            return index;
+        },
+
         // Also known as fitness proportionate selection
-        routletteWheelSelection: function(evalPop) {
-            // TODO
+        // TODO make just one call to this method
+        fitnessProportionalSelection: function(population) {
+            var cumulativeFitnesses = [population[0].fitness];
+            for (var i = 1; i < population.length; i++) {
+                cumulativeFitnesses[i] = cumulativeFitnesses[i - 1] + population[i].fitness;
+            }
+            debugger;
+            var randomFitness = Math.random() * cumulativeFitnesses[cumulativeFitnesses.length - 1];
+            var index = Darwin.Selection.binarySearch(cumulativeFitnesses, randomFitness);
+            if (index < 0) {
+                index = Math.abs(index + 1);
+            }
+            return _.clone(population[index].genotype);
         },
 
         tournamentSelection: function(evalPop) {

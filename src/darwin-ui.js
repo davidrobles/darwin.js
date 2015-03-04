@@ -294,7 +294,7 @@ var Darwin = Darwin || {};
             this.$el.html(this.template());
             if (this.collection) {
                 var container = document.createDocumentFragment();
-                for (var i = 0; i < this.collection.length; i++) {
+                for (var i = 0; i < 10; i++) {
                     var individual = this.collection.get(i);
                     var individualRowView = new Darwin.Views.IndividualRowView({
                         model: individual,
@@ -383,7 +383,7 @@ var Darwin = Darwin || {};
         className: "widget",
 
         initialize: function() {
-            this.maxX = 150;
+            this.maxX = 500;
             this.maxY = "GENETIC HELLO WORLD".length;
             this.data1 = [];
             this.data2 = [];
