@@ -39,9 +39,6 @@ var Darwin = Darwin || {};
             }
             var randomFitness = Math.random() * cumulativeFitnesses[cumulativeFitnesses.length - 1];
             var index = Darwin.Selection.binarySearch(cumulativeFitnesses, randomFitness);
-            if (index < 0) {
-                index = Math.abs(index + 1);
-            }
             return _.clone(population[index].genotype);
         },
 
