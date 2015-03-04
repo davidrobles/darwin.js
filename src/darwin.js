@@ -214,10 +214,9 @@ var Darwin = Darwin || {};
         population.sort(function(a, b) {
             return b.fitness - a.fitness;
         });
-        var newMap = _.map(population.slice(0, this.parentsSize), function(individual) {
+        return _.map(population.slice(0, this.parentsSize), function (individual) {
             return individual.genotype;
         });
-        return newMap;
     };
 
     Darwin.EvolutionStrategy.prototype.toString = function() {
