@@ -201,8 +201,11 @@ var Darwin = Darwin || {};
     };
 
     Darwin.EvolutionStrategy.prototype.selectParents = function() {
-        // TODO this doesn't work if the population is not sorted
-        return this.evaluatedPopulation.slice(0, this.parentsSize);
+        var population = _.clone(this.population);
+        population.sort(function(a, b) {
+            return b.fitness - a.fitness;
+        });
+        return this.population.slice(0, this.parentsSize);
     };
 
     Darwin.EvolutionStrategy.prototype.toString = function() {
