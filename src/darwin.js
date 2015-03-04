@@ -183,6 +183,7 @@ var Darwin = Darwin || {};
         }
     });
 
+    // TODO pass the parents? and the selection type? operators? variables
     Darwin.EvolutionStrategy.prototype.breed = function() {
         var newPopulation = [],
             parents = this.selectParents();
