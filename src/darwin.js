@@ -205,7 +205,7 @@ var Darwin = Darwin || {};
         population.sort(function(a, b) {
             return b.fitness - a.fitness;
         });
-        return this.population.slice(0, this.parentsSize);
+        return population.slice(0, this.parentsSize);
     };
 
     Darwin.EvolutionStrategy.prototype.toString = function() {
