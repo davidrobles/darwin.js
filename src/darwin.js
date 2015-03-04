@@ -186,15 +186,24 @@ var Darwin = Darwin || {};
     Darwin.EvolutionStrategy.prototype.breed = function() {
         var newPopulation = [],
             parents = this.selectParents();
+        var index = 0;
         if (this.plusSelection) {
             newPopulation = _.map(parents, function(parent) {
-                return parent.genotype;
-            });
+                return {
+                    id: index++,
+                    generation: this.currentGeneration,
+                    genotype: parent // TODO rename to parentGenotype?
+                };
+            }, this);
         }
         _.each(parents, function(parent) {
             for (var i = 0; i < this.childrenPerParent; i++) {
-                var child = this.mutate(parent.genotype, this.mutationRate);
-                newPopulation.push(child)
+                var child = this.mutate(parent, this.mutationRate);
+                newPopulation.push({
+                    id: index++,
+                    generation: this.currentGeneration,
+                    genotype: child
+                })
             }
         }, this);
         return newPopulation;
@@ -205,7 +214,10 @@ var Darwin = Darwin || {};
         population.sort(function(a, b) {
             return b.fitness - a.fitness;
         });
-        return population.slice(0, this.parentsSize);
+        var newMap = _.map(population.slice(0, this.parentsSize), function(individual) {
+            return individual.genotype;
+        });
+        return newMap;
     };
 
     Darwin.EvolutionStrategy.prototype.toString = function() {
