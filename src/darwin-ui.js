@@ -27,9 +27,25 @@ var Darwin = Darwin || {};
 
         template: _.template($("#es-configuration-view").html()),
 
+        initialize: function(es) {
+            this.es = es;
+        },
+
         render: function() {
             this.$el.html(this.template());
             return this;
+        },
+
+        run: function() {
+            var parentsSize = parseInt(this.$("input[name=parents-size]").val());
+            var childrenSize = parseInt(this.$("input[name=children-size]").val());
+            this.es.setSizes(parentsSize, childrenSize);
+            // TODO fix this
+            this.es.start();
+        },
+
+        start: function() {
+            this.run();
         }
 
     });
@@ -51,8 +67,12 @@ var Darwin = Darwin || {};
             "change .ea-type": "changeType"
         },
 
-        initialize: function(ga) {
-            this.ga = ga;
+        initialize: function(options) {
+            this.individualFactory = options.individualFactory;
+            this.fitnessFunction = options.fitnessFunction;
+            this.reproduce = options.reproduce; // TODO rename
+            this.mutate = options.mutate;
+            this.terminationConditions = options.terminationConditions;
         },
 
         changeType: function(event) {
@@ -62,23 +82,34 @@ var Darwin = Darwin || {};
 
         render: function() {
             this.$el.html(this.template());
-            this.renderSubview(this.subviews["GA"]);
+            this.renderSubview(this.subviews["ES"]);
             return this;
         },
 
         renderSubview: function(EATypeView) {
-            var subview = new EATypeView();
+            var subview = new EATypeView(new Darwin.EvolutionStrategy({
+                parentsSize: 10,
+                childrenSize: 40,
+                plusSelection: false,
+                individualFactory: this.individualFactory,
+                fitnessFunction: this.fitnessFunction,
+                mutate: this.mutate,
+                mutationRate: 0.05,
+                terminationConditions: this.terminationConditions
+            }));
+            this.subview = subview;
             this.$(".ea-type-view").html(subview.render().el);
         },
 
         start: function() {
             this.run();
             //this.ga.populationSize = parseInt(this.$(".population-size").val());
-            this.ga.start();
         },
 
         run: function() {
-            this.$(".population-size").prop("disabled", true);
+            Darwin.vent.trigger("start-ea", this.subview.es);
+            this.subview.start();
+            //this.$(".population-size").prop("disabled", true);
             this.$(".start").prop("disabled", true);
             this.$(".reset").prop("disabled", false);
         },
@@ -87,34 +118,14 @@ var Darwin = Darwin || {};
             this.$(".population-size").prop("disabled", false);
             this.$(".start").prop("disabled", false);
             this.$(".reset").prop("disabled", true);
-            this.ga.reset();
+            //this.ga.reset();
         }
 
     });
 
-    /////////////////
-    // Other Stuff //
-    /////////////////
-
-    Darwin.Views.EADetailsView = Backbone.View.extend({
-
-        className: "widget widget-info",
-
-        template: _.template($("#ea-details-view").html()),
-
-        initialize: function(ga) {
-            this.ga = ga;
-        },
-
-        render: function() {
-            this.$el.html(this.template({
-                populationSize: this.ga.populationSize,
-                mutationProbability: "1%"
-            }));
-            return this;
-        }
-
-    });
+    ///////////////
+    // Dashboard //
+    ///////////////
 
     Darwin.Views.DashboardView = Backbone.View.extend({
 
@@ -123,10 +134,15 @@ var Darwin = Darwin || {};
         className: "dashboard",
 
         initialize: function(options) {
-            this.ga = options.ga;
-            this.phenotypeView = options.phenotypeView;
+            this.individualFactory = options.individualFactory;
+            this.fitnessFunction = options.fitnessFunction;
+            this.reproduce = options.reproduce; // TODO rename
+            this.mutate = options.mutate;
+            this.terminationConditions = options.terminationConditions;
+            this.phenotypeView = options.phenotypeView; // TODO rename? capitalize?
             this.initSubviews();
-            this.registerCallbacks();
+            //this.registerCallbacks(); // TODO triggered by start button?
+            this.listenTo(Darwin.vent, "start-ea", this.registerCallbacks);
         },
 
         initSubviews: function() {
@@ -141,16 +157,21 @@ var Darwin = Darwin || {};
             this.individualDetailsView = new Darwin.Views.IndividualDetailsView({
                 phenotypeView: this.phenotypeView
             });
-            this.configurationView = new Darwin.Views.EAConfigurationView(this.ga);
-            this.eaDetailsView = new Darwin.Views.EADetailsView(this.ga);
+            this.configurationView = new Darwin.Views.EAConfigurationView({
+                individualFactory: this.individualFactory,
+                fitnessFunction: this.fitnessFunction,
+                reproduce: this.reproduce, // TODO rename
+                mutate: this.mutate,
+                terminationConditions: this.terminationConditions
+            });
             this.graph = new Darwin.Views.EAGraph();
         },
 
         // TODO Refactor
-        registerCallbacks: function() {
+        registerCallbacks: function(ea) {
             var gensMap = {};
 
-            this.listenTo(this.ga, "reset", function() {
+            this.listenTo(ea, "reset", function() {
                 gensMap = {};
                 this.generationsTableView.remove();
                 this.populationTableView.remove();
@@ -159,16 +180,16 @@ var Darwin = Darwin || {};
                 this.render();
             });
 
-            this.listenTo(this.ga, "ea-started", function() {
+            this.listenTo(ea, "ea-started", function() {
             });
 
-            this.listenTo(this.ga, "generation-started", function(generation) {
+            this.listenTo(ea, "generation-started", function(generation) {
                 this.generationsCollection.add(generation);
                 var last = this.generationsCollection.last();
                 gensMap[last.get("id")] = last;
             });
 
-            this.listenTo(this.ga, "generation-finished", function(generation) {
+            this.listenTo(ea, "generation-finished", function(generation) {
                 var generationModel = gensMap[generation.id];
                 generationModel.set(generation);
                 this.populationTableView.generationSelected(generationModel);
@@ -201,7 +222,6 @@ var Darwin = Darwin || {};
             this.$el.empty();
             this.$el.html(this.template());
             this.$(".dashboard-sidebar").append(this.configurationView.render().el);
-            //this.$el.append(this.eaDetailsView.render().el);
             this.$(".dashboard-content").append(this.generationsTableView.render().el);
             this.$(".dashboard-content").append(this.populationTableView.render().el);
             this.$(".dashboard-content").append(this.individualDetailsView.render().el);

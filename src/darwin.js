@@ -183,6 +183,13 @@ var Darwin = Darwin || {};
         }
     });
 
+    Darwin.EvolutionStrategy.prototype.setSizes = function(parentsSize, childrenSize) {
+        this.parentsSize = parentsSize;     // μ
+        this.childrenSize = childrenSize;   // λ
+        this.childrenPerParent = this.childrenSize / this.parentsSize;
+        this.populationSize = this.plusSelection ? (this.parentsSize + this.childrenSize) : this.childrenSize;
+    };
+
     // TODO pass the parents? and the selection type? operators? variables
     Darwin.EvolutionStrategy.prototype.breed = function() {
         var newPopulation = [],

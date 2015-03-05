@@ -39,26 +39,28 @@
     <script type="text/template" id="es-configuration-view">
         <label>
             μ (No. parents):
-            <input type="text" name="parentsSize" value="5" />
-            <br/><br/>
-            λ (No. children):
-            <input type="text" name="childrenSize" value="20" />
-            <br/><br/>
-            <label>
-                Type:
-                <select class="plus-selection">
-                    <option value="true" selected="selected">(μ, λ)</option>
-                    <option value="ES">(μ + λ)</option>
-                </select>
-            </label>
-            <br/><br/>
-            Mutation rate:
-            <input type="text" name="parentsSize" value="5" /> %
-            <br/><br/>
+            <input type="text" name="parents-size" value="5" />
         </label>
+        <br/><br/>
+        <label>
+            λ (No. children):
+            <input type="text" name="children-size" value="20" />
+        </label>
+        <br/><br/>
+        <label>
+            Type:
+            <select class="plus-selection">
+                <option value="false" selected="selected">(μ, λ)</option>
+                <option value="true">(μ + λ)</option>
+            </select>
+        </label>
+        <br/><br/>
+        <label>
+            Mutation rate:
+            <input type="text" name="mutation-rate" value="5" /> %
+        </label>
+        <br/><br/>
     </script>
-
-    this.plusSelection = options.plusSelection; // if true (μ + λ), if false (μ, λ)
 
     <script type="text/template" id="ea-details-view">
         <p class="widget-title">Evolutionary Algorithm<br/>Details</p>
@@ -213,52 +215,37 @@
     // Genetic Algorithm //
     ///////////////////////
 
-    var runGA = function() {
-        var wordToFind = "GENETIC HELLO WORLD",
-            alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
-            stringEvolver = new Darwin.GeneticAlgorithm({
-                populationSize: 100,
-                individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
-                fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
-                select: Darwin.Selection.fitnessProportionalSelection,
-                reproduce: Darwin.Operators.singlePointCrossover,
-                recombinationRate: 0.70,
-                mutate: Darwin.Operators.createStringMutation(alphabet),
-                mutationRate: 0.01,
-                terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
-            }),
-            dashboardView = new Darwin.Views.DashboardView({
-                ga: stringEvolver,
-                phenotypeView: StringEvolver.createStringDiffView(wordToFind)
-            });
-        $("body").prepend(dashboardView.render().el);
-    };
-
-    ///////////////////////////
-    // Evolutionary Strategy //
-    ///////////////////////////
-
-    var runES = function() {
-        var wordToFind = "GENETIC HELLO WORLD",
-            alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
-            stringEvolver = new Darwin.EvolutionStrategy({
-                parentsSize: 10,
-                childrenSize: 40,
-                plusSelection: true,
-                individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
-                fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
-                mutate: Darwin.Operators.createStringMutation(alphabet),
-                mutationRate: 0.05,
-                terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
-            }),
-            dashboardView = new Darwin.Views.DashboardView({
-                ga: stringEvolver,
-                phenotypeView: StringEvolver.createStringDiffView(wordToFind)
-            });
-        $("body").prepend(dashboardView.render().el);
-    };
-
-    runES();
+//    var runGA = function() {
+//        var wordToFind = "GENETIC HELLO WORLD",
+//            alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ",
+//            stringEvolver = new Darwin.GeneticAlgorithm({
+//                populationSize: 100,
+//                individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
+//                fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
+//                select: Darwin.Selection.fitnessProportionalSelection,
+//                reproduce: Darwin.Operators.singlePointCrossover,
+//                recombinationRate: 0.70,
+//                mutate: Darwin.Operators.createStringMutation(alphabet),
+//                mutationRate: 0.01,
+//                terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
+//            }),
+//            dashboardView = new Darwin.Views.DashboardView({
+//                ga: stringEvolver,
+//                phenotypeView: StringEvolver.createStringDiffView(wordToFind)
+//            });
+//        $("body").prepend(dashboardView.render().el);
+//    };
+    var wordToFind = "GENETIC HELLO WORLD",
+            alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+    var dashboardView = new Darwin.Views.DashboardView({
+        individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
+        fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
+        phenotypeView: StringEvolver.createStringDiffView(wordToFind),
+        reproduce: Darwin.Operators.singlePointCrossover,
+        mutate: Darwin.Operators.createStringMutation(alphabet),
+        terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
+    });
+    $("body").prepend(dashboardView.render().el);
 
     </script>
 </body>
