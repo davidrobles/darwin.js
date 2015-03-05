@@ -181,7 +181,7 @@ table.population th + th + th, table.population td + td + td {
 }
 
 .dashboard-sidebar {
-    width: 200px;
+    width: 400px;
 }
 
 .dashboard-content {

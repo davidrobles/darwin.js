@@ -14,21 +14,51 @@
         <p class="widget-title">Evolutionary Algorithm<br/>Configuration</p>
         <div class="widget-content">
             <label>
-                Population size:
-                <select class="population-size">
-                    <option value="20">20</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                    <option value="250">250</option>
-                    <option value="500" selected="selected">500</option>
-                    <option value="1000">1000</option>
+                Type:
+                <select class="ea-type">
+                    <option value="GA" selected="selected">Genetic Algorithm</option>
+                    <option value="ES">Evolution Strategy</option>
                 </select>
             </label>
+            <br/><br/>
+            <div class="ea-type-view"></div>
             <br/><br/>
             <button class="start">Start</button>
             <button class="reset" disabled="disabled">Reset</button>
         </div>
     </script>
+
+    <script type="text/template" id="ga-configuration-view">
+        Genetic Algorithm
+        <label>
+            Population size:
+            <input type="text" value="hello" />
+        </label>
+    </script>
+
+    <script type="text/template" id="es-configuration-view">
+        <label>
+            μ (No. parents):
+            <input type="text" name="parentsSize" value="5" />
+            <br/><br/>
+            λ (No. children):
+            <input type="text" name="childrenSize" value="20" />
+            <br/><br/>
+            <label>
+                Type:
+                <select class="plus-selection">
+                    <option value="true" selected="selected">(μ, λ)</option>
+                    <option value="ES">(μ + λ)</option>
+                </select>
+            </label>
+            <br/><br/>
+            Mutation rate:
+            <input type="text" name="parentsSize" value="5" /> %
+            <br/><br/>
+        </label>
+    </script>
+
+    this.plusSelection = options.plusSelection; // if true (μ + λ), if false (μ, λ)
 
     <script type="text/template" id="ea-details-view">
         <p class="widget-title">Evolutionary Algorithm<br/>Details</p>

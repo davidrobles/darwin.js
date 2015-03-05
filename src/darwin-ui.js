@@ -8,29 +8,72 @@ var Darwin = Darwin || {};
 
     Darwin.Views = {};
 
+    /////////////////////////
+    // Configuration Views //
+    /////////////////////////
+
+    Darwin.Views.GAConfigurationView = Backbone.View.extend({
+
+        template: _.template($("#ga-configuration-view").html()),
+
+        render: function() {
+            this.$el.html("GAConfigurationView");
+            return this;
+        }
+
+    });
+
+    Darwin.Views.ESConfigurationView = Backbone.View.extend({
+
+        template: _.template($("#es-configuration-view").html()),
+
+        render: function() {
+            this.$el.html(this.template());
+            return this;
+        }
+
+    });
+
     Darwin.Views.EAConfigurationView = Backbone.View.extend({
 
         className: "widget widget-info",
 
         template: _.template($("#ea-configuration-view").html()),
 
+        subviews: {
+            "GA": Darwin.Views.GAConfigurationView,
+            "ES": Darwin.Views.ESConfigurationView
+        },
+
         events: {
             "click .start": "start",
-            "click .reset": "reset"
+            "click .reset": "reset",
+            "change .ea-type": "changeType"
         },
 
         initialize: function(ga) {
             this.ga = ga;
         },
 
+        changeType: function(event) {
+            var Subview = this.subviews[event.target.value];
+            this.renderSubview(Subview);
+        },
+
         render: function() {
             this.$el.html(this.template());
+            this.renderSubview(this.subviews["GA"]);
             return this;
+        },
+
+        renderSubview: function(EATypeView) {
+            var subview = new EATypeView();
+            this.$(".ea-type-view").html(subview.render().el);
         },
 
         start: function() {
             this.run();
-            this.ga.populationSize = parseInt(this.$(".population-size").val());
+            //this.ga.populationSize = parseInt(this.$(".population-size").val());
             this.ga.start();
         },
 
@@ -48,6 +91,10 @@ var Darwin = Darwin || {};
         }
 
     });
+
+    /////////////////
+    // Other Stuff //
+    /////////////////
 
     Darwin.Views.EADetailsView = Backbone.View.extend({
 
