@@ -73,9 +73,9 @@ var Darwin = Darwin || {};
         },
 
         initializePopulation: function() {
-            return _.map(_.range(this.populationSize), function(index) {
+            return _.map(_.range(this.populationSize), function(individualId) {
                 return {
-                    id: index,
+                    id: individualId,
                     generation: this.currentGeneration,
                     genotype: this.individualFactory()
                 };
