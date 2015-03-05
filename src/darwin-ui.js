@@ -40,7 +40,9 @@ var Darwin = Darwin || {};
             var parentsSize = parseInt(this.$("input[name=parents-size]").val());
             var childrenSize = parseInt(this.$("input[name=children-size]").val());
             var plusSelection = this.$("select[name=plus-selection]").val() === "true";
+            var mutationRate = parseFloat(this.$("input[name=mutation-rate]").val()) * .01;
             this.es.setSizes(parentsSize, childrenSize);
+            this.es.mutationRate = mutationRate;
             // TODO fix this
             this.es.start();
         },
