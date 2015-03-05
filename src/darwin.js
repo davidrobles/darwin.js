@@ -186,12 +186,12 @@ var Darwin = Darwin || {};
     // TODO pass the parents? and the selection type? operators? variables
     Darwin.EvolutionStrategy.prototype.breed = function() {
         var newPopulation = [],
-            parents = this.selectParents();
-        var index = 0;
+            parents = this.selectParents(),
+            individualId = 0;
         if (this.plusSelection) {
             newPopulation = _.map(parents, function(parent) {
                 return {
-                    id: index++,
+                    id: individualId++,
                     generation: this.currentGeneration,
                     genotype: parent // TODO rename to parentGenotype?
                 };
@@ -201,7 +201,7 @@ var Darwin = Darwin || {};
             for (var i = 0; i < this.childrenPerParent; i++) {
                 var child = this.mutate(parent, this.mutationRate);
                 newPopulation.push({
-                    id: index++,
+                    id: individualId++,
                     generation: this.currentGeneration,
                     genotype: child
                 })
