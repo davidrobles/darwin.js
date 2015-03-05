@@ -39,6 +39,7 @@ var Darwin = Darwin || {};
         run: function() {
             var parentsSize = parseInt(this.$("input[name=parents-size]").val());
             var childrenSize = parseInt(this.$("input[name=children-size]").val());
+            var plusSelection = this.$("select[name=plus-selection]").val() === "true";
             this.es.setSizes(parentsSize, childrenSize);
             // TODO fix this
             this.es.start();
