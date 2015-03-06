@@ -36,7 +36,7 @@ var Darwin = Darwin || {};
             return this;
         },
 
-        run: function() {
+        start: function() {
             var parentsSize = parseInt(this.$("input[name=parents-size]").val());
             var childrenSize = parseInt(this.$("input[name=children-size]").val());
             var plusSelection = this.$("select[name=plus-selection]").val() === "true";
@@ -45,10 +45,6 @@ var Darwin = Darwin || {};
             this.es.mutationRate = mutationRate;
             // TODO fix this
             this.es.start();
-        },
-
-        start: function() {
-            this.run();
         }
 
     });
