@@ -361,7 +361,6 @@ var Darwin = Darwin || {};
         },
 
         render: function() {
-            this.$el.empty();
             this.$el.html(this.template());
             this.$(".dashboard-sidebar").append(this.configurationView.render().el);
             this.$(".dashboard-content").append(this.generationsTableView.render().el);
