@@ -13,9 +13,9 @@ var Darwin = Darwin || {};
         this.fitnessFunction = options.fitnessFunction;
         this.individualFactory = options.individualFactory;
         this.select = options.select;
-        this.recombination = options.recombination;
+        this.recombine = options.recombination;
         this.recombinationRate = options.recombinationRate;
-        this.mutation = options.mutation;
+        this.mutate = options.mutation;
         this.mutationRate = options.mutationRate;
         this.terminationConditions = options.terminationConditions;
         this.generations = [];
@@ -135,13 +135,13 @@ var Darwin = Darwin || {};
             var childB = parentB;
             // Recombination
             if (Math.random() < this.recombinationRate) {
-                var children = this.recombination(parentA, parentB);
+                var children = this.recombine(parentA, parentB);
                 childA = children.childA;
                 childB = children.childB;
             }
             // Mutation
-            childA = this.mutation(childA, this.mutationRate);
-            childB = this.mutation(childB, this.mutationRate);
+            childA = this.mutate(childA, this.mutationRate);
+            childB = this.mutate(childB, this.mutationRate);
             // Add to new population
             newPopulation.push({
                 id: i * 2,
@@ -206,7 +206,7 @@ var Darwin = Darwin || {};
         }
         _.each(parents, function(parent) {
             for (var i = 0; i < this.childrenPerParent; i++) {
-                var child = this.mutation(parent, this.mutationRate);
+                var child = this.mutate(parent, this.mutationRate);
                 newPopulation.push({
                     id: individualId++,
                     generation: this.currentGeneration,
