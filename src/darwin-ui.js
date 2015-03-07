@@ -34,8 +34,8 @@ var Darwin = Darwin || {};
             }
             // Optional
             this.set("populationSize", (typeof options.populationSize !== "undefined") ? options.populationSize : 100);
-            this.set("recombinationRate", (typeof options.recombinationRate !== "undefined") ? options.recombinationRate : 0.70);
-            this.set("mutationRate", (typeof options.mutationRate !== "undefined") ? options.mutationRate : 0.05);
+            this.set("recombinationRate", (typeof options.recombinationRate !== "undefined") ? options.recombinationRate : 0.50);
+            this.set("mutationRate", (typeof options.mutationRate !== "undefined") ? options.mutationRate : 0.02);
         },
 
         validate: function(attrs) {
