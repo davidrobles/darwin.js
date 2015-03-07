@@ -43,12 +43,16 @@ var Darwin = Darwin || {};
             var errors = [];
             if (typeof attrs.parentsSize === "undefined") {
                 errors.push("Missing parents size.");
+            } else if (attrs.parentsSize < 1) {
+                errors.push("μ (parents size) must be greater than 0");
             }
             if (typeof attrs.childrenSize === "undefined") {
                 errors.push("Missing children size");
+            } else if (attrs.childrenSize < 1) {
+                errors.push("λ (children size) must be greater than 0");
             }
             if (attrs.childrenSize % attrs.parentsSize !== 0) {
-                errors.push("λ must be a multiple of μ");
+                errors.push("λ (children size) must be a multiple of μ (parents size)");
             }
             if (typeof attrs.plusSelection === "undefined") {
                 errors.push("Missing plus selection value");
@@ -112,7 +116,7 @@ var Darwin = Darwin || {};
             var mutationRate = parseFloat(this.$("input[name=mutation-rate]").val()) * .01;
             this.model.set("mutationRate", mutationRate);
             if (!this.model.isValid()) {
-                throw this.model.validationError;
+                throw this.model.validationError.join("\n");
             }
             var evolutionStrategy = new Darwin.EvolutionStrategy(this.model.attributes);
             Darwin.vent.trigger("start-ea", evolutionStrategy);
