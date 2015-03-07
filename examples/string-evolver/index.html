@@ -37,28 +37,29 @@
     </script>
 
     <script type="text/template" id="evolution-strategy-configuration-view">
-        <label>
-            μ (No. parents):
-            <input type="text" name="parents-size" value="<%= parentsSize %>" />
-        </label>
-        <br/><br/>
-        <label>
-            λ (No. children):
-            <input type="text" name="children-size" value="<%= childrenSize %>" />
-        </label>
-        <br/><br/>
-        <label>
-            Survivor selection:
-            <select name="plus-selection">
-                <option value="false"<% if (!plusSelection) { %>selected="selected"<% } %>>(μ, λ)</option>
-                <option value="true"<% if (plusSelection) { %>selected="selected"<% } %>>(μ + λ)</option>
-            </select>
-        </label>
-        <br/><br/>
-        <label>
-            Mutation rate:
-            <input type="text" name="mutation-rate" value="5" /> %
-        </label>
+        <table>
+            <tr>
+                <td>μ (No. parents):</td>
+                <td><input type="text" name="parents-size" value="<%= parentsSize %>" /></td>
+            </tr>
+            <tr>
+                <td>λ (No. children):</td>
+                <td><input type="text" name="children-size" value="<%= childrenSize %>" /></td>
+            </tr>
+            <tr>
+                <td>Survivor selection:</td>
+                <td>
+                    <select name="plus-selection">
+                        <option value="false"<% if (!plusSelection) { %>selected="selected"<% } %>>(μ, λ)</option>
+                        <option value="true"<% if (plusSelection) { %>selected="selected"<% } %>>(μ + λ)</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Mutation rate:</td>
+                <td><input type="text" name="mutation-rate" value="5" /> %</td>
+            </tr>
+        </table>
     </script>
 
     <script type="text/template" id="ea-details-view">
