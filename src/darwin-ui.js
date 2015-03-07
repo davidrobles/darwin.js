@@ -51,7 +51,7 @@ var Darwin = Darwin || {};
 
     Darwin.Views.GeneticAlgorithmConfigurationView = Backbone.View.extend({
 
-        template: _.template($("#ga-configuration-view").html()),
+        template: _.template($("#genetic-algorithm-configuration-view").html()),
 
         render: function() {
             this.$el.html("GAConfigurationView");
@@ -62,7 +62,7 @@ var Darwin = Darwin || {};
 
     Darwin.Views.EvolutionStrategyConfigurationView = Backbone.View.extend({
 
-        template: _.template($("#es-configuration-view").html()),
+        template: _.template($("#evolution-strategy-configuration-view").html()),
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
@@ -88,7 +88,7 @@ var Darwin = Darwin || {};
 
         className: "widget widget-info",
 
-        template: _.template($("#ea-configuration-view").html()),
+        template: _.template($("#evolutionary-algorithm-configuration-view").html()),
 
         subviews: {
             "GA": Darwin.Views.GeneticAlgorithmConfigurationView,
