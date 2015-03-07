@@ -159,8 +159,6 @@
 </head>
 <body>
 
-    <div id="robles"></div>
-
     <script src="../../lib/jquery-2.1.1.js"></script>
     <script src="../../lib/underscore.js"></script>
     <script src="../../lib/backbone.js"></script>
@@ -175,7 +173,7 @@
     <script>
 
     var wordToFind = "HELLO WORLD 123",
-            alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789";
+        alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789";
 
     var dashboardView = new Darwin.Views.DashboardView({
         individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
