@@ -52,6 +52,8 @@ var Darwin = Darwin || {};
             }
             if (typeof attrs.mutationRate === "undefined") {
                 errors.push("Missing mutation rate");
+            } else if (attrs.mutationRate < 0.0 || attrs.mutationRate > 1.0) {
+                errors.push("Mutation rate must be between 0 and 100.");
             }
             if (typeof attrs.individualFactory === "undefined") {
                 errors.push("Missing individual factory");
@@ -163,7 +165,6 @@ var Darwin = Darwin || {};
 
         start: function() {
             this.subview.start();
-            //this.$(".population-size").prop("disabled", true);
             this.$(".start").prop("disabled", true);
             this.$(".reset").prop("disabled", false);
         },
