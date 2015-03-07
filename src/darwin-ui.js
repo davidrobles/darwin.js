@@ -17,8 +17,8 @@ var Darwin = Darwin || {};
             if (typeof options.recombination !== "undefined") {
                 this.set("recombination", options.recombination);
             }
-            if (typeof options.mutate !== "undefined") {
-                this.set("mutate", options.mutate);
+            if (typeof options.mutation !== "undefined") {
+                this.set("mutation", options.mutation);
             }
             if (typeof options.individualFactory !== "undefined") {
                 this.set("individualFactory", options.individualFactory);
@@ -51,7 +51,7 @@ var Darwin = Darwin || {};
             if (typeof attrs.select === "undefined" || !_.isFunction(attrs.select)) {
                 errors.push("Missing selection function");
             }
-            if (typeof attrs.mutate === "undefined" || !_.isFunction(attrs.mutate)) {
+            if (typeof attrs.mutation === "undefined" || !_.isFunction(attrs.mutation)) {
                 errors.push("Missing mutation function");
             }
             if (typeof attrs.mutationRate === "undefined") {
@@ -88,8 +88,8 @@ var Darwin = Darwin || {};
         initialize: function(options) {
             options = options || {};
             // Required
-            if (typeof options.mutate !== "undefined") {
-                this.set("mutate", options.mutate);
+            if (typeof options.mutation !== "undefined") {
+                this.set("mutation", options.mutation);
             }
             if (typeof options.individualFactory !== "undefined") {
                 this.set("individualFactory", options.individualFactory);
@@ -127,7 +127,7 @@ var Darwin = Darwin || {};
             } else if (!_.isBoolean(attrs.plusSelection)) {
                 errors.push("Plus selection must be a boolean.");
             }
-            if (typeof attrs.mutate === "undefined" || !_.isFunction(attrs.mutate)) {
+            if (typeof attrs.mutation === "undefined" || !_.isFunction(attrs.mutation)) {
                 errors.push("Missing mutation function");
             }
             if (typeof attrs.mutationRate === "undefined") {

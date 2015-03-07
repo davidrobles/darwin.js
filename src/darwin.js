@@ -15,7 +15,7 @@ var Darwin = Darwin || {};
         this.select = options.select;
         this.recombination = options.recombination;
         this.recombinationRate = options.recombinationRate;
-        this.mutate = options.mutate;
+        this.mutation = options.mutation;
         this.mutationRate = options.mutationRate;
         this.terminationConditions = options.terminationConditions;
         this.generations = [];
@@ -140,8 +140,8 @@ var Darwin = Darwin || {};
                 childB = children.childB;
             }
             // Mutation
-            childA = this.mutate(childA, this.mutationRate);
-            childB = this.mutate(childB, this.mutationRate);
+            childA = this.mutation(childA, this.mutationRate);
+            childB = this.mutation(childB, this.mutationRate);
             // Add to new population
             newPopulation.push({
                 id: i * 2,
@@ -206,7 +206,7 @@ var Darwin = Darwin || {};
         }
         _.each(parents, function(parent) {
             for (var i = 0; i < this.childrenPerParent; i++) {
-                var child = this.mutate(parent, this.mutationRate);
+                var child = this.mutation(parent, this.mutationRate);
                 newPopulation.push({
                     id: individualId++,
                     generation: this.currentGeneration,

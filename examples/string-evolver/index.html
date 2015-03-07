@@ -210,7 +210,7 @@
         individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
         fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
         phenotypeView: StringEvolver.createStringDiffView(wordToFind),
-        mutate: Darwin.Operators.createStringMutation(alphabet),
+        mutation: Darwin.Operators.createStringMutation(alphabet),
         terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)],
         recombination: Darwin.Operators.singlePointCrossover,
         select: Darwin.Selection.fitnessProportionalSelection
