@@ -29,11 +29,20 @@
     </script>
 
     <script type="text/template" id="genetic-algorithm-configuration-view">
-        Genetic Algorithm
-        <label>
-            Population size:
-            <input type="text" value="hello" />
-        </label>
+        <table>
+            <tr>
+                <td>Population size:</td>
+                <td><input type="text" name="population-size" value="<%= populationSize %>" class="small" /></td>
+            </tr>
+            <tr>
+                <td>Recombination rate:</td>
+                <td><input type="text" name="recombination-rate" value="70" class="small" /> %</td>
+            </tr>
+            <tr>
+                <td>Mutation rate:</td>
+                <td><input type="text" name="mutation-rate" value="5" class="small" /> %</td>
+            </tr>
+        </table>
     </script>
 
     <script type="text/template" id="evolution-strategy-configuration-view">
@@ -242,7 +251,9 @@
         fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
         phenotypeView: StringEvolver.createStringDiffView(wordToFind),
         mutate: Darwin.Operators.createStringMutation(alphabet),
-        terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
+        terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)],
+        reproduce: Darwin.Operators.singlePointCrossover,
+        select: Darwin.Selection.fitnessProportionalSelection
     });
     $("body").prepend(dashboardView.render().el);
 

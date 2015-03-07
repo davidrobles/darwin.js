@@ -10,9 +10,77 @@ var Darwin = Darwin || {};
     Darwin.Models = {};
 
     Darwin.Models.GeneticAlgorithmConfiguration = Backbone.Model.extend({
-        validate: function(attrs, options) {
 
+        initialize: function(options) {
+            options = options || {};
+            // Required
+            if (typeof options.reproduce !== "undefined") {
+                this.set("reproduce", options.reproduce);
+            }
+            if (typeof options.mutate !== "undefined") {
+                this.set("mutate", options.mutate);
+            }
+            if (typeof options.individualFactory !== "undefined") {
+                this.set("individualFactory", options.individualFactory);
+            }
+            if (typeof options.terminationConditions !== "undefined") {
+                this.set("terminationConditions", options.terminationConditions);
+            }
+            if (typeof options.fitnessFunction !== "undefined") {
+                this.set("fitnessFunction", options.fitnessFunction);
+            }
+            if (typeof options.select !== "undefined") {
+                this.set("select", options.select);
+            }
+            // Optional
+            this.set("populationSize", (typeof options.populationSize !== "undefined") ? options.populationSize : 100);
+            this.set("recombinationRate", (typeof options.recombinationRate !== "undefined") ? options.recombinationRate : 0.70);
+            this.set("mutationRate", (typeof options.mutationRate !== "undefined") ? options.mutationRate : 0.05);
+        },
+
+        validate: function(attrs) {
+            var errors = [];
+            if (typeof attrs.populationSize === "undefined") {
+                errors.push("Missing population size.");
+            } else if (attrs.populationSize < 1) {
+                errors.push("Population size must be greater than 0");
+            }
+            if (attrs.populationSize % 2 !== 0) {
+                errors.push("Population size must be a multiple of 2");
+            }
+            if (typeof attrs.select === "undefined" || !_.isFunction(attrs.select)) {
+                errors.push("Missing selection function");
+            }
+            if (typeof attrs.mutate === "undefined" || !_.isFunction(attrs.mutate)) {
+                errors.push("Missing mutation function");
+            }
+            if (typeof attrs.mutationRate === "undefined") {
+                errors.push("Missing mutation rate");
+            } else if (!_.isNumber(attrs.mutationRate) || attrs.mutationRate < 0.0 || attrs.mutationRate > 1.0) {
+                errors.push("Mutation rate must be a number between 0.0 and 1.0");
+            }
+            if (typeof attrs.reproduce === "undefined" || !_.isFunction(attrs.reproduce)) {
+                errors.push("Missing recombination function");
+            }
+            if (typeof attrs.recombinationRate === "undefined") {
+                errors.push("Missing recombination rate");
+            } else if (!_.isNumber(attrs.recombinationRate) || attrs.recombinationRate < 0.0 || attrs.recombinationRate > 1.0) {
+                errors.push("Recombination rate must be a number between 0.0 and 1.0");
+            }
+            if (typeof attrs.individualFactory === "undefined" || !_.isFunction(attrs.individualFactory)) {
+                errors.push("Missing individual factory function");
+            }
+            if (typeof attrs.terminationConditions === "undefined") {
+                errors.push("Missing termination conditions");
+            }
+            if (typeof attrs.fitnessFunction === "undefined" || !_.isFunction(attrs.fitnessFunction)) {
+                errors.push("Missing fitness function");
+            }
+            if (!_.isEmpty(errors)) {
+                return errors;
+            }
         }
+
     });
 
     Darwin.Models.EvolutionStrategyConfiguration = Backbone.Model.extend({
@@ -21,16 +89,16 @@ var Darwin = Darwin || {};
             options = options || {};
             // Required
             if (typeof options.mutate !== "undefined") {
-                this.mutate = options.mutate;
+                this.set("mutate", options.mutate);
             }
             if (typeof options.individualFactory !== "undefined") {
-                this.individualFactory = options.individualFactory;
+                this.set("individualFactory", options.individualFactory);
             }
             if (typeof options.terminationConditions !== "undefined") {
-                this.terminationConditions = options.terminationConditions;
+                this.set("terminationConditions", options.terminationConditions);
             }
             if (typeof options.fitnessFunction !== "undefined") {
-                this.fitnessFunction = options.fitnessFunction;
+                this.set("fitnessFunction", options.fitnessFunction);
             }
             // Optional
             this.set("parentsSize", (typeof options.parentsSize !== "undefined") ? options.parentsSize : 10);
@@ -80,6 +148,7 @@ var Darwin = Darwin || {};
                 return errors;
             }
         }
+
     });
 
     /////////////////////////
@@ -91,8 +160,22 @@ var Darwin = Darwin || {};
         template: _.template($("#genetic-algorithm-configuration-view").html()),
 
         render: function() {
-            this.$el.html("GAConfigurationView");
+            this.$el.html(this.template(this.model.toJSON()));
             return this;
+        },
+
+        start: function() {
+            var populationSize = parseInt(this.$("input[name=population-size]").val());
+            this.model.set("populationSize", populationSize);
+            var recombinationRate = parseFloat(this.$("input[name=recombination-rate]").val()) * .01;
+            this.model.set("recombinationRate", recombinationRate);
+            var mutationRate = parseFloat(this.$("input[name=mutation-rate]").val()) * .01;
+            this.model.set("mutationRate", mutationRate);
+            if (!this.model.isValid()) {
+                throw this.model.validationError.join("\n");
+            }
+            var evolutionStrategy = new Darwin.EvolutionStrategy(this.model.attributes);
+            Darwin.vent.trigger("start-ea", evolutionStrategy);
         }
 
     });
@@ -169,6 +252,7 @@ var Darwin = Darwin || {};
 
         renderSubview: function() {
             var eaConfig = new this.ConfigurationModel(_.clone(this.configOptions));
+            debugger;
             if (!eaConfig.isValid()) {
                 console.log(eaConfig.validationError);
             }
