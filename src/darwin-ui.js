@@ -306,7 +306,7 @@ var Darwin = Darwin || {};
                 phenotypeView: this.PhenotypeView
             });
             this.configurationView = new Darwin.Views.EAConfigurationView(_.clone(this.options));
-            this.graph = new Darwin.Views.EAGraph();
+            this.graph = new Darwin.Views.GenerationsFitnessGraphView();
         },
 
         startEA: function(ea) {
@@ -586,7 +586,7 @@ var Darwin = Darwin || {};
 
     });
 
-    Darwin.Views.EAGraph = Backbone.View.extend({
+    Darwin.Views.GenerationsFitnessGraphView = Backbone.View.extend({
 
         className: "widget",
 
