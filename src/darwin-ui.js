@@ -68,7 +68,7 @@ var Darwin = Darwin || {};
                 errors.push("Mutation rate must be a number between 0.0 and 1.0");
             }
             if (typeof attrs.individualFactory === "undefined" || !_.isFunction(attrs.individualFactory)) {
-                errors.push("Missing individual factory");
+                errors.push("Missing individual factory function");
             }
             if (typeof attrs.terminationConditions === "undefined") {
                 errors.push("Missing termination conditions");
