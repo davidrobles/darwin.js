@@ -166,43 +166,40 @@ var Darwin = Darwin || {};
         initialize: function(options) {
             this.individualFactory = options.individualFactory;
             this.fitnessFunction = options.fitnessFunction;
-            this.reproduce = options.reproduce; // TODO rename
+            this.reproduce = options.reproduce;
             this.mutate = options.mutate;
             this.terminationConditions = options.terminationConditions;
-            this.phenotypeView = options.phenotypeView; // TODO rename? capitalize?
+            this.PhenotypeView = options.phenotypeView;
             this.initSubviews();
-            //this.registerCallbacks(); // TODO triggered by start button?
-            this.listenTo(Darwin.vent, "start-ea", this.registerCallbacks);
+            this.listenTo(Darwin.vent, "start-ea", this.startEA);
         },
 
         initSubviews: function() {
             this.generationsCollection = new Backbone.Collection();
             this.generationsTableView = new Darwin.Views.GenerationsTableView({
                 collection: this.generationsCollection,
-                phenotypeView: this.phenotypeView
+                phenotypeView: this.PhenotypeView
             });
             this.populationTableView = new Darwin.Views.PopulationTableView({
-                phenotypeView: this.phenotypeView
+                phenotypeView: this.PhenotypeView
             });
             this.individualDetailsView = new Darwin.Views.IndividualDetailsView({
-                phenotypeView: this.phenotypeView
+                phenotypeView: this.PhenotypeView
             });
             this.configurationView = new Darwin.Views.EAConfigurationView({
                 individualFactory: this.individualFactory,
                 fitnessFunction: this.fitnessFunction,
-                reproduce: this.reproduce, // TODO rename
+                reproduce: this.reproduce,
                 mutate: this.mutate,
                 terminationConditions: this.terminationConditions
             });
             this.graph = new Darwin.Views.EAGraph();
         },
 
-        // TODO Refactor
-        registerCallbacks: function(ea) {
+        startEA: function(ea) {
             var gensMap = {};
 
             this.listenTo(ea, "reset", function() {
-                gensMap = {};
                 this.generationsTableView.remove();
                 this.populationTableView.remove();
                 this.individualDetailsView.remove();
