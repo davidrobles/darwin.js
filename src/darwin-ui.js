@@ -174,8 +174,8 @@ var Darwin = Darwin || {};
             if (!this.model.isValid()) {
                 throw this.model.validationError.join("\n");
             }
-            var evolutionStrategy = new Darwin.EvolutionStrategy(this.model.attributes);
-            Darwin.vent.trigger("start-ea", evolutionStrategy);
+            var geneticAlgorithm = new Darwin.GeneticAlgorithm(this.model.attributes);
+            Darwin.vent.trigger("start-ea", geneticAlgorithm);
         }
 
     });
@@ -252,7 +252,6 @@ var Darwin = Darwin || {};
 
         renderSubview: function() {
             var eaConfig = new this.ConfigurationModel(_.clone(this.configOptions));
-            debugger;
             if (!eaConfig.isValid()) {
                 console.log(eaConfig.validationError);
             }
