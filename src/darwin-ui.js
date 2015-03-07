@@ -59,7 +59,7 @@ var Darwin = Darwin || {};
             } else if (!_.isBoolean(attrs.plusSelection)) {
                 errors.push("Plus selection must be a boolean.");
             }
-            if (typeof attrs.mutate === "undefined") {
+            if (typeof attrs.mutate === "undefined" || !_.isFunction(attrs.mutate)) {
                 errors.push("Missing mutation function");
             }
             if (typeof attrs.mutationRate === "undefined") {
@@ -67,13 +67,13 @@ var Darwin = Darwin || {};
             } else if (!_.isNumber(attrs.mutationRate) || attrs.mutationRate < 0.0 || attrs.mutationRate > 1.0) {
                 errors.push("Mutation rate must be a number between 0.0 and 1.0");
             }
-            if (typeof attrs.individualFactory === "undefined") {
+            if (typeof attrs.individualFactory === "undefined" || !_.isFunction(attrs.individualFactory)) {
                 errors.push("Missing individual factory");
             }
             if (typeof attrs.terminationConditions === "undefined") {
                 errors.push("Missing termination conditions");
             }
-            if (typeof attrs.fitnessFunction === "undefined") {
+            if (typeof attrs.fitnessFunction === "undefined" || !_.isFunction(attrs.fitnessFunction)) {
                 errors.push("Missing fitness function");
             }
             if (!_.isEmpty(errors)) {
