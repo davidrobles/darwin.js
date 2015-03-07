@@ -238,12 +238,9 @@
     var wordToFind = "GENETIC HELLO WORLD",
             alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
     var dashboardView = new Darwin.Views.DashboardView({
-        plusSelection: false,
-        mutationRate: 0.05,
         individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
         fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
         phenotypeView: StringEvolver.createStringDiffView(wordToFind),
-        reproduce: Darwin.Operators.singlePointCrossover,
         mutate: Darwin.Operators.createStringMutation(alphabet),
         terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)]
     });
