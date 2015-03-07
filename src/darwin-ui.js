@@ -324,9 +324,6 @@ var Darwin = Darwin || {};
                 ea.reset();
             });
 
-            this.listenTo(ea, "ea-started", function() {
-            });
-
             this.listenTo(ea, "generation-started", function(generation) {
                 this.generationsCollection.add(generation);
                 var last = this.generationsCollection.last();
