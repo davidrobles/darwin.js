@@ -187,3 +187,15 @@ table.population th + th + th, table.population td + td + td {
 .dashboard-content {
     margin-left: 200px;
 }
+
+/**********************/
+/* Configuration View */
+/**********************/
+
+input.small {
+    width: 30px;
+}
+
+
+
+
