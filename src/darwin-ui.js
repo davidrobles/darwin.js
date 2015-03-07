@@ -7,12 +7,49 @@ var Darwin = Darwin || {};
     Darwin.vent = _.extend({}, Backbone.Events);
 
     Darwin.Views = {};
+    Darwin.Models = {};
+
+    Darwin.Models.GeneticAlgorithmConfiguration = Backbone.Model.extend({
+        validate: function(attrs, options) {
+
+        }
+    });
+
+    Darwin.Models.EvolutionStrategyConfiguration = Backbone.Model.extend({
+        validate: function(attrs) {
+            var errors = [];
+            if (typeof attrs.parentsSize === "undefined") {
+                errors.push("Missing parents size.");
+            }
+            if (typeof attrs.childrenSize === "undefined") {
+                errors.push("Missing children size");
+            }
+            if (typeof attrs.mutate === "undefined") {
+                errors.push("Missing mutation function");
+            }
+            if (typeof attrs.mutationRate === "undefined") {
+                errors.push("Missing mutation rate");
+            }
+            if (typeof attrs.individualFactory === "undefined") {
+                errors.push("Missing individual factory");
+            }
+            if (typeof attrs.terminationConditions === "undefined") {
+                errors.push("Missing termination conditions");
+            }
+            if (typeof attrs.fitnessFunction === "undefined") {
+                errors.push("Missing fitness function");
+            }
+            if (!_.isEmpty(errors)) {
+                return errors;
+            }
+        }
+    });
 
     /////////////////////////
     // Configuration Views //
     /////////////////////////
 
-    Darwin.Views.GAConfigurationView = Backbone.View.extend({
+    Darwin.Views.GeneticAlgorithmConfigurationView = Backbone.View.extend({
 
         template: _.template($("#ga-configuration-view").html()),
 
@@ -23,28 +60,26 @@ var Darwin = Darwin || {};
 
     });
 
-    Darwin.Views.ESConfigurationView = Backbone.View.extend({
+    Darwin.Views.EvolutionStrategyConfigurationView = Backbone.View.extend({
 
         template: _.template($("#es-configuration-view").html()),
 
-        initialize: function(es) {
-            this.es = es;
-        },
-
         render: function() {
-            this.$el.html(this.template());
+            this.$el.html(this.template(this.model.toJSON()));
             return this;
         },
 
         start: function() {
             var parentsSize = parseInt(this.$("input[name=parents-size]").val());
+            this.model.set("parentsSize", parentsSize);
             var childrenSize = parseInt(this.$("input[name=children-size]").val());
+            this.model.set("childrenSize", childrenSize);
             var plusSelection = this.$("select[name=plus-selection]").val() === "true";
+            this.model.set("plusSelection", plusSelection);
             var mutationRate = parseFloat(this.$("input[name=mutation-rate]").val()) * .01;
-            this.es.setSizes(parentsSize, childrenSize);
-            this.es.mutationRate = mutationRate;
-            // TODO fix this
-            this.es.start();
+            this.model.set("mutationRate", mutationRate);
+            var evolutionStrategy = new Darwin.EvolutionStrategy(this.model.attributes);
+            Darwin.vent.trigger("start-ea", evolutionStrategy);
         }
 
     });
@@ -56,8 +91,8 @@ var Darwin = Darwin || {};
         template: _.template($("#ea-configuration-view").html()),
 
         subviews: {
-            "GA": Darwin.Views.GAConfigurationView,
-            "ES": Darwin.Views.ESConfigurationView
+            "GA": Darwin.Views.GeneticAlgorithmConfigurationView,
+            "ES": Darwin.Views.EvolutionStrategyConfigurationView
         },
 
         events: {
@@ -86,7 +121,7 @@ var Darwin = Darwin || {};
         },
 
         renderSubview: function(EATypeView) {
-            var subview = new EATypeView(new Darwin.EvolutionStrategy({
+            var esConfig = new Darwin.Models.EvolutionStrategyConfiguration({
                 parentsSize: 10,
                 childrenSize: 40,
                 plusSelection: false,
@@ -95,18 +130,14 @@ var Darwin = Darwin || {};
                 mutate: this.mutate,
                 mutationRate: 0.05,
                 terminationConditions: this.terminationConditions
-            }));
-            this.subview = subview;
-            this.$(".ea-type-view").html(subview.render().el);
+            });
+            this.subview = new EATypeView({
+                model: esConfig
+            });
+            this.$(".ea-type-view").html(this.subview.render().el);
         },
 
         start: function() {
-            this.run();
-            //this.ga.populationSize = parseInt(this.$(".population-size").val());
-        },
-
-        run: function() {
-            Darwin.vent.trigger("start-ea", this.subview.es);
             this.subview.start();
             //this.$(".population-size").prop("disabled", true);
             this.$(".start").prop("disabled", true);
@@ -215,6 +246,7 @@ var Darwin = Darwin || {};
                     }
                 });
             });
+            ea.start();
         },
 
         render: function() {

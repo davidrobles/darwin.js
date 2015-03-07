@@ -39,19 +39,19 @@
     <script type="text/template" id="es-configuration-view">
         <label>
             μ (No. parents):
-            <input type="text" name="parents-size" value="5" />
+            <input type="text" name="parents-size" value="<%= parentsSize %>" />
         </label>
         <br/><br/>
         <label>
             λ (No. children):
-            <input type="text" name="children-size" value="20" />
+            <input type="text" name="children-size" value="<%= childrenSize %>" />
         </label>
         <br/><br/>
         <label>
-            Type:
+            Survivor selection:
             <select name="plus-selection">
-                <option value="false" selected="selected">(μ, λ)</option>
-                <option value="true">(μ + λ)</option>
+                <option value="false"<% if (!plusSelection) { %>selected="selected"<% } %>>(μ, λ)</option>
+                <option value="true"<% if (plusSelection) { %>selected="selected"<% } %>>(μ + λ)</option>
             </select>
         </label>
         <br/><br/>
@@ -59,7 +59,6 @@
             Mutation rate:
             <input type="text" name="mutation-rate" value="5" /> %
         </label>
-        <br/><br/>
     </script>
 
     <script type="text/template" id="ea-details-view">
