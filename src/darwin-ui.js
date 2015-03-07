@@ -271,7 +271,7 @@ var Darwin = Darwin || {};
             this.$(".population-size").prop("disabled", false);
             this.$(".start").prop("disabled", false);
             this.$(".reset").prop("disabled", true);
-            //this.ga.reset();
+            Darwin.vent.trigger("reset-ea");
         }
 
     });
@@ -318,6 +318,10 @@ var Darwin = Darwin || {};
                 this.individualDetailsView.remove();
                 this.initSubviews();
                 this.render();
+            });
+
+            this.listenTo(Darwin.vent, "reset-ea", function() {
+                ea.reset();
             });
 
             this.listenTo(ea, "ea-started", function() {
