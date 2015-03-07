@@ -47,6 +47,9 @@ var Darwin = Darwin || {};
             if (typeof attrs.childrenSize === "undefined") {
                 errors.push("Missing children size");
             }
+            if (attrs.childrenSize % attrs.parentsSize !== 0) {
+                errors.push("λ must be a multiple of μ");
+            }
             if (typeof attrs.plusSelection === "undefined") {
                 errors.push("Missing plus selection value");
             } else if (!_.isBoolean(attrs.plusSelection)) {
@@ -108,6 +111,9 @@ var Darwin = Darwin || {};
             this.model.set("plusSelection", plusSelection);
             var mutationRate = parseFloat(this.$("input[name=mutation-rate]").val()) * .01;
             this.model.set("mutationRate", mutationRate);
+            if (!this.model.isValid()) {
+                throw this.model.validationError;
+            }
             var evolutionStrategy = new Darwin.EvolutionStrategy(this.model.attributes);
             Darwin.vent.trigger("start-ea", evolutionStrategy);
         }
