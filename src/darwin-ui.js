@@ -14,8 +14,8 @@ var Darwin = Darwin || {};
         initialize: function(options) {
             options = options || {};
             // Required
-            if (typeof options.reproduce !== "undefined") {
-                this.set("reproduce", options.reproduce);
+            if (typeof options.recombination !== "undefined") {
+                this.set("recombination", options.recombination);
             }
             if (typeof options.mutate !== "undefined") {
                 this.set("mutate", options.mutate);
@@ -59,7 +59,7 @@ var Darwin = Darwin || {};
             } else if (!_.isNumber(attrs.mutationRate) || attrs.mutationRate < 0.0 || attrs.mutationRate > 1.0) {
                 errors.push("Mutation rate must be a number between 0.0 and 1.0");
             }
-            if (typeof attrs.reproduce === "undefined" || !_.isFunction(attrs.reproduce)) {
+            if (typeof attrs.recombination === "undefined" || !_.isFunction(attrs.recombination)) {
                 errors.push("Missing recombination function");
             }
             if (typeof attrs.recombinationRate === "undefined") {

@@ -192,7 +192,7 @@
 //                individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
 //                fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
 //                select: Darwin.Selection.fitnessProportionalSelection,
-//                reproduce: Darwin.Operators.singlePointCrossover,
+//                recombination: Darwin.Operators.singlePointCrossover,
 //                recombinationRate: 0.70,
 //                mutate: Darwin.Operators.createStringMutation(alphabet),
 //                mutationRate: 0.01,
@@ -212,7 +212,7 @@
         phenotypeView: StringEvolver.createStringDiffView(wordToFind),
         mutate: Darwin.Operators.createStringMutation(alphabet),
         terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)],
-        reproduce: Darwin.Operators.singlePointCrossover,
+        recombination: Darwin.Operators.singlePointCrossover,
         select: Darwin.Selection.fitnessProportionalSelection
     });
     $("body").prepend(dashboardView.render().el);

@@ -13,7 +13,7 @@ var Darwin = Darwin || {};
         this.fitnessFunction = options.fitnessFunction;
         this.individualFactory = options.individualFactory;
         this.select = options.select;
-        this.reproduce = options.reproduce;
+        this.recombination = options.recombination;
         this.recombinationRate = options.recombinationRate;
         this.mutate = options.mutate;
         this.mutationRate = options.mutationRate;
@@ -135,7 +135,7 @@ var Darwin = Darwin || {};
             var childB = parentB;
             // Recombination
             if (Math.random() < this.recombinationRate) {
-                var children = this.reproduce(parentA, parentB);
+                var children = this.recombination(parentA, parentB);
                 childA = children.childA;
                 childB = children.childB;
             }
