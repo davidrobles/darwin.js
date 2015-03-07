@@ -29,8 +29,8 @@ var Darwin = Darwin || {};
             if (typeof options.fitnessFunction !== "undefined") {
                 this.set("fitnessFunction", options.fitnessFunction);
             }
-            if (typeof options.select !== "undefined") {
-                this.set("select", options.select);
+            if (typeof options.selection !== "undefined") {
+                this.set("selection", options.selection);
             }
             // Optional
             this.set("populationSize", (typeof options.populationSize !== "undefined") ? options.populationSize : 100);
@@ -48,7 +48,7 @@ var Darwin = Darwin || {};
             if (attrs.populationSize % 2 !== 0) {
                 errors.push("Population size must be a multiple of 2");
             }
-            if (typeof attrs.select === "undefined" || !_.isFunction(attrs.select)) {
+            if (typeof attrs.selection === "undefined" || !_.isFunction(attrs.selection)) {
                 errors.push("Missing selection function");
             }
             if (typeof attrs.mutation === "undefined" || !_.isFunction(attrs.mutation)) {

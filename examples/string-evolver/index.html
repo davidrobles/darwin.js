@@ -182,7 +182,7 @@
         mutation: Darwin.Operators.createStringMutation(alphabet),
         terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)],
         recombination: Darwin.Operators.singlePointCrossover,
-        select: Darwin.Selection.fitnessProportionalSelection
+        selection: Darwin.Selection.fitnessProportionalSelection
     });
     $("body").prepend(dashboardView.render().el);
 
