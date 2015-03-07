@@ -597,18 +597,18 @@ var Darwin = Darwin || {};
             this.maxX = options.maxGenerations;
             this.maxY = options.maxFitness;
             this.data1 = [];
-            this.data2 = [];
+            //this.data2 = [];
             this.data3 = [];
-            this.data4 = [];
+            //this.data4 = [];
             this.data5 = [];
             this.renderBase();
         },
 
         addPoints: function(points) {
             this.data1.push(points.best);
-            this.data2.push(points.stdUp);
+            //this.data2.push(points.stdUp);
             this.data3.push(points.avg);
-            this.data4.push(points.stdDown);
+            //this.data4.push(points.stdDown);
             this.data5.push(points.worst);
             this.render();
         },
@@ -667,9 +667,9 @@ var Darwin = Darwin || {};
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
             this.path1 = self.svg.append("path");
-            this.path2 = self.svg.append("path");
+            //this.path2 = self.svg.append("path");
             this.path3 = self.svg.append("path");
-            this.path4 = self.svg.append("path");
+            //this.path4 = self.svg.append("path");
             this.path5 = self.svg.append("path");
 
             this.svg.append("g")
@@ -718,14 +718,14 @@ var Darwin = Darwin || {};
                 });
 
             // Standard Deviation Over
-            this.path2.datum(self.data2);
-            this.path2.attr("d", self.area)
-                .style({
-                    "fill": "F1FF",
-                    "fill-opacity": .1,
-                    "stroke": "#F1FF",
-                    "stroke-width": "2px"
-                });
+            //this.path2.datum(self.data2);
+            //this.path2.attr("d", self.area)
+            //    .style({
+            //        "fill": "F1FF",
+            //        "fill-opacity": .1,
+            //        "stroke": "#F1FF",
+            //        "stroke-width": "2px"
+            //    });
 
             // Average
             this.path3.datum(self.data3);
@@ -738,14 +738,14 @@ var Darwin = Darwin || {};
                 });
 
             // Standard Deviation Under
-            this.path4.datum(self.data4);
-            this.path4.attr("d", self.area)
-                .style({
-                    "fill": "#FFA787",
-                    "fill-opacity": .1,
-                    "stroke": "#FFA787",
-                    "stroke-width": "2px"
-                });
+            //this.path4.datum(self.data4);
+            //this.path4.attr("d", self.area)
+            //    .style({
+            //        "fill": "#FFA787",
+            //        "fill-opacity": .1,
+            //        "stroke": "#FFA787",
+            //        "stroke-width": "2px"
+            //    });
 
             // Worst
             this.path5.datum(self.data5);
