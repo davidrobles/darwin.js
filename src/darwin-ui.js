@@ -306,7 +306,10 @@ var Darwin = Darwin || {};
                 phenotypeView: this.PhenotypeView
             });
             this.configurationView = new Darwin.Views.EAConfigurationView(_.clone(this.options));
-            this.graph = new Darwin.Views.GenerationsFitnessGraphView();
+            this.graph = new Darwin.Views.GenerationsFitnessGraphView({
+                maxGenerations: this.options.maxGenerations,
+                maxFitness: this.options.maxFitness
+            });
         },
 
         startEA: function(ea) {
@@ -590,9 +593,9 @@ var Darwin = Darwin || {};
 
         className: "widget",
 
-        initialize: function() {
-            this.maxX = 200;
-            this.maxY = "HELLO WORLD 123".length;
+        initialize: function(options) {
+            this.maxX = options.maxGenerations;
+            this.maxY = options.maxFitness;
             this.data1 = [];
             this.data2 = [];
             this.data3 = [];
