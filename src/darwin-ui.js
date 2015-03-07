@@ -47,6 +47,11 @@ var Darwin = Darwin || {};
             if (typeof attrs.childrenSize === "undefined") {
                 errors.push("Missing children size");
             }
+            if (typeof attrs.plusSelection === "undefined") {
+                errors.push("Missing plus selection value");
+            } else if (!_.isBoolean(attrs.plusSelection)) {
+                errors.push("Plus selection must be a boolean.");
+            }
             if (typeof attrs.mutate === "undefined") {
                 errors.push("Missing mutation function");
             }
