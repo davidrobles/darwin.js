@@ -2,7 +2,7 @@ var Darwin = Darwin || {};
 
 (function(Darwin) {
 
-    "use strict"
+    "use strict";
 
     Darwin.Termination = {};
 
