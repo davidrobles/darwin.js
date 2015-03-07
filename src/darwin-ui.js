@@ -152,7 +152,6 @@ var Darwin = Darwin || {};
 
         renderSubview: function() {
             var eaConfig = new this.ConfigurationModel(_.clone(this.configOptions));
-            debugger;
             if (!eaConfig.isValid()) {
                 console.log(eaConfig.validationError);
             }
