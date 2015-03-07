@@ -593,7 +593,7 @@ var Darwin = Darwin || {};
 
         initialize: function() {
             this.maxX = 200;
-            this.maxY = "GENETIC HELLO WORLD".length;
+            this.maxY = "HELLO WORLD 123".length;
             this.data1 = [];
             this.data2 = [];
             this.data3 = [];
@@ -622,7 +622,7 @@ var Darwin = Darwin || {};
                     left:   45
                 },
                 width = 1000 - margin.left - margin.right,
-                height = 350 - margin.top - margin.bottom;
+                height = 300 - margin.top - margin.bottom;
 
             this.x = d3.scale.linear()
                 .domain([0, this.maxX])
