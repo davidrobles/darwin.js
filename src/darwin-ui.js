@@ -16,6 +16,29 @@ var Darwin = Darwin || {};
     });
 
     Darwin.Models.EvolutionStrategyConfiguration = Backbone.Model.extend({
+
+        initialize: function(options) {
+            options = options || {};
+            // Required
+            if (typeof options.mutate !== "undefined") {
+                this.mutate = options.mutate;
+            }
+            if (typeof options.individualFactory !== "undefined") {
+                this.individualFactory = options.individualFactory;
+            }
+            if (typeof options.terminationConditions !== "undefined") {
+                this.terminationConditions = options.terminationConditions;
+            }
+            if (typeof options.fitnessFunction !== "undefined") {
+                this.fitnessFunction = options.fitnessFunction;
+            }
+            // Optional
+            this.set("parentsSize", (typeof options.parentsSize !== "undefined") ? options.parentsSize : 10);
+            this.set("childrenSize", (typeof options.childrenSize !== "undefined") ? options.childrenSize : 70);
+            this.set("mutationRate", (typeof options.mutationRate !== "undefined") ? options.mutationRate : 0.05);
+            this.set("plusSelection", (typeof options.plusSelection !== "undefined") ? options.plusSelection : false);
+        },
+
         validate: function(attrs) {
             var errors = [];
             if (typeof attrs.parentsSize === "undefined") {
@@ -95,44 +118,46 @@ var Darwin = Darwin || {};
             "ES": Darwin.Views.EvolutionStrategyConfigurationView
         },
 
+        configuration: {
+            "GA": Darwin.Models.GeneticAlgorithmConfiguration,
+            "ES": Darwin.Models.EvolutionStrategyConfiguration
+        },
+
         events: {
             "click .start": "start",
             "click .reset": "reset",
-            "change .ea-type": "changeType"
+            "change .ea-type": "changeConfigurationTypeEvent"
         },
 
         initialize: function(options) {
-            this.individualFactory = options.individualFactory;
-            this.fitnessFunction = options.fitnessFunction;
-            this.reproduce = options.reproduce; // TODO rename
-            this.mutate = options.mutate;
-            this.terminationConditions = options.terminationConditions;
+            this.configOptions = options;
         },
 
-        changeType: function(event) {
-            var Subview = this.subviews[event.target.value];
-            this.renderSubview(Subview);
+        changeConfigurationTypeEvent: function(event) {
+            var configType = event.target.value;
+            this.changeConfigurationType(configType)
+        },
+
+        changeConfigurationType: function(configType) {
+            this.ConfigurationModel = this.configuration[configType];
+            this.ConfigurationView = this.subviews[configType];
+            this.renderSubview();
         },
 
         render: function() {
             this.$el.html(this.template());
-            this.renderSubview(this.subviews["ES"]);
+            this.changeConfigurationType("ES");
             return this;
         },
 
-        renderSubview: function(EATypeView) {
-            var esConfig = new Darwin.Models.EvolutionStrategyConfiguration({
-                parentsSize: 10,
-                childrenSize: 40,
-                plusSelection: false,
-                individualFactory: this.individualFactory,
-                fitnessFunction: this.fitnessFunction,
-                mutate: this.mutate,
-                mutationRate: 0.05,
-                terminationConditions: this.terminationConditions
-            });
-            this.subview = new EATypeView({
-                model: esConfig
+        renderSubview: function() {
+            var eaConfig = new this.ConfigurationModel(_.clone(this.configOptions));
+            debugger;
+            if (!eaConfig.isValid()) {
+                console.log(eaConfig.validationError);
+            }
+            this.subview = new this.ConfigurationView({
+                model: eaConfig
             });
             this.$(".ea-type-view").html(this.subview.render().el);
         },
@@ -164,11 +189,7 @@ var Darwin = Darwin || {};
         className: "dashboard",
 
         initialize: function(options) {
-            this.individualFactory = options.individualFactory;
-            this.fitnessFunction = options.fitnessFunction;
-            this.reproduce = options.reproduce;
-            this.mutate = options.mutate;
-            this.terminationConditions = options.terminationConditions;
+            this.options = options;
             this.PhenotypeView = options.phenotypeView;
             this.initSubviews();
             this.listenTo(Darwin.vent, "start-ea", this.startEA);
@@ -186,13 +207,7 @@ var Darwin = Darwin || {};
             this.individualDetailsView = new Darwin.Views.IndividualDetailsView({
                 phenotypeView: this.PhenotypeView
             });
-            this.configurationView = new Darwin.Views.EAConfigurationView({
-                individualFactory: this.individualFactory,
-                fitnessFunction: this.fitnessFunction,
-                reproduce: this.reproduce,
-                mutate: this.mutate,
-                terminationConditions: this.terminationConditions
-            });
+            this.configurationView = new Darwin.Views.EAConfigurationView(_.clone(this.options));
             this.graph = new Darwin.Views.EAGraph();
         },
 
