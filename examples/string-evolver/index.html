@@ -174,20 +174,6 @@
     <script src="string-evolver.js"></script>
     <script>
 
-    ///////////////
-    // Mona Lisa //
-    ///////////////
-
-    var getColorFromImageData = function(imageData, x, y) {
-        var r = imageData.data[((y * (imageData.width * 4)) + (x * 4))],
-            g = imageData.data[((y * (imageData.width * 4)) + (x * 4)) + 1],
-            b = imageData.data[((y * (imageData.width * 4)) + (x * 4)) + 2],
-            a = imageData.data[((y * (imageData.width * 4)) + (x * 4)) + 3];
-        var value = r.toString(16) + g.toString(16) + b.toString(16);
-        console.log(value);
-        $("body").css("background-color", value);
-    };
-
     var theWidth = 16;
     var theHeight = 16;
     var pixelArraySize = theWidth * theHeight * 4;
