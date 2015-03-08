@@ -38,15 +38,9 @@ var Darwin = Darwin || {};
             };
         },
 
-        shouldContinue: function(popData, conditions) {
-            return _.every(conditions, function(condition) {
-                return !condition.shouldTerminate(popData);
-            });
-        },
-
-        shouldTerminate: function(popData, conditions) {
-            return _.some(conditions, function(condition) {
-                return condition(popData);
+        shouldTerminate: function(population, terminationConditions) {
+            return _.some(terminationConditions, function(condition) {
+                return condition(population);
             });
         }
 
