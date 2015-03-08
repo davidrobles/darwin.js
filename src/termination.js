@@ -17,7 +17,7 @@ var Darwin = Darwin || {};
             throw "Max number of generations must be at least 1"
         }
         return function(population) {
-            return maxGens - 1 === population.id;
+            return population.id >= maxGens - 1;
         }
     };
 
