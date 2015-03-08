@@ -214,33 +214,13 @@
         var canvas = document.createElement("canvas");
         canvas.width = monaLisaImg.width;
         canvas.height = monaLisaImg.height;
-//        $("body").append(canvas);
         var ctx = canvas.getContext("2d");
         ctx.drawImage(monaLisaImg, 0, 0, monaLisaImg.width, monaLisaImg.height);
         var imageData = ctx.getImageData(0, 0, monaLisaImg.width, monaLisaImg.height);
-
-        var canvas2 = document.createElement("canvas");
-        canvas2.height = theWidth;
-        canvas2.width = theHeight;
-//        $("body").append(canvas2);
-
-//        for (var i = 0; i < imageData.data.length; i++) {
-//            imageData.data[i + 1] = Math.floor(Math.random() * 255);
-//            imageData.data[i + 2] = Math.floor(Math.random() * 255);
-//            imageData.data[i + 3] = Math.floor(Math.random() * 255);
-//        }
-
-//        imageData.data[100] = 255;
-//        imageData.data[101] = 0;
-//        imageData.data[102] = 0;
-//        imageData.data[103] = 255;
-//        canvas2.getContext("2d").putImageData(imageData, 0, 0);
-
         return imageData
     }
 
     var canvas = createBinaryCanvas(theWidth, theHeight);
-    $("body").append(canvas);
     imageData = canvas.getContext("2d").getImageData(0, 0, theWidth, theHeight);
 
     var dashboardView = new Darwin.Views.DashboardView({
