@@ -246,7 +246,7 @@ var Darwin = Darwin || {};
 
         render: function() {
             this.$el.html(this.template());
-            this.changeConfigurationType("ES");
+            this.changeConfigurationType("GA");
             return this;
         },
 
