@@ -102,13 +102,13 @@
 
     <script type="text/template" id="individual-row-view">
         <td><%= id %></td>
-        <td><div class="the-image"></div></td>
+        <td><div class="phenotype"></div></td>
         <td><span class="worst-fitness"><%= fitness %></span></td>
     </script>
 
     <script type="text/template" id="generation-row-view">
         <td><%= id %></td>
-        <td><div class="the-image"></div></td>
+        <td><div class="phenotype"></div></td>
         <td><%= bestIndividualFitness %></td>
         <td><%= averageFitness.toFixed(2) %></td>
     </script>
@@ -134,7 +134,7 @@
                 </tr>
                 <tr>
                     <td>Phenotype:</td>
-                    <td><%= phenotype %></td>
+                    <td><div class="phenotype"></div></td>
                 </tr>
                 <tr>
                     <td>Fitness:</td>
