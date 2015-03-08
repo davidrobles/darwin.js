@@ -66,7 +66,7 @@ var Darwin = Darwin || {};
         },
 
         checkTermination: function() {
-            if (!Darwin.Utils.shouldContinue(this.currentGeneration, this.terminationConditions)) {
+            if (Darwin.Utils.shouldTerminate(this.currentGeneration, this.terminationConditions)) {
                 this.trigger("ea-finished");
                 clearInterval(this.interval);
             }

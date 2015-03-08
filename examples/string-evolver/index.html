@@ -102,13 +102,13 @@
 
     <script type="text/template" id="individual-row-view">
         <td><%= id %></td>
-        <td><%= phenotype %></td>
+        <td><div class="the-image"></div></td>
         <td><span class="worst-fitness"><%= fitness %></span></td>
     </script>
 
     <script type="text/template" id="generation-row-view">
         <td><%= id %></td>
-        <td><%= bestIndividual %></td>
+        <td><div class="the-image"></div></td>
         <td><%= bestIndividualFitness %></td>
         <td><%= averageFitness.toFixed(2) %></td>
     </script>
@@ -159,6 +159,8 @@
 </head>
 <body>
 
+    <!--<img src="../mona-lisa/img/mona-lisa.png" id="mona-lisa" style="visibility: hidden" />-->
+
     <script src="../../lib/jquery-2.1.1.js"></script>
     <script src="../../lib/underscore.js"></script>
     <script src="../../lib/backbone.js"></script>
@@ -172,24 +174,191 @@
     <script src="string-evolver.js"></script>
     <script>
 
-    var wordToFind = "HELLO WORLD 123",
-        alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789";
+    ///////////////
+    // Mona Lisa //
+    ///////////////
 
-//    var wordToFind = "1111111111111111111",
-//        alphabet = "01";
+    var getColorFromImageData = function(imageData, x, y) {
+        var r = imageData.data[((y * (imageData.width * 4)) + (x * 4))],
+            g = imageData.data[((y * (imageData.width * 4)) + (x * 4)) + 1],
+            b = imageData.data[((y * (imageData.width * 4)) + (x * 4)) + 2],
+            a = imageData.data[((y * (imageData.width * 4)) + (x * 4)) + 3];
+        var value = r.toString(16) + g.toString(16) + b.toString(16);
+        console.log(value);
+        $("body").css("background-color", value);
+    };
+
+    var theWidth = 16;
+    var theHeight = 16;
+    var pixelArraySize = theWidth * theHeight * 4;
+    var pixelCount = theWidth * theHeight;
+
+    var createBinaryCanvas = function(width, height) {
+        var canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        var context = canvas.getContext("2d");
+        var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        for (var i = 0; i < pixelCount; i++) {
+            imageData.data[i * 4] = 255;
+            imageData.data[i * 4 + 1] = 0;
+            imageData.data[i * 4 + 2] = 0;
+            imageData.data[i * 4 + 3] = 255;
+        }
+        context.putImageData(imageData, 0, 0);
+        return canvas;
+    };
+
+    function getImageData() {
+        var monaLisaImg = $("#mona-lisa")[0];
+        var canvas = document.createElement("canvas");
+        canvas.width = monaLisaImg.width;
+        canvas.height = monaLisaImg.height;
+//        $("body").append(canvas);
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(monaLisaImg, 0, 0, monaLisaImg.width, monaLisaImg.height);
+        var imageData = ctx.getImageData(0, 0, monaLisaImg.width, monaLisaImg.height);
+
+        var canvas2 = document.createElement("canvas");
+        canvas2.height = theWidth;
+        canvas2.width = theHeight;
+//        $("body").append(canvas2);
+
+//        for (var i = 0; i < imageData.data.length; i++) {
+//            imageData.data[i + 1] = Math.floor(Math.random() * 255);
+//            imageData.data[i + 2] = Math.floor(Math.random() * 255);
+//            imageData.data[i + 3] = Math.floor(Math.random() * 255);
+//        }
+
+//        imageData.data[100] = 255;
+//        imageData.data[101] = 0;
+//        imageData.data[102] = 0;
+//        imageData.data[103] = 255;
+//        canvas2.getContext("2d").putImageData(imageData, 0, 0);
+
+        return imageData
+    }
+
+    var canvas = createBinaryCanvas(theWidth, theHeight);
+    $("body").append(canvas);
+    imageData = canvas.getContext("2d").getImageData(0, 0, theWidth, theHeight);
 
     var dashboardView = new Darwin.Views.DashboardView({
-        individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
-        fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
-        phenotypeView: StringEvolver.createStringDiffView(wordToFind),
-        mutation: Darwin.Operators.createStringMutation(alphabet),
-        terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)],
-        recombination: Darwin.Operators.singlePointCrossover,
-        selection: Darwin.Selection.fitnessProportionalSelection,
-        maxFitness: wordToFind.length,
-        maxGenerations: 140
+        individualFactory: function() {
+            var data = [];
+            for (var i = 0; i < pixelCount; i++) {
+                // red
+                if (Math.random() < 0.50) {
+                    data[i * 4] = 255;
+                    data[i * 4 + 1] = 0;
+                    data[i * 4 + 2] = 0;
+                    data[i * 4 + 3] = 255;
+                }
+                // white
+                else {
+                    data[i * 4] = 255;
+                    data[i * 4 + 1] = 255;
+                    data[i * 4 + 2] = 255;
+                    data[i * 4 + 3] = 255;
+                }
+            }
+            return data;
+        },
+        fitnessFunction: function(individual) {
+            var fitness = theWidth * theHeight;
+            for (var i = 0; i < pixelCount; i++) {
+                if (individual.genotype[i * 4 + 1] !== 0) {
+                    fitness--;
+                }
+            }
+            return fitness;
+        },
+        phenotypeView: Backbone.View.extend({
+
+                tagName: "img",
+
+                initialize: function(options) {
+                    this.actual = options.actual;
+                },
+
+                render: function() {
+                    var newCanvas = document.createElement('canvas');
+                    newCanvas.height = theHeight;
+                    newCanvas.width = theWidth;
+                    var newCtx = newCanvas.getContext('2d');
+                    var imageData = newCtx.getImageData(0, 0, newCanvas.width, newCanvas.height);
+                    for (var i = 0; i < this.actual.length; i++) {
+                        imageData.data[i] = this.actual[i];
+                    }
+                    newCtx.putImageData(imageData, 0, 0);
+                    this.el.src = newCanvas.toDataURL("image/png");
+                    this.el.width = 50;
+                    this.el.height = 50;
+                    return this;
+                }
+
+        }),
+        mutation: function(individual, mutationRate) {
+            individual = _.clone(individual);
+            for (var i = 0; i < pixelCount; i++) {
+                if (Math.random() < mutationRate) {
+                    if (individual[i * 4 + 1] === 255) {
+                        individual[i * 4 + 1] = 0;
+                        individual[i * 4 + 2] = 0;
+                    } else {
+                        individual[i * 4 + 1] = 255;
+                        individual[i * 4 + 2] = 255;
+                    }
+                }
+            }
+            return individual;
+        },
+        terminationConditions: [Darwin.Termination.createTargetFitnessCondition(theWidth * theHeight)],
+        recombination: function(parentA, parentB) {
+            var crossoverPoint = _.random(0, pixelCount);
+            var outcomeA = _.clone(parentA);
+            var outcomeB = _.clone(parentB);
+            for (var i = 0; i < pixelCount; i++) {
+                if (i > crossoverPoint) {
+                    outcomeA[i * 4 + 1] = parentB[i * 4 + 1];
+                    outcomeA[i * 4 + 2] = parentB[i * 4 + 2];
+                    outcomeB[i * 4 + 1] = parentA[i * 4 + 1];
+                    outcomeB[i * 4 + 2] = parentA[i * 4 + 2];
+                }
+            }
+            return {
+                childA: outcomeA,
+                childB: outcomeB
+            };
+        },
+        selection: Darwin.Selection.createRandomTopPercent(0.10),
+        mutationRate: 0.0025,
+        maxFitness: theWidth * theHeight,
+        maxGenerations: 150,
+        populationSize: 100,
+        recombinationRate: 0.80
     });
     $("body").prepend(dashboardView.render().el);
+
+    ////////////////////
+    // String Evolver //
+    ////////////////////
+
+//    var wordToFind = "HELLO WORLD 123",
+//        alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789";
+//
+//    var dashboardView = new Darwin.Views.DashboardView({
+//        individualFactory: StringEvolver.createStringFactory(alphabet, wordToFind.length),
+//        fitnessFunction: StringEvolver.createWordFitnessFunction(wordToFind),
+//        phenotypeView: StringEvolver.createStringDiffView(wordToFind),
+//        mutation: Darwin.Operators.createStringMutation(alphabet),
+//        terminationConditions: [new Darwin.Termination.TargetFitness(wordToFind.length)],
+//        recombination: Darwin.Operators.singlePointCrossover,
+//        selection: Darwin.Selection.fitnessProportionalSelection,
+//        maxFitness: wordToFind.length,
+//        maxGenerations: 140
+//    });
+//    $("body").prepend(dashboardView.render().el);
 
     </script>
 </body>

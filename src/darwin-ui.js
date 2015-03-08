@@ -457,14 +457,16 @@ var Darwin = Darwin || {};
         render: function() {
             var templateName = this.model.get("status");
             if (templateName === "complete") {
+                var pepe = new this.phenotypeView({
+                    actual: this.model.get("bestIndividual").genotype
+                }).render().el;
                 this.$el.html(this.templates[templateName]({
                     id: this.model.get("id"),
-                    bestIndividual: new this.phenotypeView({
-                        actual: this.model.get("bestIndividual").genotype
-                    }).render().el.innerHTML,
+                    bestIndividual: pepe,
                     bestIndividualFitness: this.model.get("bestIndividual").fitness,
                     averageFitness: this.model.get("averageFitness") // TODO rename to avgFitness
                 }));
+                this.$(".the-image").append(pepe);
             } else {
                 this.$el.html(this.templates[templateName](this.model.toJSON()));
             }
@@ -541,13 +543,15 @@ var Darwin = Darwin || {};
         },
 
         render: function() {
+            var pepe = new this.phenotypeView({
+                actual: this.model.get("genotype")
+            }).render().el;
             this.$el.html(this.template({
                 id: this.model.get("id"),
-                phenotype: new this.phenotypeView({
-                    actual: this.model.get("genotype")
-                }).render().el.innerHTML,
+                phenotype: pepe,
                 fitness: this.model.get("fitness")
             }));
+            this.$(".the-image").append(pepe);
             return this;
         },
 
