@@ -312,7 +312,7 @@
             };
         },
         selection: Darwin.Selection.createRandomTopPercent(0.10),
-        mutationRate: 0.0025,
+        mutationRate: 1.0 / (theWidth * theHeight),
         maxFitness: theWidth * theHeight,
         maxGenerations: 150,
         populationSize: 100,
