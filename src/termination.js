@@ -13,9 +13,11 @@ var Darwin = Darwin || {};
     };
 
     Darwin.Termination.createMaxGenerationsCondition = function(maxGens) {
+        if (maxGens < 1) {
+            throw "Max number of generations must be at least 1"
+        }
         return function(population) {
-            // TODO fix this
-            return maxGens === population.id;
+            return maxGens - 1 === population.id;
         }
     };
 
