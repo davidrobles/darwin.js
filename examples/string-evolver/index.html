@@ -221,7 +221,8 @@
                 b = b.length == 1 ? "0" + b  : b;
                 var a = imageData.data[i * 4 + 3].toString(16);
                 a = a.length == 1 ? "0" + a : a;
-                colors[r + g + b + a] = true; // TODO needed?
+                colors[r + g + b + a];
+                debugger;
             }
             return _.map(colors, function(value, key) {
                 return [
