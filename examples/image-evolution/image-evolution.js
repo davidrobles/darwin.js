@@ -1,6 +1,6 @@
 var ImageEvolution = {
 
-    createImagefitnessFunction: function(targetFitness, imageData, numPixels) {
+    createImageFitnessFunction: function(targetFitness, imageData, numPixels) {
         return function (individual) {
             var fitness = targetFitness;
             for (var i = 0; i < numPixels; i++) {
