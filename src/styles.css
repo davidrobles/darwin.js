@@ -199,3 +199,10 @@ input.small {
 
 
 
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #ecf1f4;
+    /*shape-rendering: crispEdges;*/
+    font-weight: 100;
+}
