@@ -197,6 +197,10 @@
 
     (function() {
 
+        var targetImageEl = $("#target-image")[0];
+        var targetFitness = targetImageEl.width * targetImageEl.height * 4 * 256;
+        var pixelCount = targetImageEl.width * targetImageEl.height;
+
         var getImageData = function(imgEl) {
             var canvas = document.createElement("canvas");
             canvas.width = imgEl.width;
@@ -206,11 +210,7 @@
             return ctx.getImageData(0, 0, imgEl.width, imgEl.height);
         };
 
-        var targetImageEl = $("#target-image")[0];
-        var imageData = getImageData(targetImageEl);
-        var pixelCount = targetImageEl.width * targetImageEl.height;
-
-        var colorsPool = (function(imageData) {
+        var getColorsFromImageData = function(imageData) {
             var colors = {};
             for (var i = 0; i < pixelCount; i++) {
                 var r = imageData.data[i * 4].toString(16);
@@ -231,9 +231,10 @@
                     parseInt(key.substr(6, 2), 16)
                 ];
             });
-        })(imageData);
+        };
 
-        var targetFitness = targetImageEl.width * targetImageEl.height * 4 * 256;
+        var imageData = getImageData(targetImageEl);
+        var colorsPool = getColorsFromImageData(imageData);
 
         var dashboardView = new Darwin.Views.DashboardView({
             individualFactory: function() {
