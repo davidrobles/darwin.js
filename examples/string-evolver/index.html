@@ -159,7 +159,7 @@
 </head>
 <body>
 
-    <img src="../mona-lisa/img/mushroom.png" id="mona-lisa" style="visibility: hidden" />
+    <img src="../mona-lisa/img/soccer.png" id="mona-lisa" style="visibility: hidden" />
 
     <script src="../../lib/jquery-2.1.1.js"></script>
     <script src="../../lib/underscore.js"></script>
@@ -174,73 +174,93 @@
     <script src="string-evolver.js"></script>
     <script>
 
-    var theWidth = 16;
-    var theHeight = 16;
-    var pixelArraySize = theWidth * theHeight * 4;
-    var pixelCount = theWidth * theHeight;
+    /////////////////////
+    // Image evolution //
+    /////////////////////
 
-    var createBinaryCanvas = function(width, height) {
-        var canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
-        var context = canvas.getContext("2d");
-        var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-        for (var i = 0; i < pixelCount; i++) {
-            imageData.data[i * 4] = 255;
-            imageData.data[i * 4 + 1] = 0;
-            imageData.data[i * 4 + 2] = 0;
-            imageData.data[i * 4 + 3] = 255;
+    (function() {
+        var theWidth = 24;
+        var theHeight = 24;
+        var pixelCount = theWidth * theHeight;
+
+        var createBinaryCanvas = function(width, height) {
+            var canvas = document.createElement("canvas");
+            canvas.width = width;
+            canvas.height = height;
+            var context = canvas.getContext("2d");
+            var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            for (var i = 0; i < pixelCount; i++) {
+                imageData.data[i * 4] = 255;
+                imageData.data[i * 4 + 1] = 0;
+                imageData.data[i * 4 + 2] = 0;
+                imageData.data[i * 4 + 3] = 255;
+            }
+            context.putImageData(imageData, 0, 0);
+            return canvas;
+        };
+
+        var colorsPool = null;
+
+        function getImageData() {
+            var monaLisaImg = $("#mona-lisa")[0];
+            var canvas = document.createElement("canvas");
+            canvas.width = monaLisaImg.width;
+            canvas.height = monaLisaImg.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(monaLisaImg, 0, 0, monaLisaImg.width, monaLisaImg.height);
+            var imageData = ctx.getImageData(0, 0, monaLisaImg.width, monaLisaImg.height);
+            var pixelCount = canvas.width * canvas.height;
+            var colors = {};
+            for (var i = 0; i < pixelCount; i++) {
+                var r = imageData.data[i * 4].toString(16);
+                r = r.length == 1 ? "0" + r : r;
+                var g = imageData.data[i * 4 + 1].toString(16);
+                g = g.length == 1 ? "0" + g : g;
+                var b = imageData.data[i * 4 + 2].toString(16);
+                b = b.length == 1 ? "0" + b  : b;
+                var a = imageData.data[i * 4 + 3].toString(16);
+                a = a.length == 1 ? "0" + a : a;
+                colors[r + g + b + a] = true;
+            }
+            var cols = _.map(colors, function(value, key) {
+                return [
+                    parseInt(key.substr(0, 2), 16),
+                    parseInt(key.substr(2, 2), 16),
+                    parseInt(key.substr(4, 2), 16),
+                    parseInt(key.substr(6, 2), 16)
+                ];
+            });
+            colorsPool = cols;
+            return imageData;
         }
-        context.putImageData(imageData, 0, 0);
-        return canvas;
-    };
 
-    var colorsPool = [
-        [216, 40, 0, 255],
-        [252, 252, 252, 255],
-        [0, 0, 0, 255],
-        [0, 0, 0, 0]
-    ];
+        var canvas = createBinaryCanvas(theWidth, theHeight);
+        imageData = getImageData();
 
-    function getImageData() {
-        var monaLisaImg = $("#mona-lisa")[0];
-        var canvas = document.createElement("canvas");
-        canvas.width = monaLisaImg.width;
-        canvas.height = monaLisaImg.height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(monaLisaImg, 0, 0, monaLisaImg.width, monaLisaImg.height);
-        var imageData = ctx.getImageData(0, 0, monaLisaImg.width, monaLisaImg.height);
-        return imageData;
-    }
-
-    var canvas = createBinaryCanvas(theWidth, theHeight);
-//    imageData = canvas.getContext("2d").getImageData(0, 0, theWidth, theHeight);
-    imageData = getImageData();
-
-    var dashboardView = new Darwin.Views.DashboardView({
-        individualFactory: function() {
-            var data = [];
-            for (var i = 0; i < pixelCount; i++) {
-                var colorIndex = Math.floor(Math.random() * colorsPool.length);
-                var randomColor = colorsPool[colorIndex];
-                data[i * 4] = randomColor[0];
-                data[i * 4 + 1] = randomColor[1];
-                data[i * 4 + 2] = randomColor[2];
-                data[i * 4 + 3] = randomColor[3];
-            }
-            return data;
-        },
-        fitnessFunction: function(individual) {
-            var fitness = 16 * 16 * 4 * 256;
-            for (var i = 0; i < pixelCount; i++) {
-                fitness -= Math.abs(individual.genotype[i * 4] - imageData.data[i * 4]);
-                fitness -= Math.abs(individual.genotype[i * 4 + 1] - imageData.data[i * 4 + 1]);
-                fitness -= Math.abs(individual.genotype[i * 4 + 2] - imageData.data[i * 4 + 2]);
-                fitness -= Math.abs(individual.genotype[i * 4 + 3] - imageData.data[i * 4 + 3]);
-            }
-            return fitness;
-        },
-        phenotypeView: Backbone.View.extend({
+        var dashboardView = new Darwin.Views.DashboardView({
+            individualFactory: function() {
+                var data = [];
+                for (var i = 0; i < pixelCount; i++) {
+                    var colorIndex = Math.floor(Math.random() * colorsPool.length);
+                    var randomColor = colorsPool[colorIndex];
+                    data[i * 4] = randomColor[0];
+                    data[i * 4 + 1] = randomColor[1];
+                    data[i * 4 + 2] = randomColor[2];
+                    data[i * 4 + 3] = randomColor[3];
+                }
+                return data;
+            },
+            fitnessFunction: function(individual) {
+                var fitness = 16 * 16 * 4 * 256;
+                for (var i = 0; i < pixelCount; i++) {
+                    fitness -= Math.abs(individual.genotype[i * 4] - imageData.data[i * 4]);
+                    fitness -= Math.abs(individual.genotype[i * 4 + 1] - imageData.data[i * 4 + 1]);
+                    fitness -= Math.abs(individual.genotype[i * 4 + 2] - imageData.data[i * 4 + 2]);
+                    fitness -= Math.abs(individual.genotype[i * 4 + 3] - imageData.data[i * 4 + 3]);
+                }
+                return fitness;
+            },
+            phenotypeView: Backbone.View.extend({
 
                 tagName: "img",
 
@@ -264,51 +284,52 @@
                     return this;
                 }
 
-        }),
-        mutation: function(individual, mutationRate) {
-            individual = _.clone(individual);
-            for (var i = 0; i < pixelCount; i++) {
-                if (Math.random() < mutationRate) {
-                    var colorIndex = Math.floor(Math.random() * colorsPool.length);
-                    var randomColor = colorsPool[colorIndex];
-                    individual[i * 4] = randomColor[0];
-                    individual[i * 4 + 1] = randomColor[1];
-                    individual[i * 4 + 2] = randomColor[2];
-                    individual[i * 4 + 3] = randomColor[3];
+            }),
+            mutation: function(individual, mutationRate) {
+                individual = _.clone(individual);
+                for (var i = 0; i < pixelCount; i++) {
+                    if (Math.random() < mutationRate) {
+                        var colorIndex = Math.floor(Math.random() * colorsPool.length);
+                        var randomColor = colorsPool[colorIndex];
+                        individual[i * 4] = randomColor[0];
+                        individual[i * 4 + 1] = randomColor[1];
+                        individual[i * 4 + 2] = randomColor[2];
+                        individual[i * 4 + 3] = randomColor[3];
+                    }
                 }
-            }
-            return individual;
-        },
-        terminationConditions: [Darwin.Termination.createTargetFitnessCondition(16 * 16 * 4 * 256)],
-        recombination: function(parentA, parentB) {
-            var crossoverPoint = _.random(0, pixelCount);
-            var outcomeA = _.clone(parentA);
-            var outcomeB = _.clone(parentB);
-            for (var i = 0; i < pixelCount; i++) {
-                if (i > crossoverPoint) {
-                    outcomeA[i * 4] = parentB[i * 4];
-                    outcomeA[i * 4 + 1] = parentB[i * 4 + 1];
-                    outcomeA[i * 4 + 2] = parentB[i * 4 + 2];
-                    outcomeA[i * 4 + 3] = parentB[i * 4 + 3];
-                    outcomeB[i * 4] = parentA[i * 4];
-                    outcomeB[i * 4 + 1] = parentA[i * 4 + 1];
-                    outcomeB[i * 4 + 2] = parentA[i * 4 + 2];
-                    outcomeB[i * 4 + 3] = parentA[i * 4 + 3];
+                return individual;
+            },
+            terminationConditions: [Darwin.Termination.createTargetFitnessCondition(16 * 16 * 4 * 256)],
+            recombination: function(parentA, parentB) {
+                var crossoverPoint = _.random(0, pixelCount);
+                var outcomeA = _.clone(parentA);
+                var outcomeB = _.clone(parentB);
+                for (var i = 0; i < pixelCount; i++) {
+                    if (i > crossoverPoint) {
+                        outcomeA[i * 4] = parentB[i * 4];
+                        outcomeA[i * 4 + 1] = parentB[i * 4 + 1];
+                        outcomeA[i * 4 + 2] = parentB[i * 4 + 2];
+                        outcomeA[i * 4 + 3] = parentB[i * 4 + 3];
+                        outcomeB[i * 4] = parentA[i * 4];
+                        outcomeB[i * 4 + 1] = parentA[i * 4 + 1];
+                        outcomeB[i * 4 + 2] = parentA[i * 4 + 2];
+                        outcomeB[i * 4 + 3] = parentA[i * 4 + 3];
+                    }
                 }
-            }
-            return {
-                childA: outcomeA,
-                childB: outcomeB
-            };
-        },
-        selection: Darwin.Selection.createRandomTopPercent(0.10),
-        mutationRate: 1.0 / (theWidth * theHeight),
-        maxFitness: 16 * 16 * 4 * 256,
-        maxGenerations: 150,
-        populationSize: 100,
-        recombinationRate: 0.80
-    });
-    $("body").prepend(dashboardView.render().el);
+                return {
+                    childA: outcomeA,
+                    childB: outcomeB
+                };
+            },
+            selection: Darwin.Selection.createRandomTopPercent(0.10),
+            mutationRate: 1.0 / (theWidth * theHeight),
+            maxFitness: 16 * 16 * 4 * 256,
+            maxGenerations: 800,
+            populationSize: 100,
+            recombinationRate: 0.80
+        });
+        $("body").prepend(dashboardView.render().el);
+    })();
 
     ////////////////////
     // String Evolver //

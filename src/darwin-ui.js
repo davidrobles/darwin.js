@@ -505,7 +505,7 @@ var Darwin = Darwin || {};
             this.$el.html(this.template());
             if (this.collection) {
                 var container = document.createDocumentFragment();
-                for (var i = 0; i < this.collection.length; i++) {
+                for (var i = 0; i < 1; i++) {
                     var individual = this.collection.get(i);
                     var individualRowView = new Darwin.Views.IndividualRowView({
                         model: individual,
