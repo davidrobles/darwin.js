@@ -174,42 +174,41 @@
     <script src="string-evolver.js"></script>
     <script>
 
+    // TODO remove?
+    var createBinaryCanvas = function(width, height) {
+        var canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        var context = canvas.getContext("2d");
+        var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        for (var i = 0; i < pixelCount; i++) {
+            imageData.data[i * 4] = 255;
+            imageData.data[i * 4 + 1] = 0;
+            imageData.data[i * 4 + 2] = 0;
+            imageData.data[i * 4 + 3] = 255;
+        }
+        context.putImageData(imageData, 0, 0);
+        return canvas;
+    };
+
     /////////////////////
     // Image evolution //
     /////////////////////
 
     (function() {
-        var theWidth = 16;
-        var theHeight = 16;
-        var pixelCount = theWidth * theHeight;
 
-        var createBinaryCanvas = function(width, height) {
-            var canvas = document.createElement("canvas");
-            canvas.width = width;
-            canvas.height = height;
-            var context = canvas.getContext("2d");
-            var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-            for (var i = 0; i < pixelCount; i++) {
-                imageData.data[i * 4] = 255;
-                imageData.data[i * 4 + 1] = 0;
-                imageData.data[i * 4 + 2] = 0;
-                imageData.data[i * 4 + 3] = 255;
-            }
-            context.putImageData(imageData, 0, 0);
-            return canvas;
-        };
-
-        function getImageData(imgEl) {
+        var getImageData = function(imgEl) {
             var canvas = document.createElement("canvas");
             canvas.width = imgEl.width;
             canvas.height = imgEl.height;
             var ctx = canvas.getContext("2d");
             ctx.drawImage(imgEl, 0, 0, imgEl.width, imgEl.height);
-            var imageData = ctx.getImageData(0, 0, imgEl.width, imgEl.height);
-            return imageData;
-        }
+            return ctx.getImageData(0, 0, imgEl.width, imgEl.height);
+        };
 
-        var imageData = getImageData($("#target-image")[0]);
+        var targetImageEl = $("#target-image")[0];
+        var imageData = getImageData(targetImageEl);
+        var pixelCount = targetImageEl.width * targetImageEl.height;
 
         var colorsPool = (function(imageData) {
             var colors = {};
@@ -233,6 +232,8 @@
                 ];
             });
         })(imageData);
+
+        var targetFitness = targetImageEl.width * targetImageEl.height * 4 * 256;
 
         var dashboardView = new Darwin.Views.DashboardView({
             individualFactory: function() {
@@ -267,8 +268,8 @@
 
                 render: function() {
                     var newCanvas = document.createElement('canvas');
-                    newCanvas.height = theHeight;
-                    newCanvas.width = theWidth;
+                    newCanvas.height = targetImageEl.height;
+                    newCanvas.width = targetImageEl.width;
                     var newCtx = newCanvas.getContext('2d');
                     var imageData = newCtx.getImageData(0, 0, newCanvas.width, newCanvas.height);
                     for (var i = 0; i < this.actual.length; i++) {
@@ -296,7 +297,7 @@
                 }
                 return individual;
             },
-            terminationConditions: [Darwin.Termination.createTargetFitnessCondition(theWidth * theHeight * 4 * 256)],
+            terminationConditions: [Darwin.Termination.createTargetFitnessCondition(targetFitness)],
             recombination: function(parentA, parentB) {
                 var crossoverPoint = _.random(0, pixelCount);
                 var outcomeA = _.clone(parentA);
@@ -319,8 +320,8 @@
                 };
             },
             selection: Darwin.Selection.createRandomTopPercent(0.10),
-            mutationRate: 1.0 / (theWidth * theHeight),
-            maxFitness: theWidth * theHeight * 4 * 256,
+            mutationRate: 1.0 / pixelCount,
+            maxFitness: targetFitness,
             maxGenerations: 800,
             populationSize: 100,
             recombinationRate: 0.80
