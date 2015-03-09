@@ -159,7 +159,7 @@
 </head>
 <body>
 
-    <img src="../mona-lisa/img/soccer.png" id="mona-lisa" style="visibility: hidden" />
+    <img src="../mona-lisa/img/mushroom.png" id="mona-lisa" style="visibility: hidden" />
 
     <script src="../../lib/jquery-2.1.1.js"></script>
     <script src="../../lib/underscore.js"></script>
@@ -179,8 +179,8 @@
     /////////////////////
 
     (function() {
-        var theWidth = 24;
-        var theHeight = 24;
+        var theWidth = 16;
+        var theHeight = 16;
         var pixelCount = theWidth * theHeight;
 
         var createBinaryCanvas = function(width, height) {
@@ -279,8 +279,8 @@
                     }
                     newCtx.putImageData(imageData, 0, 0);
                     this.el.src = newCanvas.toDataURL("image/png");
-                    this.el.width = 48;
-                    this.el.height = 48;
+                    this.el.width = 32;
+                    this.el.height = 32;
                     return this;
                 }
 
