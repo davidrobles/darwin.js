@@ -30,13 +30,10 @@ var ImageEvolution = {
 
     createImageView: function(targetImageEl) {
         return Backbone.View.extend({
-
             tagName: "img",
-
             initialize: function(options) {
                 this.actual = options.actual;
             },
-
             render: function() {
                 var newCanvas = document.createElement('canvas');
                 debugger;
@@ -53,7 +50,6 @@ var ImageEvolution = {
                 this.el.height = 32;
                 return this;
             }
-
         });
     },
 
