@@ -19,28 +19,6 @@
     <script src="../../src/templates.js"></script>
     <script src="../../src/darwin-ui.js"></script>
     <script>
-
-    // TODO remove?
-    var createBinaryCanvas = function(width, height) {
-        var canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
-        var context = canvas.getContext("2d");
-        var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-        for (var i = 0; i < pixelCount; i++) {
-            imageData.data[i * 4] = 255;
-            imageData.data[i * 4 + 1] = 0;
-            imageData.data[i * 4 + 2] = 0;
-            imageData.data[i * 4 + 3] = 255;
-        }
-        context.putImageData(imageData, 0, 0);
-        return canvas;
-    };
-
-    /////////////////////
-    // Image evolution //
-    /////////////////////
-
     (function() {
 
         var targetImageEl = $("#target-image")[0];
@@ -175,7 +153,6 @@
         });
         $("body").prepend(dashboardView.render().el);
     })();
-
     </script>
 </body>
 </html>
