@@ -279,8 +279,8 @@
                     }
                     newCtx.putImageData(imageData, 0, 0);
                     this.el.src = newCanvas.toDataURL("image/png");
-                    this.el.width = 24;
-                    this.el.height = 24;
+                    this.el.width = 48;
+                    this.el.height = 48;
                     return this;
                 }
 
@@ -299,7 +299,7 @@
                 }
                 return individual;
             },
-            terminationConditions: [Darwin.Termination.createTargetFitnessCondition(16 * 16 * 4 * 256)],
+            terminationConditions: [Darwin.Termination.createTargetFitnessCondition(theWidth * theHeight * 4 * 256)],
             recombination: function(parentA, parentB) {
                 var crossoverPoint = _.random(0, pixelCount);
                 var outcomeA = _.clone(parentA);
@@ -323,7 +323,7 @@
             },
             selection: Darwin.Selection.createRandomTopPercent(0.10),
             mutationRate: 1.0 / (theWidth * theHeight),
-            maxFitness: 16 * 16 * 4 * 256,
+            maxFitness: theWidth * theHeight * 4 * 256,
             maxGenerations: 800,
             populationSize: 100,
             recombinationRate: 0.80
