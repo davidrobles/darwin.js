@@ -38,12 +38,12 @@
         mutation: Darwin.Operators.createStringMutation(alphabet),
         terminationConditions: [Darwin.Termination.createTargetFitnessCondition(wordToFind.length)],
         recombination: Darwin.Operators.singlePointCrossover,
-        selection: Darwin.Selection.fitnessProportionalSelection,
+        selection: Darwin.Selection.createRandomTopPercent(0.10),
         maxFitness: wordToFind.length,
         populationSize: 100,
         maxGenerations: 200,
         recombinationRate: 0.70,
-        mutationRate: 0.0025
+        mutationRate: 1.0 / wordToFind.length
     });
     $("body").prepend(dashboardView.render().el);
     </script>
