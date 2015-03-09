@@ -223,12 +223,12 @@
                 a = a.length == 1 ? "0" + a : a;
                 colors[r + g + b + a] = true;
             }
-            return _.map(colors, function(value, key) {
+            return _.map(_.keys(colors), function(hexColor) {
                 return [
-                    parseInt(key.substr(0, 2), 16),
-                    parseInt(key.substr(2, 2), 16),
-                    parseInt(key.substr(4, 2), 16),
-                    parseInt(key.substr(6, 2), 16)
+                    parseInt(hexColor.substr(0, 2), 16),
+                    parseInt(hexColor.substr(2, 2), 16),
+                    parseInt(hexColor.substr(4, 2), 16),
+                    parseInt(hexColor.substr(6, 2), 16)
                 ];
             });
         };
