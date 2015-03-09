@@ -159,7 +159,7 @@
 </head>
 <body>
 
-    <!--<img src="../mona-lisa/img/mona-lisa.png" id="mona-lisa" style="visibility: hidden" />-->
+    <img src="../mona-lisa/img/mushroom.png" id="mona-lisa" style="visibility: hidden" />
 
     <script src="../../lib/jquery-2.1.1.js"></script>
     <script src="../../lib/underscore.js"></script>
@@ -195,6 +195,13 @@
         return canvas;
     };
 
+    var colorsPool = [
+        [216, 40, 0, 255],
+        [252, 252, 252, 255],
+        [0, 0, 0, 255],
+        [0, 0, 0, 0]
+    ];
+
     function getImageData() {
         var monaLisaImg = $("#mona-lisa")[0];
         var canvas = document.createElement("canvas");
@@ -203,39 +210,33 @@
         var ctx = canvas.getContext("2d");
         ctx.drawImage(monaLisaImg, 0, 0, monaLisaImg.width, monaLisaImg.height);
         var imageData = ctx.getImageData(0, 0, monaLisaImg.width, monaLisaImg.height);
-        return imageData
+        return imageData;
     }
 
     var canvas = createBinaryCanvas(theWidth, theHeight);
-    imageData = canvas.getContext("2d").getImageData(0, 0, theWidth, theHeight);
+//    imageData = canvas.getContext("2d").getImageData(0, 0, theWidth, theHeight);
+    imageData = getImageData();
 
     var dashboardView = new Darwin.Views.DashboardView({
         individualFactory: function() {
             var data = [];
             for (var i = 0; i < pixelCount; i++) {
-                // red
-                if (Math.random() < 0.50) {
-                    data[i * 4] = 255;
-                    data[i * 4 + 1] = 0;
-                    data[i * 4 + 2] = 0;
-                    data[i * 4 + 3] = 255;
-                }
-                // white
-                else {
-                    data[i * 4] = 255;
-                    data[i * 4 + 1] = 255;
-                    data[i * 4 + 2] = 255;
-                    data[i * 4 + 3] = 255;
-                }
+                var colorIndex = Math.floor(Math.random() * colorsPool.length);
+                var randomColor = colorsPool[colorIndex];
+                data[i * 4] = randomColor[0];
+                data[i * 4 + 1] = randomColor[1];
+                data[i * 4 + 2] = randomColor[2];
+                data[i * 4 + 3] = randomColor[3];
             }
             return data;
         },
         fitnessFunction: function(individual) {
-            var fitness = theWidth * theHeight;
+            var fitness = 16 * 16 * 4 * 256;
             for (var i = 0; i < pixelCount; i++) {
-                if (individual.genotype[i * 4 + 1] !== 0) {
-                    fitness--;
-                }
+                fitness -= Math.abs(individual.genotype[i * 4] - imageData.data[i * 4]);
+                fitness -= Math.abs(individual.genotype[i * 4 + 1] - imageData.data[i * 4 + 1]);
+                fitness -= Math.abs(individual.genotype[i * 4 + 2] - imageData.data[i * 4 + 2]);
+                fitness -= Math.abs(individual.genotype[i * 4 + 3] - imageData.data[i * 4 + 3]);
             }
             return fitness;
         },
@@ -258,8 +259,8 @@
                     }
                     newCtx.putImageData(imageData, 0, 0);
                     this.el.src = newCanvas.toDataURL("image/png");
-                    this.el.width = 50;
-                    this.el.height = 50;
+                    this.el.width = 24;
+                    this.el.height = 24;
                     return this;
                 }
 
@@ -268,28 +269,31 @@
             individual = _.clone(individual);
             for (var i = 0; i < pixelCount; i++) {
                 if (Math.random() < mutationRate) {
-                    if (individual[i * 4 + 1] === 255) {
-                        individual[i * 4 + 1] = 0;
-                        individual[i * 4 + 2] = 0;
-                    } else {
-                        individual[i * 4 + 1] = 255;
-                        individual[i * 4 + 2] = 255;
-                    }
+                    var colorIndex = Math.floor(Math.random() * colorsPool.length);
+                    var randomColor = colorsPool[colorIndex];
+                    individual[i * 4] = randomColor[0];
+                    individual[i * 4 + 1] = randomColor[1];
+                    individual[i * 4 + 2] = randomColor[2];
+                    individual[i * 4 + 3] = randomColor[3];
                 }
             }
             return individual;
         },
-        terminationConditions: [Darwin.Termination.createTargetFitnessCondition(theWidth * theHeight)],
+        terminationConditions: [Darwin.Termination.createTargetFitnessCondition(16 * 16 * 4 * 256)],
         recombination: function(parentA, parentB) {
             var crossoverPoint = _.random(0, pixelCount);
             var outcomeA = _.clone(parentA);
             var outcomeB = _.clone(parentB);
             for (var i = 0; i < pixelCount; i++) {
                 if (i > crossoverPoint) {
+                    outcomeA[i * 4] = parentB[i * 4];
                     outcomeA[i * 4 + 1] = parentB[i * 4 + 1];
                     outcomeA[i * 4 + 2] = parentB[i * 4 + 2];
+                    outcomeA[i * 4 + 3] = parentB[i * 4 + 3];
+                    outcomeB[i * 4] = parentA[i * 4];
                     outcomeB[i * 4 + 1] = parentA[i * 4 + 1];
                     outcomeB[i * 4 + 2] = parentA[i * 4 + 2];
+                    outcomeB[i * 4 + 3] = parentA[i * 4 + 3];
                 }
             }
             return {
@@ -299,7 +303,7 @@
         },
         selection: Darwin.Selection.createRandomTopPercent(0.10),
         mutationRate: 1.0 / (theWidth * theHeight),
-        maxFitness: theWidth * theHeight,
+        maxFitness: 16 * 16 * 4 * 256,
         maxGenerations: 150,
         populationSize: 100,
         recombinationRate: 0.80
