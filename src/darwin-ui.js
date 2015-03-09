@@ -157,7 +157,7 @@ var Darwin = Darwin || {};
 
     Darwin.Views.GeneticAlgorithmConfigurationView = Backbone.View.extend({
 
-        template: _.template($("#genetic-algorithm-configuration-view").html()),
+        template: _.template(Darwin.Templates.geneticAlgorithmConfigurationView),
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
@@ -182,7 +182,7 @@ var Darwin = Darwin || {};
 
     Darwin.Views.EvolutionStrategyConfigurationView = Backbone.View.extend({
 
-        template: _.template($("#evolution-strategy-configuration-view").html()),
+        template: _.template(Darwin.Templates.evolutionaryStrategyConfigurationView),
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
@@ -211,7 +211,7 @@ var Darwin = Darwin || {};
 
         className: "widget widget-info",
 
-        template: _.template($("#evolutionary-algorithm-configuration-view").html()),
+        template: _.template(Darwin.Templates.evolutionaryAlgorithmConfigurationView),
 
         subviews: {
             "GA": Darwin.Views.GeneticAlgorithmConfigurationView,
@@ -282,7 +282,7 @@ var Darwin = Darwin || {};
 
     Darwin.Views.DashboardView = Backbone.View.extend({
 
-        template: _.template($("#dashboard-layout").html()),
+        template: _.template(Darwin.Templates.dashboardLayout),
 
         className: "dashboard",
 
@@ -381,7 +381,7 @@ var Darwin = Darwin || {};
 
         className: "ea generations widget",
 
-        template: _.template($("#generations-table-view").html()),
+        template: _.template(Darwin.Templates.generationsTableView),
 
         initialize: function(options) {
             options = options || {};
@@ -444,8 +444,8 @@ var Darwin = Darwin || {};
     Darwin.Views.GenerationRowView = Darwin.Views.SelectableRowView.extend({
 
         templates: {
-            "complete": _.template($("#generation-row-view").html()),
-            "in-progress": _.template($("#generation-row-view-in-progress").html())
+            "complete": _.template(Darwin.Templates.generationRowView),
+            "in-progress": _.template(Darwin.Templates.generationRowViewInProgress)
         },
 
         initialize: function(options) {
@@ -483,7 +483,7 @@ var Darwin = Darwin || {};
 
         className: "ea population widget",
 
-        template: _.template($("#population-table-view").html()),
+        template: _.template(Darwin.Templates.populationTableView),
 
         initialize: function(options) {
             this.phenotypeView = options.phenotypeView;
@@ -534,7 +534,7 @@ var Darwin = Darwin || {};
 
     Darwin.Views.IndividualRowView = Darwin.Views.SelectableRowView.extend({
 
-        template: _.template($("#individual-row-view").html()),
+        template: _.template(Darwin.Templates.individualRowView),
 
         initialize: function(options) {
             this.phenotypeView = options.phenotypeView
@@ -561,7 +561,7 @@ var Darwin = Darwin || {};
 
         className: "widget widget-info individual-details-view",
 
-        template: _.template($("#individual-details-view").html()),
+        template: _.template(Darwin.Templates.individualDetailsView),
 
         initialize: function(options) {
             this.phenotypeView = options.phenotypeView;
