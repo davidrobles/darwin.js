@@ -199,8 +199,6 @@
             return canvas;
         };
 
-        var colorsPool = null;
-
         function getImageData(imgEl) {
             var canvas = document.createElement("canvas");
             canvas.width = imgEl.width;
@@ -208,7 +206,12 @@
             var ctx = canvas.getContext("2d");
             ctx.drawImage(imgEl, 0, 0, imgEl.width, imgEl.height);
             var imageData = ctx.getImageData(0, 0, imgEl.width, imgEl.height);
-            var pixelCount = canvas.width * canvas.height;
+            return imageData;
+        }
+
+        var imageData = getImageData($("#target-image")[0]);
+
+        var colorsPool = (function(imageData) {
             var colors = {};
             for (var i = 0; i < pixelCount; i++) {
                 var r = imageData.data[i * 4].toString(16);
@@ -219,9 +222,9 @@
                 b = b.length == 1 ? "0" + b  : b;
                 var a = imageData.data[i * 4 + 3].toString(16);
                 a = a.length == 1 ? "0" + a : a;
-                colors[r + g + b + a] = true;
+                colors[r + g + b + a] = true; // TODO needed?
             }
-            var cols = _.map(colors, function(value, key) {
+            return _.map(colors, function(value, key) {
                 return [
                     parseInt(key.substr(0, 2), 16),
                     parseInt(key.substr(2, 2), 16),
@@ -229,12 +232,7 @@
                     parseInt(key.substr(6, 2), 16)
                 ];
             });
-            colorsPool = cols;
-            return imageData;
-        }
-
-        var canvas = createBinaryCanvas(theWidth, theHeight);
-        imageData = getImageData($("#target-image")[0]);
+        })(imageData);
 
         var dashboardView = new Darwin.Views.DashboardView({
             individualFactory: function() {
