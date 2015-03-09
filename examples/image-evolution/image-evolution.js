@@ -26,6 +26,52 @@ var ImageEvolution = {
             }
             return data;
         };
+    },
+
+    createImageView: function(targetImageEl) {
+        return Backbone.View.extend({
+
+            tagName: "img",
+
+            initialize: function(options) {
+                this.actual = options.actual;
+            },
+
+            render: function() {
+                var newCanvas = document.createElement('canvas');
+                debugger;
+                newCanvas.height = targetImageEl.height;
+                newCanvas.width = targetImageEl.width;
+                var newCtx = newCanvas.getContext('2d');
+                var imageData = newCtx.getImageData(0, 0, newCanvas.width, newCanvas.height);
+                for (var i = 0; i < this.actual.length; i++) {
+                    imageData.data[i] = this.actual[i];
+                }
+                newCtx.putImageData(imageData, 0, 0);
+                this.el.src = newCanvas.toDataURL("image/png");
+                this.el.width = 32;
+                this.el.height = 32;
+                return this;
+            }
+
+        });
+    },
+
+    createColorMutation: function(colorsPool, numPixels) {
+        return function(individual, mutationRate) {
+            individual = _.clone(individual);
+            for (var i = 0; i < numPixels; i++) {
+                if (Math.random() < mutationRate) {
+                    var colorIndex = Math.floor(Math.random() * colorsPool.length);
+                    var randomColor = colorsPool[colorIndex];
+                    individual[i * 4] = randomColor[0];
+                    individual[i * 4 + 1] = randomColor[1];
+                    individual[i * 4 + 2] = randomColor[2];
+                    individual[i * 4 + 3] = randomColor[3];
+                }
+            }
+            return individual;
+        }
     }
 
 };
