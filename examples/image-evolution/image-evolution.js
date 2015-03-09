@@ -72,6 +72,30 @@ var ImageEvolution = {
             }
             return individual;
         }
+    },
+
+    createImageCrossover: function(numPixels) {
+        return function(parentA, parentB) {
+            var crossoverPoint = _.random(0, numPixels);
+            var outcomeA = _.clone(parentA);
+            var outcomeB = _.clone(parentB);
+            for (var i = 0; i < numPixels; i++) {
+                if (i > crossoverPoint) {
+                    outcomeA[i * 4] = parentB[i * 4];
+                    outcomeA[i * 4 + 1] = parentB[i * 4 + 1];
+                    outcomeA[i * 4 + 2] = parentB[i * 4 + 2];
+                    outcomeA[i * 4 + 3] = parentB[i * 4 + 3];
+                    outcomeB[i * 4] = parentA[i * 4];
+                    outcomeB[i * 4 + 1] = parentA[i * 4 + 1];
+                    outcomeB[i * 4 + 2] = parentA[i * 4 + 2];
+                    outcomeB[i * 4 + 3] = parentA[i * 4 + 3];
+                }
+            }
+            return {
+                childA: outcomeA,
+                childB: outcomeB
+            };
+        }
     }
 
 };
