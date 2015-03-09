@@ -159,7 +159,7 @@
 </head>
 <body>
 
-    <img src="../mona-lisa/img/mushroom.png" id="mona-lisa" style="visibility: hidden" />
+    <img src="../mona-lisa/img/mushroom.png" id="target-image" style="visibility: hidden" />
 
     <script src="../../lib/jquery-2.1.1.js"></script>
     <script src="../../lib/underscore.js"></script>
@@ -201,14 +201,13 @@
 
         var colorsPool = null;
 
-        function getImageData() {
-            var monaLisaImg = $("#mona-lisa")[0];
+        function getImageData(imgEl) {
             var canvas = document.createElement("canvas");
-            canvas.width = monaLisaImg.width;
-            canvas.height = monaLisaImg.height;
+            canvas.width = imgEl.width;
+            canvas.height = imgEl.height;
             var ctx = canvas.getContext("2d");
-            ctx.drawImage(monaLisaImg, 0, 0, monaLisaImg.width, monaLisaImg.height);
-            var imageData = ctx.getImageData(0, 0, monaLisaImg.width, monaLisaImg.height);
+            ctx.drawImage(imgEl, 0, 0, imgEl.width, imgEl.height);
+            var imageData = ctx.getImageData(0, 0, imgEl.width, imgEl.height);
             var pixelCount = canvas.width * canvas.height;
             var colors = {};
             for (var i = 0; i < pixelCount; i++) {
@@ -235,7 +234,7 @@
         }
 
         var canvas = createBinaryCanvas(theWidth, theHeight);
-        imageData = getImageData();
+        imageData = getImageData($("#target-image")[0]);
 
         var dashboardView = new Darwin.Views.DashboardView({
             individualFactory: function() {
