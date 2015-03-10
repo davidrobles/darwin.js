@@ -20,7 +20,7 @@
     <script src="../../src/darwin-ui.js"></script>
     <script src="image-evolution.js"></script>
     <script>
-    (function() {
+    $(function() {
         var targetImageEl = $("#target-image")[0];
         var numPixels = targetImageEl.width * targetImageEl.height;
         var targetFitness = numPixels * 4 * 256;
@@ -71,7 +71,7 @@
             recombinationRate: 0.80
         });
         $("body").append(dashboardView.render().el);
-    })();
+    });
     </script>
 </body>
 </html>
