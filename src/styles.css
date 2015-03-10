@@ -1,8 +1,6 @@
 body {
-    font-family: "Tahoma", "Lucida Grande";
+    font-family: "Tahoma", "Lucida Grande", serif;
     letter-spacing: 0.1em;
-    /*font-family: "Menlo", "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;*/
-    /*font-family: "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;*/
     font-size: 12px;
     margin: 0;
     background-color: #252b34;
@@ -13,7 +11,6 @@ body p {
 }
 
 .dashboard {
-    /*color: #b5bfcc;*/
     color: #ecf1f4;
     background-color: #252b34;
     height: 100vh;
@@ -83,22 +80,6 @@ table.ea tbody {
 table.ea tr.selected, table.ea tr.selected:hover {
     background-color: #252b34;
 }
-
-/*table.ea td:first-child {*/
-    /*border-left: 2px solid #363f4a;*/
-/*}*/
-
-/*table.ea tr.selected td:first-child {*/
-    /*border-left: 2px solid #252b34;*/
-/*}*/
-
-/*table.ea td:last-child {*/
-    /*border-right: 2px solid #363f4a;*/
-/*}*/
-
-/*table.ea tr.selected td:last-child {*/
-    /*border-right: 2px solid #252b34;*/
-/*}*/
 
 table.ea tbody tr:hover {
     cursor: pointer;
@@ -175,11 +156,6 @@ table.population th + th + th, table.population td + td + td {
     padding: 3px 5px 3px 6px;
 }
 
-/* String Evolver */
-.fixed-str {
-    font-family: 'Menlo', Arial, sans-serif;
-}
-
 .dashboard-sidebar {
     width: 400px;
 }
@@ -196,13 +172,12 @@ input.small {
     width: 30px;
 }
 
+/*****************/
+/* Fitness Graph */
+/*****************/
 
-
-
-.axis path,
-.axis line {
+.axis path, .axis line {
     fill: none;
     stroke: #ecf1f4;
-    /*shape-rendering: crispEdges;*/
     font-weight: 100;
 }
