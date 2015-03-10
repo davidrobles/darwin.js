@@ -193,17 +193,17 @@ var Darwin = Darwin || {};
                 return {
                     id: individualId++,
                     generation: this.currentGeneration,
-                    genotype: parent // TODO rename to parentGenotype?
+                    genotype: parent.genotype
                 };
             }, this);
         }
         _.each(parents, function(parent) {
             for (var i = 0; i < this.childrenPerParent; i++) {
-                var child = this.mutate(parent, this.mutationRate);
+                var childGenotype = this.mutate(parent.genotype, this.mutationRate);
                 newPopulation.push({
                     id: individualId++,
                     generation: this.currentGeneration,
-                    genotype: child
+                    genotype: childGenotype
                 })
             }
         }, this);
@@ -215,8 +215,8 @@ var Darwin = Darwin || {};
         population.sort(function(a, b) {
             return b.fitness - a.fitness;
         });
-        return _.map(population.slice(0, this.parentsSize), function (individual) {
-            return individual.genotype;
+        return _.map(population.slice(0, this.parentsSize), function(individual) {
+            return individual;
         });
     };
 
