@@ -12,7 +12,6 @@ var Darwin = Darwin || {};
             var totalFitness = 0,
                 bestIndividual = null,
                 worstIndividual = null;
-            var diff = 0;
             _.each(population, function(individual) {
                 totalFitness += individual.fitness;
                 if (!bestIndividual || individual.fitness > bestIndividual.fitness) {
@@ -23,10 +22,9 @@ var Darwin = Darwin || {};
                 }
             });
             var average = totalFitness / population.length;
-            // TODO Refactor, use_.reduce() ?
-            _.each(population, function(individual) {
-                diff += Math.pow(individual.fitness - average, 2);
-            });
+            var diff = _.reduce(population, function(memo, individual) {
+                return memo + Math.pow(individual.fitness - average, 2)
+            }, 0);
             var variance = diff / population.length;
             var std = Math.sqrt(variance);
             return {
