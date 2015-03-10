@@ -13,7 +13,7 @@ var Darwin = Darwin || {};
             <td><%= id %></td> \
             <td><div class="phenotype"></div></td>\
             <td><%= bestIndividualFitness %></td> \
-            <td><%= averageFitness.toFixed(2) %></td> \
+            <td><%= fitnessAvg.toFixed(2) %></td> \
         ',
 
         generationRowViewInProgress: ' \

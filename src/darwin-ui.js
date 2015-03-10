@@ -344,7 +344,7 @@ var Darwin = Darwin || {};
                     },
                     avg: {
                         id: generation.id,
-                        fitness: generation.averageFitness
+                        fitness: generation.fitnessAvg
                     },
                     worst: {
                         id: generation.id,
@@ -352,11 +352,11 @@ var Darwin = Darwin || {};
                     },
                     stdUp: {
                         id: generation.id,
-                        fitness: generation.averageFitness + generation.stdFitness
+                        fitness: generation.fitnessAvg + generation.fitnessStd
                     },
                     stdDown: {
                         id: generation.id,
-                        fitness: generation.averageFitness - generation.stdFitness
+                        fitness: generation.fitnessAvg - generation.fitnessStd
                     }
                 });
             });
@@ -460,7 +460,7 @@ var Darwin = Darwin || {};
                 this.$el.html(this.templates[templateName]({
                     id: this.model.get("id"),
                     bestIndividualFitness: this.model.get("bestIndividual").fitness,
-                    averageFitness: this.model.get("averageFitness") // TODO rename to avgFitness
+                    fitnessAvg: this.model.get("fitnessAvg") // TODO rename to avgFitness
                 }));
                 this.$(".phenotype").append(new this.phenotypeView({
                     actual: this.model.get("bestIndividual").genotype

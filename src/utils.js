@@ -30,8 +30,8 @@ var Darwin = Darwin || {};
             var variance = diff / population.length;
             var std = Math.sqrt(variance);
             return {
-                averageFitness: average, // TODO rename
-                stdFitness: std, // TODO rename
+                fitnessAvg: average,
+                fitnessStd: std,
                 bestIndividual: bestIndividual,
                 worstIndividual: worstIndividual,
                 population: population
