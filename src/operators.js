@@ -10,10 +10,9 @@ var Darwin = Darwin || {};
         // Recombination //
         ///////////////////
 
-
         // One point random crossover for two String candidates.
         // Assumes that both candidate Strings are the same length.
-        singlePointCrossover: function(parentA, parentB) {
+        singlePointStringCrossover: function(parentA, parentB) {
             var parentLength = parentA.length;
             var crossoverPoint = _.random(0, parentLength);
             return {

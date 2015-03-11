@@ -33,7 +33,7 @@
                     phenotypeView: StringEvolver.createStringDiffView(wordToFind),
                     mutation: Darwin.Operators.createStringMutation(alphabet),
                     terminationConditions: [Darwin.Termination.createTargetFitnessCondition(wordToFind.length)],
-                    recombination: Darwin.Operators.singlePointCrossover,
+                    recombination: Darwin.Operators.singlePointStringCrossover,
                     selection: Darwin.Selection.createTopRankSelection(0.10),
                     maxFitness: wordToFind.length,
                     populationSize: 100,
