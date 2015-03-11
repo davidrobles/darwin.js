@@ -63,7 +63,7 @@
             mutation: ImageEvolution.createColorMutation(colorsPool, numPixels),
             terminationConditions: [Darwin.Termination.createTargetFitnessCondition(targetFitness)],
             recombination: ImageEvolution.createImageCrossover(numPixels),
-            selection: Darwin.Selection.createRandomTopPercent(0.10),
+            selection: Darwin.Selection.createTopRankSelection(0.10),
             mutationRate: 1.0 / numPixels,
             maxFitness: targetFitness,
             maxGenerations: 800,

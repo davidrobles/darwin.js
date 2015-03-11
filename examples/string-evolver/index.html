@@ -34,7 +34,7 @@
                     mutation: Darwin.Operators.createStringMutation(alphabet),
                     terminationConditions: [Darwin.Termination.createTargetFitnessCondition(wordToFind.length)],
                     recombination: Darwin.Operators.singlePointCrossover,
-                    selection: Darwin.Selection.createRandomTopPercent(0.10),
+                    selection: Darwin.Selection.createTopRankSelection(0.10),
                     maxFitness: wordToFind.length,
                     populationSize: 100,
                     maxGenerations: 200,

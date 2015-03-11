@@ -6,7 +6,7 @@ var Darwin = Darwin || {};
 
     Darwin.Selection = {
 
-        createRandomTopPercent: function(percentage) {
+        createTopRankSelection: function(percentage) {
             return function(population) {
                 population = _.clone(population);
                 population.sort(function(a, b) {
