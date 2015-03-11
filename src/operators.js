@@ -33,8 +33,7 @@ var Darwin = Darwin || {};
             return function(individual, mutationRate) {
                 return _.reduce(individual, function(memo, char) {
                     if (Math.random() < mutationRate) {
-                        var randChar = _.random(0, alphabet.length - 1);
-                        return memo + alphabet.charAt(randChar);
+                        return memo + _.sample(alphabet);
                     }
                     return memo + char;
                 }, "");
