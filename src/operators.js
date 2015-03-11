@@ -31,16 +31,13 @@ var Darwin = Darwin || {};
         // probability and draws its characters from the specified alphabet.
         createStringMutation: function(alphabet) {
             return function(individual, mutationRate) {
-                var newString = "";
-                for (var i = 0; i < individual.length; i++) {
+                return _.reduce(individual, function(memo, char) {
                     if (Math.random() < mutationRate) {
                         var randChar = _.random(0, alphabet.length - 1);
-                        newString += alphabet.charAt(randChar);
-                    } else {
-                        newString += individual.charAt(i);
+                        return memo + alphabet.charAt(randChar);
                     }
-                }
-                return newString;
+                    return memo + char;
+                }, "");
             };
         }
     }
