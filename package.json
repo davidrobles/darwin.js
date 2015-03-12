@@ -22,7 +22,6 @@
   "bugs": {
     "url": "https://github.com/davidrobles/darwin.js/issues"
   },
-  "homepage": "http://darwinjs.com",
   "dependencies": {
     "underscore": ">=1.5.0"
   },
