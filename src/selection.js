@@ -30,7 +30,6 @@ var Darwin = Darwin || {};
             return index;
         },
 
-        // Also known as fitness proportionate selection
         // TODO make just one call to this method
         fitnessProportionalSelection: function(population) {
             var cumulativeFitnesses = [population[0].fitness];
