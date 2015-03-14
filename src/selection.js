@@ -42,11 +42,11 @@ var Darwin = Darwin || {};
             return _.clone(population[index].genotype);
         },
 
-        tournamentSelection: function(evalPop) {
+        tournamentSelection: function(population) {
             // TODO
         },
 
-        rankSelection: function(evalPop) {
+        rankSelection: function(population) {
             // TODO
         }
 

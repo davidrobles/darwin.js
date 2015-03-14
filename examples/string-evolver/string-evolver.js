@@ -1,3 +1,5 @@
+"use strict";
+
 var StringEvolver = {
 
     createWordFitnessFunction: function(targetWord) {
