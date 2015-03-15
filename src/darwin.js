@@ -66,10 +66,16 @@ var Darwin = Darwin || {};
         },
 
         checkTermination: function() {
-            if (Darwin.Utils.shouldTerminate(this.currentGeneration, this.terminationConditions)) {
+            if (this.shouldTerminate()) {
                 this.trigger("ea-finished");
                 clearInterval(this.interval);
             }
+        },
+
+        shouldTerminate: function() {
+            return _.some(this.terminationConditions, function(condition) {
+                return condition(this.currentGeneration);
+            }, this);
         },
 
         initializePopulation: function() {

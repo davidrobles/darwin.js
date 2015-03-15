@@ -34,12 +34,6 @@ var Darwin = Darwin || {};
                 worstIndividual: worstIndividual,
                 population: population
             };
-        },
-
-        shouldTerminate: function(population, terminationConditions) {
-            return _.some(terminationConditions, function(condition) {
-                return condition(population);
-            });
         }
 
     };
