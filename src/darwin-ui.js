@@ -11,6 +11,12 @@ var Darwin = Darwin || {};
 
     Darwin.Models.GeneticAlgorithmConfiguration = Backbone.Model.extend({
 
+        POPULATION_SIZE: 100,
+
+        RECOMBINATION_RATE: 0.50,
+
+        MUTATION_RATE: 0.02,
+
         initialize: function(options) {
             options = options || {};
             // Required
@@ -33,9 +39,17 @@ var Darwin = Darwin || {};
                 this.set("selection", options.selection);
             }
             // Optional
-            this.set("populationSize", (typeof options.populationSize !== "undefined") ? options.populationSize : 100);
-            this.set("recombinationRate", (typeof options.recombinationRate !== "undefined") ? options.recombinationRate : 0.50);
-            this.set("mutationRate", (typeof options.mutationRate !== "undefined") ? options.mutationRate : 0.02);
+            this.set(
+                "populationSize",
+                (typeof options.populationSize !== "undefined") ? options.populationSize : this.POPULATION_SIZE
+            );
+            this.set(
+                "recombinationRate",
+                (typeof options.recombinationRate !== "undefined") ? options.recombinationRate : this.RECOMBINATION_RATE
+            );
+            this.set(
+                "mutationRate",
+                (typeof options.mutationRate !== "undefined") ? options.mutationRate : this.MUTATION_RATE);
         },
 
         validate: function(attrs) {
@@ -85,6 +99,14 @@ var Darwin = Darwin || {};
 
     Darwin.Models.EvolutionStrategyConfiguration = Backbone.Model.extend({
 
+        PARENTS_SIZE: 10,
+
+        CHILDREN_SIZE: 70,
+
+        MUTATION_RATE: 0.05,
+
+        PLUS_SELECTION: false,
+
         initialize: function(options) {
             options = options || {};
             // Required
@@ -101,10 +123,22 @@ var Darwin = Darwin || {};
                 this.set("fitnessFunction", options.fitnessFunction);
             }
             // Optional
-            this.set("parentsSize", (typeof options.parentsSize !== "undefined") ? options.parentsSize : 10);
-            this.set("childrenSize", (typeof options.childrenSize !== "undefined") ? options.childrenSize : 70);
-            this.set("mutationRate", (typeof options.mutationRate !== "undefined") ? options.mutationRate : 0.05);
-            this.set("plusSelection", (typeof options.plusSelection !== "undefined") ? options.plusSelection : false);
+            this.set(
+                "parentsSize",
+                (typeof options.parentsSize !== "undefined") ? options.parentsSize : this.PARENTS_SIZE
+            );
+            this.set(
+                "childrenSize",
+                (typeof options.childrenSize !== "undefined") ? options.childrenSize : this.CHILDREN_SIZE
+            );
+            this.set(
+                "mutationRate",
+                (typeof options.mutationRate !== "undefined") ? options.mutationRate : this.MUTATION_RATE
+            );
+            this.set(
+                "plusSelection",
+                (typeof options.plusSelection !== "undefined") ? options.plusSelection : this.PLUS_SELECTION
+            );
         },
 
         validate: function(attrs) {
